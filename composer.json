@@ -10,9 +10,11 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "inertiajs/inertia-laravel": "^0.6.11",
         "laravel/framework": "^8.75",
+        "laravel/jetstream": "^2.9",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.4"
+        "laravel/ui": "^3.4",
+        "tightenco/ziggy": "^1.8"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

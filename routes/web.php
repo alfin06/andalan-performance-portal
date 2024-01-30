@@ -24,29 +24,9 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 Route::middleware('auth')->group(function() {
     Route::get('/', function() {
         return Inertia::render('Home');
-    })->middleware('verified')->name('home');
-
-    Route::post('user/logout', [AuthController::class, 'logout'])->name('logout');
+    })->name('home');
+    Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
     
-    Route::get('/email/verify', [AuthController::class, 'emailVerification'])->middleware('auth')->name('verification.notice');
-   
-    Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-        $request->fulfill();
-     
-        return redirect()->route('home')->with([
-            'message' => 'Email verified successfully',
-            'class' => 'alert alert-success'
-        ]);
-    })->middleware('signed')->name('verification.verify');
-    
-    Route::post('/email/verification-notification', function (Request $request) {
-        $request->user()->sendEmailVerificationNotification();
-     
-        return redirect()->back()->with([
-            'message' => 'Verification link sent!',
-            'class' => 'alert alert-success'
-        ]);
-    })->middleware('throttle:6,1')->name('verification.send');
 });
 
 Route::middleware('guest')->group(function() {
