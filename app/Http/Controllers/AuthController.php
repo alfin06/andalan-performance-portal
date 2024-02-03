@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -37,6 +38,10 @@ class AuthController extends Controller
             'email' => $request->email,
         ])) {
             $request->session()->regenerate();
+            $user = User::where('email', $request->email)->first();
+            $user->last_login = now();
+            $user->save();
+
             return redirect()->route('home');
         }else {
             return Inertia::render('User/Login', [
@@ -52,4 +57,37 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
+    public function profile(Request $request) {
+        return Inertia::render('User/Profile');
+    }
+
+    public function updateProfile(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:6',
+        ]);
+
+        if($validator->fails()) {
+            return Inertia::render('User/Profile', [
+                'failed' => "Your password must be at least 6 characters."
+            ]);
+        }
+        
+        $user = User::where('id', Auth::id())->first();
+        
+        if($request->password == $request->confirmpassword) {
+            $user->name = $request->name;
+            $user->password = Hash::make($request->password);
+            $user->updated_at = now();
+            $user->save();
+
+            return Inertia::render('User/Profile', [
+                'succeed' => "Saved."
+            ]);
+        }
+        else {
+            return Inertia::render('User/Profile', [
+                'failed' => "ERROR! Password does not match."
+            ]);
+        }
+    }
 }

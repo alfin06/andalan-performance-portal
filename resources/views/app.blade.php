@@ -12,26 +12,19 @@
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
-    <!-- chartist CSS -->
-    <link href="{{ asset('assets/plugins/chartist-js/dist/chartist.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css') }}" rel="stylesheet">
     <!--c3 CSS -->
     <link href="{{ asset('assets/plugins/c3-master/c3.min.css') }}" rel="stylesheet">
     <!-- page css -->
     <link href="{{ asset('css/pages/login-register-lock.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <!-- Dashboard 1 Page CSS -->
-    <link href="{{ asset('css/pages/dashboard2.css') }}" rel="stylesheet">
 
     <!-- The replacement of @vite('resources/js/app.js') -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     @inertiaHead
   </head>
   <body class="fix-header fix-sidebar card-no-border">
-    <div id="main-wrapper">
-        @inertia
-    </div>
+    @inertia
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
@@ -51,13 +44,9 @@
     <!-- This page plugins -->
     <!-- ============================================================== -->
     
-    <script src="{{ asset('assets/plugins/chartist-js/dist/chartist.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js') }}"></script>
     <!--c3 JavaScript -->
     <script src="{{ asset('assets/plugins/d3/d3.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/c3-master/c3.min.js') }}"></script>
-    <!-- Chart JS -->
-    <script src="{{ asset('js/dashboard2.js') }}"></script>
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->

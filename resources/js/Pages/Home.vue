@@ -7,9 +7,6 @@ import Layout from '../Layouts/Main'
 <template>
     <Layout></Layout>
     <div class="page-wrapper">
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
         <div class="container-fluid">
             <div class="row">
                 <!-- contact -->
