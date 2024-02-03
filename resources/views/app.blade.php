@@ -29,7 +29,9 @@
     @inertiaHead
   </head>
   <body class="fix-header fix-sidebar card-no-border">
-    @inertia
+    <div id="main-wrapper">
+        @inertia
+    </div>
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->

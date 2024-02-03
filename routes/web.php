@@ -17,12 +17,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Home');
-// });
-
 Route::middleware('auth')->group(function() {
-    Route::get('/', function() {
+    Route::get('/home', function() {
         return Inertia::render('Home');
     })->name('home');
     Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
@@ -30,11 +26,6 @@ Route::middleware('auth')->group(function() {
 });
 
 Route::middleware('guest')->group(function() {
-    Route::get('user/register', [AuthController::class, 'register'])->name('register');
-    
-    Route::post('user/register', [AuthController::class, 'store'])->name('register');
-    
     Route::get('user/login', [AuthController::class, 'login'])->name('login');
-    
     Route::post('user/login', [AuthController::class, 'auth'])->name('login');
 });

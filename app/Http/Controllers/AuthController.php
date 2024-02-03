@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     public function login() {
-        return Inertia::render('User/Login');
+        if(!auth()->check()) {
+            return Inertia::render('User/Login');
+        }
+        else {
+            return redirect()->route('home');
+        }
     }
 
     public function auth(Request $request) {
