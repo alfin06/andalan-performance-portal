@@ -25,6 +25,15 @@ Route::middleware('auth')->group(function() {
     
 });
 
+Route::middleware('auth')->group(function() {
+    Route::get('/profile', function() {
+        return Inertia::render('Profile');
+    })->name('profile');
+    Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
+    
+});
+
+
 Route::middleware('guest')->group(function() {
     Route::get('user/login', [AuthController::class, 'login'])->name('login');
     Route::post('user/login', [AuthController::class, 'auth'])->name('login');
