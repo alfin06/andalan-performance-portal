@@ -37,11 +37,11 @@ import Layout from '../Layouts/Main'
                                         <label>Movement Plan</label>
                                         <select class="custom-select form-control pull-right">
                                             <option selected="">Pick Movement</option>
-                                            <option value="1">Assisted Pull Up ( 5 sets)</option>
-                                            <option value="2">Line Jump | Lateral <span>( 5 sets)</span></option>
-                                            <option value="3">Line Jump | Sagital <span>( 0 sets)</span></option>
-                                            <option value="4">FEE Split Squat <span>( 0 sets)</span></option>
-                                            <option value="5">Reverse Plank <span>( 0 sets)</span></option>
+                                            <option value="1">Assisted Pull Up ( 5 x)</option>
+                                            <option value="2">Line Jump | Lateral <span>( 5 x)</span></option>
+                                            <option value="3">Line Jump | Sagital <span>( 0 x)</span></option>
+                                            <option value="4">FEE Split Squat <span>( 0 x)</span></option>
+                                            <option value="5">Reverse Plank <span>( 0 x)</span></option>
                                         </select>
                                     </div>
                                     <div class="form-group col-2">
