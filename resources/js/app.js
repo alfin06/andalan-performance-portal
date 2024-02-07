@@ -1,8 +1,9 @@
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
-import route from 'ziggy'
-import { ZiggyVue } from './ziggy'
+import route from 'ziggy-js';
+import { ZiggyVue } from 'ziggy';
+import { Ziggy } from './ziggy';
 
 createInertiaApp({
     title: title => '${title} | Andalan Performance',
@@ -17,6 +18,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
       const VueApp = createApp({ render: () => h(App, props) })
                     .use(plugin)
+                    .use(ZiggyVue, Ziggy)
                     .mixin({ methods: { route } })
                     .mount(el)
     },

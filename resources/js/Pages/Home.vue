@@ -1,6 +1,13 @@
 <script setup>
 import {ref} from 'vue';
-import Layout from '../Layouts/Main'
+import VueMeta from 'vue-meta';
+import Layout from '../Layouts/Main';
+
+const title = defineProps({
+    metaInfo: {
+        titlle: 'Profile'
+    }
+});
 
 </script>
 

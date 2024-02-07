@@ -22,6 +22,7 @@
     <!-- The replacement of @vite('resources/js/app.js') -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     @inertiaHead
+    @routes
   </head>
   <body class="fix-header fix-sidebar card-no-border">
     @inertia

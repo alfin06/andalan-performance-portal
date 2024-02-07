@@ -18,6 +18,9 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 Route::middleware('auth')->group(function() {
+    Route::get('/', function() {
+        return Inertia::render('Home');
+    })->name('home');
     Route::get('/home', function() {
         return Inertia::render('Home');
     })->name('home');

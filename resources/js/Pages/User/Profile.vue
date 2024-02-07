@@ -16,6 +16,10 @@ const props = defineProps({
     failed: {
         type: String,
         required: false
+    },
+
+    metaInfo: {
+        titlle: 'Profile'
     }
 });
 
