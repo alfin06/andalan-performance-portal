@@ -44,7 +44,9 @@ const props = defineProps({
                                         <div class="u-img"><img src="/assets/images/users/user.png" alt="user"></div>
                                         <div class="u-text">
                                             <h4>{{ user.name }}</h4>
-                                            <p class="text-muted">{{ user.email }}</p><a :href="route('profile')" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                            <p class="text-muted">{{ user.email }}</p>
+                                            <a :href="route('profile')" class="btn btn-rounded btn-danger btn-sm mt-2">View Profile</a>
+                                        </div>
                                     </div>
                                 </li>
                                 <li role="separator" class="divider"></li>
@@ -72,7 +74,7 @@ const props = defineProps({
 
                     <li class="nav-devider" v-if="user.role === 'SUPERADMIN'"></li>
                     <li class="nav-small-cap"  v-if="user.role === 'SUPERADMIN'">Superadmin Access Only</li>
-                    <li><a class="waves-effect waves-dark" href="/" aria-expanded="false" v-if="user.role === 'SUPERADMIN'"><i class="mdi mdi-account"></i><span class="hide-menu">Users </span></a></li>
+                    <li><a class="waves-effect waves-dark" :href="route('employees')" aria-expanded="false" v-if="user.role === 'SUPERADMIN'"><i class="mdi mdi-account"></i><span class="hide-menu">Employee </span></a></li>
                 </ul>
             </nav>
         </div>

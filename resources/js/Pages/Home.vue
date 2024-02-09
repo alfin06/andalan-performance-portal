@@ -1,17 +1,14 @@
 <script setup>
-import {ref} from 'vue';
-import VueMeta from 'vue-meta';
+import { Head }  from '@inertiajs/vue3';
 import Layout from '../Layouts/Main';
-
-const title = defineProps({
-    metaInfo: {
-        titlle: 'Profile'
-    }
-});
+import Footer from '../Layouts/Footer';
 
 </script>
 
 <template>
+    <Head>
+        <title>Home</title>
+    </Head>
     <Layout></Layout>
     <div class="page-wrapper">
         <div class="container-fluid">
@@ -77,7 +74,7 @@ const title = defineProps({
                 </div>
             </div>
         </div>
-        <footer class="footer"> &copy; {{ new Date().getFullYear() }} <a href="https://finicode.com/" alt="Finicode">Finicode</a></footer>
+        <Footer></Footer>
     </div>
 </template>
 

@@ -1,21 +1,21 @@
 <script setup>
-    import { useForm, router } from "@inertiajs/vue3";
+import { useForm, router, Head } from "@inertiajs/vue3";
 
-    const form = useForm({
-        email: '',
-        password: '',
-    });
+const form = useForm({
+    email: '',
+    password: '',
+});
 
-    const props = defineProps({
-        failed: {
-            type: String,
-            required: false
-        }
-    });
-
-    function auth() {
-        router.post('login', form);
+const props = defineProps({
+    failed: {
+        type: String,
+        required: false
     }
+});
+
+function auth() {
+    router.post('login', form);
+}
 </script>
 
 <style>
@@ -36,6 +36,7 @@
 </style>
 
 <template>
+    <Head title="Login" />
     <div className="parent">
         <div className="row my-5">
             <div className="col-md-6 mx-auto">

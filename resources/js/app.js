@@ -12,6 +12,9 @@ createInertiaApp({
         const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
         return pages[`./Pages/${name}.vue`]
     },
+    progress: {
+        color: '#29d',
+    },
   
     // Webpack
     resolve: name => require(`./Pages/${name}`),

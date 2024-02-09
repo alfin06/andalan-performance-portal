@@ -1,7 +1,8 @@
 <script setup>
-import { useForm, router, usePage } from "@inertiajs/vue3";
+import { useForm, router, usePage, Head } from "@inertiajs/vue3";
 import { computed } from 'vue'
 import Layout from '../../Layouts/Main'
+import Footer from '../../Layouts/Footer';
 
 const page = usePage()
 const user = computed(() => page.props.auth.user)
@@ -32,6 +33,7 @@ function profile() {
 </style>
 
 <template>
+    <Head title="Profile" />
     <Layout></Layout>
     <div class="page-wrapper">
         <div class="container-fluid">
@@ -47,7 +49,7 @@ function profile() {
                 </div>
                 <div class="col-md-7 align-self-center">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                        <li class="breadcrumb-item"><a :href="route('home')">Home</a></li>
                         <li class="breadcrumb-item active">Profile Settings</li>
                     </ol>
                 </div>
@@ -126,5 +128,6 @@ function profile() {
                 </div>
             </div>
         </div>
+        <Footer></Footer>
     </div>
 </template>

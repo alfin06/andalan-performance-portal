@@ -4,6 +4,8 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SuperadminController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -28,6 +30,8 @@ Route::middleware('auth')->group(function() {
     Route::get('user/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('user/profile', [AuthController::class, 'updateProfile'])->name('profile');
     
+    Route::get('superadmin/employees', [SuperadminController::class, 'employees'])->name('employees');
+    Route::post('superadmin/addEmployee', [SuperadminController::class, 'addEmployee'])->name('addEmployee');
 });
 
 Route::middleware('guest')->group(function() {
