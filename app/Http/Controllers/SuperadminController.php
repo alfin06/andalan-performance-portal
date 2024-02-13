@@ -40,5 +40,7 @@ class SuperadminController extends Controller
         $user->phone = $request->phone;
         $user->password = Hash::make($request->password);
         $user->save();
+
+        return back(); // Back to index page. All this happens without refreshing
     }
 }

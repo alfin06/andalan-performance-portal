@@ -3,9 +3,11 @@
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SuperadminController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -30,6 +32,13 @@ Route::middleware('auth')->group(function() {
     Route::get('user/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('user/profile', [AuthController::class, 'updateProfile'])->name('profile');
     
+    Route::resource('users', UserController::class)->names([
+        'index' => 'users.index',
+        'store' => 'users.store',
+        'update' => 'users.update',
+    ]);
+    Route::put('users/changePassword/{id}', [UserController::class, 'changePassword'])->name('users.password');
+
     Route::get('superadmin/employees', [SuperadminController::class, 'employees'])->name('employees');
     Route::post('superadmin/addEmployee', [SuperadminController::class, 'addEmployee'])->name('addEmployee');
 });
