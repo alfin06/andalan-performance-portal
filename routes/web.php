@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function() {
         'index' => 'users.index',
         'store' => 'users.store',
         'update' => 'users.update',
+        'create' => 'users.create',
+        'edit' => 'users.edit',
     ]);
     Route::put('users/changePassword/{id}', [UserController::class, 'changePassword'])->name('users.password');
 });

@@ -46,12 +46,12 @@ function destroy(id) {
 </script>
 <script>
 $(document).ready(function() {
-$('#example23').DataTable({
-    dom: 'Bfrtip',
-    buttons: [
-        'csv', 'excel', 'pdf', 'print'
-    ]
-});
+    $('#example23').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel', 'pdf', 'print'
+        ]
+    });
 });
 </script>
 
@@ -86,7 +86,7 @@ $('#example23').DataTable({
                                                     <tr>
                                                         <td colspan="2">
                                                             <Link :href="route('users.create')">
-                                                                <button type="button" class="btn btn-primary btn-rounded"><i class="mdi mdi-plus"></i> Add New Employee</button>
+                                                                <button type="button" class="btn btn-primary btn-rounded"><i class="mdi mdi-plus"></i> Add New User</button>
                                                             </Link>
                                                         </td>
                                                     </tr>
@@ -112,9 +112,7 @@ $('#example23').DataTable({
                                                 <tbody>
                                                     <tr v-for="(item, index) in users" :key="item.id">
                                                         <td>{{ index+1 }}</td>
-                                                        <td>
-                                                            <a href="app-contact-detail.html"> {{item.name}}</a>
-                                                        </td>
+                                                        <td>{{item.name}}</td>
                                                         <td>{{item.email}}</td>
                                                         <td>{{item.phone}}</td>
                                                         <td><span class="label label-danger">{{item.role}}</span></td>
