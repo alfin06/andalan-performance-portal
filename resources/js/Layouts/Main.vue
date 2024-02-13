@@ -79,6 +79,7 @@ const props = defineProps({
             </nav>
         </div>
     </aside>
+    <slot></slot>
 </template>
 
 <style>

@@ -39,88 +39,84 @@ const submit = () => {
 
 <template>
     <Head title="User" />
-    <Layout></Layout>
-    <div class="page-wrapper" id="page">
-        <div class="container-fluid">
-            <div class="row page-titles">
-                <div class="col-md-5 align-self-center">
-                    <h3 class="text-themecolor">User</h3>
+    <Layout>
+        <div class="page-wrapper" id="page">
+            <div class="container-fluid">
+                <div class="row page-titles">
+                    <div class="col-md-5 align-self-center">
+                        <h3 class="text-themecolor">User</h3>
+                    </div>
+                    <div class="col-md-7 align-self-center">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a :href="route('home')">Home</a></li>
+                            <li class="breadcrumb-item"><a :href="route('users.index')">Users</a></li>
+                            <li class="breadcrumb-item active">User</li>
+                        </ol>
+                    </div>
                 </div>
-                <div class="col-md-7 align-self-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a :href="route('home')">Home</a></li>
-                        <li class="breadcrumb-item"><a :href="route('users.index')">Users</a></li>
-                        <li class="breadcrumb-item active">User</li>
-                    </ol>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="contact-page-aside">
-                            <div class="row">
-                                <div class="col-12">
-                                    <form @submit.prevent="submit" class="form-material m-t-40">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form @submit.prevent="submit" class="form-material m-t-40">
+                                    <div class="form-body">
                                         <div class="row">
-                                            <div class="col-md-12">
-                                                <label for="name" class="form-check-label">Name</label>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="name" class="control-label">Name</label>
+                                                    <input type="text" v-model="form.name" name="name" class="form-control" placeholder="Name" />
+                                                    <div v-if="form.errors.name" class="text-sm text-red-600">
+                                                        {{ form.errors.title }}
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <input type="text" v-model="form.name" name="name" class="form-control" placeholder="Name" />
-                                                <div v-if="form.errors.name" class="text-sm text-red-600">
-                                                    {{ form.errors.title }}
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="email" class="control-label">Email</label>
+                                                    <input type="text" v-model="form.email" name="email" class="form-control" placeholder="Email" />
+                                                    <div v-if="form.errors.email" class="text-sm text-red-600">
+                                                        {{ form.errors.email }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row m-t-5">
-                                            <div class="col-md-12">
-                                                <label for="email" class="form-check-label">Email</label>
+                                        <div class="row p-t-20">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="phone" class="control-label">Phone</label>
+                                                    <input type="text" v-model="form.phone" name="phone" class="form-control" placeholder="Phone" />
+                                                    <div v-if="form.errors.phone" class="text-sm text-red-600">
+                                                        {{ form.errors.phone }}
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <input type="text" v-model="form.email" name="email" class="form-control" placeholder="Email" />
-                                                <div v-if="form.errors.email" class="text-sm text-red-600">
-                                                    {{ form.errors.email }}
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="password" class="control-label">Password</label>
+                                                    <input type="password" v-model="form.password" name="password" class="form-control" placeholder="Password" />
+                                                    <div v-if="form.errors.password" class="text-sm text-red-600">
+                                                        {{ form.errors.password }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row m-t-5">
+                                        <div class="row p-t-20">
                                             <div class="col-md-12">
-                                                <label for="phone" class="form-check-label">Phone</label>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input type="text" v-model="form.phone" name="phone" class="form-control" placeholder="Phone" />
-                                                <div v-if="form.errors.phone" class="text-sm text-red-600">
-                                                    {{ form.errors.phone }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row m-t-5">
-                                            <div class="col-md-12">
-                                                <label for="password" class="form-check-label">Password</label>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input type="password" v-model="form.password" name="password" class="form-control" placeholder="Password" />
-                                                <div v-if="form.errors.password" class="text-sm text-red-600">
-                                                    {{ form.errors.password }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br/>
-                                        <div class="row" m-t-5>
-                                            <div class="col-md-12">
-                                                <button type="submit" class="btn btn-primary" :disabled="form.processing" :class="{ 'opacity-25': form.processing }">
-                                                    Submit
+                                                <button type="submit" class="btn btn-info" :disabled="form.processing" :class="{ 'opacity-25': form.processing }">
+                                                    <i class="fa fa-check"></i> Submit
                                                 </button>
+                                                &nbsp;
+                                                <Link :href="route('users.index')" class="btn btn-inverse"><i class="fa fa-times"></i> Cancel</Link>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <Footer></Footer>
         </div>
-        <Footer></Footer>
-    </div>
+    </Layout>
 </template>
