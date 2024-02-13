@@ -32,38 +32,28 @@ import Footer from '../Layouts/Footer';
 
                             <div class="container">
                                 <div class="row" id="list_name">
-                                    <div class="col-3 name_box"> <a href="and_profile.html" class="name_a">
+                                    <div class="col-3 name_box"> <a href="profile" class="name_a">
                                         Andrei Kurnia<hr />
                                         <h6>Start date: 23/04/2024</h6>
                                         <h6>Current Program: 2x a Week | General Population</h6></a>
                                     </div>
-                                    <div class="col-3 name_box"> <a href="and_profile.html" class="name_a">
+                                    <div class="col-3 name_box"> <a href="profile" class="name_a">
                                         Nike Kurnia<hr />
                                         <h6>Start date: 23/04/2024</h6>
                                         <h6>Current Program: 2x a Week | General Population</h6></a>
                                     </div>
-                                    <div class="col-3 name_box"> <a href="and_profile.html" class="name_a">
+                                    <div class="col-3 name_box"> <a href="profile" class="name_a">
                                         Clayton Kurnia<hr />
                                         <h6>Start date: 23/04/2024</h6>
                                         <h6>Current Program: 2x a Week | General Population</h6></a>
                                     </div>
-                                    <div class="col-3 name_box"> <a href="and_profile.html" class="name_a">
+                                    <div class="col-3 name_box"> <a href="profile" class="name_a">
                                         Dominic Kurnia<hr />
                                         <h6>Start date: 23/04/2024</h6>
                                         <h6>Current Program: 2x a Week | General Population</h6></a>
                                     </div>
-                                    <div class="col-3 name_box"> <a href="and_profile.html" class="name_a">
+                                    <div class="col-3 name_box"> <a href="profile" class="name_a">
                                         Ella Kurnia<hr />
-                                        <h6>Start date: 23/04/2024</h6>
-                                        <h6>Current Program: 2x a Week | General Population</h6></a>
-                                    </div>
-                                    <div class="col-3 name_box"> <a href="and_profile.html" class="name_a">
-                                        Felix Kurnia<hr />
-                                        <h6>Start date: 23/04/2024</h6>
-                                        <h6>Current Program: 2x a Week | General Population</h6></a>
-                                    </div>
-                                    <div class="col-3 name_box"> <a href="and_profile.html" class="name_a">
-                                        Kai Kurnia<hr />
                                         <h6>Start date: 23/04/2024</h6>
                                         <h6>Current Program: 2x a Week | General Population</h6></a>
                                     </div>
