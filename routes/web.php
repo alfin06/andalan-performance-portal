@@ -38,9 +38,6 @@ Route::middleware('auth')->group(function() {
         'update' => 'users.update',
     ]);
     Route::put('users/changePassword/{id}', [UserController::class, 'changePassword'])->name('users.password');
-
-    Route::get('superadmin/employees', [SuperadminController::class, 'employees'])->name('employees');
-    Route::post('superadmin/addEmployee', [SuperadminController::class, 'addEmployee'])->name('addEmployee');
 });
 
 Route::middleware('auth')->group(function() {
