@@ -117,7 +117,7 @@ function profile() {
                                             </div>
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    <button class="btn btn-success" type="submit" name="update" id="update" value="update">Update Profile</button>
+                                                    <button class="btn btn-info" type="submit" name="update" id="update" value="update"><i class="fa fa-save"></i> Save</button>
                                                 </div>
                                             </div>
                                         </form>

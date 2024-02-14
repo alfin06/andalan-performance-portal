@@ -5,9 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -32,29 +31,34 @@ Route::middleware('auth')->group(function() {
     Route::get('user/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('user/profile', [AuthController::class, 'updateProfile'])->name('profile');
     
+    /* Client List */
+    Route::resource('client', ClientController::class)->names([
+        'index'   => 'client.index',
+        'store'   => 'client.store',
+        'update'  => 'client.update',
+        'create'  => 'client.create',
+        'edit'    => 'client.edit',
+        'destroy' => 'client.destroy',
+    ]);
+
+    /**********************/
+    /* SUPERADMIN ACCESS  */
+    /**********************/
     Route::resource('users', UserController::class)->names([
-        'index' => 'users.index',
-        'store' => 'users.store',
-        'update' => 'users.update',
-        'create' => 'users.create',
-        'edit' => 'users.edit',
+        'index'   => 'users.index',
+        'store'   => 'users.store',
+        'update'  => 'users.update',
+        'create'  => 'users.create',
+        'edit'    => 'users.edit',
+        'destroy' => 'users.destroy',
     ]);
     Route::put('users/changePassword/{id}', [UserController::class, 'changePassword'])->name('users.password');
 });
 
 Route::middleware('auth')->group(function() {
-    Route::get('/profile', function() {
+    Route::get('/client/profile', function() {
         return Inertia::render('Profile');
-    })->name('profile');
-    Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
-    
-});
-
-
-Route::middleware('auth')->group(function() {
-    Route::get('/client', function() {
-        return Inertia::render('Client');
-    })->name('client');
+    })->name('client.profile');
     Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
     
 });

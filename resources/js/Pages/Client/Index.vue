@@ -8,7 +8,7 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
 const page = usePage();
-const users = computed(() => page.props.users);
+const clients = computed(() => page.props.clients);
 
 const form = useForm({
                 name: '',
@@ -30,8 +30,8 @@ const props = defineProps({
 
 function destroy(id) {
     if (confirm("Are you sure you want to delete?")) {
-        form.delete(route('users.destroy', id));
-        toast.success('User deleted successfully!');
+        form.delete(route('client.destroy', id));
+        toast.success('Client deleted successfully!');
     }
 }
 </script>
@@ -50,18 +50,18 @@ $(document).ready(function() {
 </style>
 
 <template>
-    <Head title="Users" />
+    <Head title="Client" />
     <Layout>
         <div class="page-wrapper" id="page">
             <div class="container-fluid">
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">List of Users</h3>
+                        <h3 class="text-themecolor">List of Clients</h3>
                     </div>
                     <div class="col-md-7 align-self-center">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a :href="route('home')">Home</a></li>
-                            <li class="breadcrumb-item active">Users</li>
+                            <li class="breadcrumb-item active">Clients</li>
                         </ol>
                     </div>
                 </div>
@@ -76,8 +76,8 @@ $(document).ready(function() {
                                                 <table>
                                                     <tr>
                                                         <td colspan="2">
-                                                            <Link :href="route('users.create')">
-                                                                <button type="button" class="btn btn-primary btn-rounded"><i class="mdi mdi-plus"></i> Add New User</button>
+                                                            <Link :href="route('client.create')">
+                                                                <button type="button" class="btn btn-primary btn-rounded"><i class="mdi mdi-plus"></i> Add New Client</button>
                                                             </Link>
                                                         </td>
                                                     </tr>
@@ -93,22 +93,22 @@ $(document).ready(function() {
                                                 <thead>
                                                     <tr>
                                                         <th>No.</th>
-                                                        <th>Name</th>
-                                                        <th>Email</th>
-                                                        <th>Phone</th>
-                                                        <th>Role</th>
+                                                        <th>Full Name</th>
+                                                        <th>Program</th>
+                                                        <th>Start Date</th>
+                                                        <th>Goal</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="(item, index) in users" :key="item.id">
+                                                    <tr v-for="(item, index) in clients" :key="item.id">
                                                         <td>{{ index+1 }}</td>
                                                         <td>{{item.name}}</td>
-                                                        <td>{{item.email}}</td>
-                                                        <td>{{item.phone}}</td>
-                                                        <td><span class="label label-danger">{{item.role}}</span></td>
+                                                        <td>{{item.program}}</td>
+                                                        <td>{{(item.start_date.split(" "))[0]}}</td>
+                                                        <td>{{item.goal}}</td>
                                                         <td>
-                                                            <Link :href="route('users.edit', item.id)" class="btn btn-sm btn-icon btn-pure btn-outline" data-original-title="Edit"><i class="ti-pencil" aria-hidden="true"></i></Link>
+                                                            <Link :href="route('client.edit', item.id)" class="btn btn-sm btn-icon btn-pure btn-outline" data-original-title="Edit"><i class="ti-pencil" aria-hidden="true"></i></Link>
                                                             <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete" @click="destroy(item.id)"><i class="ti-close" aria-hidden="true"></i></button>
                                                         </td>
                                                     </tr>

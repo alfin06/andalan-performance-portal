@@ -6,9 +6,6 @@ use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -105,6 +102,6 @@ class UserController extends Controller
         $user->delete();
         sleep(1);
 
-        return redirect()->route('users.index')->with('message', 'User delete successfully');
+        return redirect()->route('users.index')->with('message', 'User deleted successfully');
     }
 }

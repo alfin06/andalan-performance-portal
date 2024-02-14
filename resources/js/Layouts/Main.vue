@@ -68,7 +68,7 @@ const props = defineProps({
                     <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-database"></i><span class="hide-menu">Master Data </span></a>
                         <ul aria-expanded="false" class="collapse">
                             <li><a href="movement">Movement List</a></li>
-                            <li><a href="client">Client List</a></li>
+                            <li><a :href="route('client.index')" class="waves-effect waves-dark">Client List</a></li>
                         </ul>
                     </li>
 

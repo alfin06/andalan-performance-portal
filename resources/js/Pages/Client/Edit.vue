@@ -8,17 +8,9 @@ import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
 const page = usePage();
-const users = computed(() => page.props.users);
-
-const form = useForm({
-                name: '',
-                email: '',
-                phone: '',
-                password: '',
-            });
 
 const props = defineProps({
-                users: {
+                client: {
                     type: Object,
                     default: () => ({}),
                 },
@@ -28,9 +20,24 @@ const props = defineProps({
                 },
             });
 
+//remove hours, minutes, and seconds
+var format_bdate = props.client.birth_date.split(" ");
+var format_sdate = props.client.start_date.split(" ");
+
+const form = useForm({
+                id: props.client.id,
+                name: props.client.name,
+                email: props.client.email,
+                phone: props.client.phone,
+                birth_date: format_bdate[0],
+                program: props.client.program,
+                goal: props.client.goal,
+                start_date: format_sdate[0],
+            });
+
 const submit = () => {
-    form.post(route("users.store"));
-    toast.success('User added!');
+    form.put(route("client.update", props.client.id));
+    toast.success('Client updated succesfully!');
 };
 </script>
 
@@ -38,19 +45,19 @@ const submit = () => {
 </style>
 
 <template>
-    <Head title="User" />
+    <Head title="Client" />
     <Layout>
         <div class="page-wrapper" id="page">
             <div class="container-fluid">
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">User</h3>
+                        <h3 class="text-themecolor">Edit Client</h3>
                     </div>
                     <div class="col-md-7 align-self-center">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a :href="route('home')">Home</a></li>
-                            <li class="breadcrumb-item"><a :href="route('users.index')">Users</a></li>
-                            <li class="breadcrumb-item active">User</li>
+                            <li class="breadcrumb-item"><a :href="route('client.index')">Clients</a></li>
+                            <li class="breadcrumb-item active">Client</li>
                         </ol>
                     </div>
                 </div>
@@ -63,13 +70,24 @@ const submit = () => {
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="name" class="control-label">Name</label>
+                                                    <label for="name" class="control-label">Full Name</label>
                                                     <input type="text" v-model="form.name" name="name" class="form-control" placeholder="Name" />
                                                     <div v-if="form.errors.name" class="text-sm text-red-600">
                                                         {{ form.errors.name }}
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="goal" class="control-label">Birth Date</label>
+                                                    <input type="date" v-model="form.birth_date" name="birth_date" class="form-control" placeholder="mm/dd/yyyy" />
+                                                    <div v-if="form.errors.birth_date" class="text-sm text-red-600">
+                                                        {{ form.errors.birth_date }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row p-t-20">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="email" class="control-label">Email</label>
@@ -79,23 +97,43 @@ const submit = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row p-t-20">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="phone" class="control-label">Phone</label>
-                                                    <input type="text" v-model="form.phone" name="phone" class="form-control" placeholder="628xxxxxxxx" />
+                                                    <input type="text" v-model="form.phone" name="phone" class="form-control" placeholder="Phone" />
                                                     <div v-if="form.errors.phone" class="text-sm text-red-600">
                                                         {{ form.errors.phone }}
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row p-t-20">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="password" class="control-label">Password</label>
-                                                    <input type="password" v-model="form.password" name="password" class="form-control" placeholder="Password" />
-                                                    <div v-if="form.errors.password" class="text-sm text-red-600">
-                                                        {{ form.errors.password }}
+                                                    <label for="program" class="control-label">Program</label>
+                                                    <input type="text" v-model="form.program" name="program" class="form-control" placeholder="Program" />
+                                                    <div v-if="form.errors.program" class="text-sm text-red-600">
+                                                        {{ form.errors.program }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="goal" class="control-label">Goal</label>
+                                                    <input type="text" v-model="form.goal" name="goal" class="form-control" placeholder="Goal" />
+                                                    <div v-if="form.errors.goal" class="text-sm text-red-600">
+                                                        {{ form.errors.goal }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row p-t-20">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="start_date" class="control-label">Start Date</label>
+                                                    <input type="date" v-model="form.start_date" name="start_date" class="form-control" placeholder="mm/dd/yy" />
+                                                    <div v-if="form.errors.start_date" class="text-sm text-red-600">
+                                                        {{ form.errors.start_date }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -106,7 +144,7 @@ const submit = () => {
                                                     <i class="fa fa-check"></i> Submit
                                                 </button>
                                                 &nbsp;
-                                                <a :href="route('users.index')" class="btn btn-inverse"><i class="fa fa-times"></i> Cancel</a>
+                                                <a :href="route('client.index')" class="btn btn-inverse"><i class="fa fa-times"></i> Cancel</a>
                                             </div>
                                         </div>
                                     </div>

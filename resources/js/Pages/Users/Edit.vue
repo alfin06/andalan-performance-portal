@@ -106,7 +106,7 @@ const changePassword = () => {
                                                     <i class="fa fa-check"></i> Submit
                                                 </button>
                                                 &nbsp;
-                                                <Link :href="route('users.index')" class="btn btn-inverse"><i class="fa fa-times"></i> Cancel</Link>
+                                                <a :href="route('users.index')" class="btn btn-inverse"><i class="fa fa-times"></i> Cancel</a>
                                             </div>
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@ const changePassword = () => {
                                     </div>
                                     <div class="row p-t-20">
                                         <div class="col-md-12">
-                                            <button type="submit" class="btn btn-info" :disabled="form2.processing" :class="{ 'opacity-25': form2.processing }">
+                                            <button type="submit" class="btn btn-danger" :disabled="form2.processing" :class="{ 'opacity-25': form2.processing }">
                                                 <i class="fa fa-lock"></i> Change Password
                                             </button>
                                         </div>

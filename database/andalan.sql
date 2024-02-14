@@ -19,6 +19,26 @@
 CREATE DATABASE IF NOT EXISTS `andalan` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `andalan`;
 
+-- Dumping structure for table andalan.clients
+CREATE TABLE IF NOT EXISTS `clients` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `client_id` varchar(10) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `phone` varchar(25) DEFAULT NULL,
+  `program` varchar(255) NOT NULL,
+  `start_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `goal` varchar(255) NOT NULL,
+  `birth_date` timestamp NULL DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table andalan.clients: ~1 rows (approximately)
+
 -- Dumping structure for table andalan.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -85,17 +105,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `last_login` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ADMIN',
+  `phone` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table andalan.users: ~1 rows (approximately)
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `last_login`, `password`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'Admin', 'finicodedigital@gmail.com', NULL, NULL, '$2y$10$i9OIews9c1p7vJKkefEUxOMyhc95ajjPWzDHHJCychZKjxp7TR3Ci', 'SUPERADMIN', NULL, NULL, NULL);
+-- Dumping data for table andalan.users: ~4 rows (approximately)
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `last_login`, `password`, `role`, `phone`, `remember_token`, `created_at`, `updated_at`) VALUES
+	(1, 'Finicode', 'finicodedigital@gmail.com', NULL, '2024-02-13 23:02:04', '$2y$10$UU9kucaD6b.7JP7SpsNMZ.7KKUrTaNVzVYYhns5uZmrguu7NtqkQe', 'SUPERADMIN', '', NULL, NULL, '2024-02-13 23:02:04'),
+	(8, 'Test User', 'test@gmail.com', NULL, '2024-02-13 01:49:46', '$2y$10$Q718w3dYN8NV2ECd6AOIuuPrP9aNb.IgIBbsqGXO/tuaiON0IFsrG', 'ADMIN', '12345678', NULL, '2024-02-08 01:32:13', '2024-02-13 01:49:46'),
+	(21, 'Test2', 'test1@test1.com', NULL, NULL, '$2y$10$/R2SJ7.kYB3HVudvQ9B5reUB8nZ.hoKTamsyzBbf.N8SJy2wHw08y', 'ADMIN', '123456', NULL, '2024-02-13 00:48:40', '2024-02-13 00:48:40'),
+	(22, 'Nike', 'bstarz.66@gmail.com', NULL, NULL, '$2y$10$89LUATdDf8L4/D0uVR7bredkII6yZPBSzzMddD1/3xz2lhxt5a.7u', 'ADMIN', '1234', NULL, '2024-02-13 03:25:08', '2024-02-13 03:41:34');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
