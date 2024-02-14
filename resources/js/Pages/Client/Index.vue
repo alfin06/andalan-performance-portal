@@ -101,7 +101,7 @@ $(document).ready(function() {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr v-for="(item, index) in clients" :key="item.id">
+                                                    <tr v-for="(item, index) in clients" :key="item.id" :style="[item.is_active == 0 ? {'color':'red'}:{}]">
                                                         <td>{{ index+1 }}</td>
                                                         <td>{{item.name}}</td>
                                                         <td>{{item.program}}</td>

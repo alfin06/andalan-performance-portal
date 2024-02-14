@@ -16,6 +16,7 @@
     <link href="{{ asset('assets/plugins/c3-master/c3.min.css') }}" rel="stylesheet">
     <!-- page css -->
     <link href="{{ asset('css/pages/login-register-lock.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/switchery/dist/switchery.min.css') }}" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
@@ -61,6 +62,7 @@
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->
+    <script src="{{ asset('assets/plugins/switchery/dist/switchery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script>
     <script>
         function myFunction() {

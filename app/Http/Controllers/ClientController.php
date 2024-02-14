@@ -13,7 +13,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::where('is_active', 1)->get();
+        $clients = Client::all();
 
         return Inertia::render('Client/Index', [
             'clients' => $clients
@@ -82,6 +82,7 @@ class ClientController extends Controller
         $client->program = $request->program;
         $client->goal = $request->goal;
         $client->start_date = $request->start_date;
+        $client->is_active = $request->is_active;
         $client->updated_at = now();
         $client->save();
         sleep(1);

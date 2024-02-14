@@ -33,12 +33,22 @@ const form = useForm({
                 program: props.client.program,
                 goal: props.client.goal,
                 start_date: format_sdate[0],
+                is_active: props.client.is_active,
             });
 
 const submit = () => {
     form.put(route("client.update", props.client.id));
     toast.success('Client updated succesfully!');
 };
+</script>
+<script>
+jQuery(document).ready(function() {
+    // Switchery
+    var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+    $('.js-switch').each(function() {
+        new Switchery($(this)[0], $(this).data());
+    });
+});
 </script>
 
 <style>
@@ -135,6 +145,12 @@ const submit = () => {
                                                     <div v-if="form.errors.start_date" class="text-sm text-red-600">
                                                         {{ form.errors.start_date }}
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="active" class="control-label">Is account active? </label><br/>
+                                                    <input type="checkbox" v-model="form.is_active" value="1" true-value="1" false-value="0" name="active" class="js-switch form-control" data-color="#26c6da" />
                                                 </div>
                                             </div>
                                         </div>
