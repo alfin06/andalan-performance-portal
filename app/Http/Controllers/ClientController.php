@@ -31,9 +31,6 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'program' => 'required',
-            'goal' => 'required',
-            'start_date' => 'required',
         ]);
 
         $client = new Client();
@@ -70,9 +67,6 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'program' => 'required',
-            'goal' => 'required',
-            'start_date' => 'required',
         ]);
 
         $client->name = $request->name;
