@@ -57,7 +57,7 @@ function auth() {
     <div className="parent">
         <div className="row my-5">
             <div className="col-md-6 mx-auto">
-                <div v-if="failed" class="text-white bg-danger p-2 rounded my-2">{{ failed }}</div>
+                <div v-if="failed" class="text-white bg-danger p-2 rounded my-2 text-center">{{ failed }}</div>
                 <div className="card">
                     <div className="card-header">
                         <div className="text-center mt-2">
@@ -89,7 +89,7 @@ function auth() {
                             <div class="form-group">
                                 <button
                                     type="submit" 
-                                    className="btn btn-info">
+                                    className="btn btn-info btn-block">
                                     Login
                                 </button>
                             </div>
