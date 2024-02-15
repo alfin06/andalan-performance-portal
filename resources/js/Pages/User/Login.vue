@@ -87,9 +87,7 @@ function auth() {
                                 <div v-if="form.errors.password" class="text-white bg-danger p-2 rounded my-2">{{ form.errors.password }}</div>
                             </div>
                             <div class="form-group">
-                                <button
-                                    type="submit" 
-                                    className="btn btn-info btn-block">
+                                <button type="submit" class="btn btn-info btn-block" :disabled="form.processing" :class="{ 'opacity-25': form.processing }" >
                                     Login
                                 </button>
                             </div>
