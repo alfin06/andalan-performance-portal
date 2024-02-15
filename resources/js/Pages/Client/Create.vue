@@ -11,6 +11,12 @@ const page = usePage();
 
 const form = useForm({
                 name: '',
+                email: '',
+                phone: '',
+                program: '',
+                start_date: '',
+                goal: '',
+                birth_date: '',
             });
 
 const props = defineProps({
@@ -21,8 +27,8 @@ const props = defineProps({
             });
 
 const submit = () => {
-    form.post(route("movement.store"));
-    toast.success('Movement added successfully!');
+    form.post(route("client.store"));
+    toast.success('Client added successfully!');
 };
 </script>
 
@@ -30,19 +36,19 @@ const submit = () => {
 </style>
 
 <template>
-    <Head title="Movement" />
+    <Head title="Client" />
     <Layout>
         <div class="page-wrapper" id="page">
             <div class="container-fluid">
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">Movement</h3>
+                        <h3 class="text-themecolor">Client</h3>
                     </div>
                     <div class="col-md-7 align-self-center">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a :href="route('home')">Home</a></li>
-                            <li class="breadcrumb-item"><a :href="route('movement.index')">Movement</a></li>
-                            <li class="breadcrumb-item active">Movement</li>
+                            <li class="breadcrumb-item"><a :href="route('client.index')">Clients</a></li>
+                            <li class="breadcrumb-item active">Client</li>
                         </ol>
                     </div>
                 </div>
@@ -62,7 +68,7 @@ const submit = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-6">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="goal" class="control-label">Birth Date</label>
                                                     <input type="date" v-model="form.birth_date" name="birth_date" class="form-control" placeholder="mm/dd/yyyy" />
@@ -70,9 +76,9 @@ const submit = () => {
                                                         {{ form.errors.birth_date }}
                                                     </div>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                         </div>
-                                        <!-- <div class="row p-t-20">
+                                        <div class="row p-t-20">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="email" class="control-label">Email</label>
@@ -122,14 +128,14 @@ const submit = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> -->
+                                        </div>
                                         <div class="row p-t-20">
                                             <div class="col-md-12">
                                                 <button type="submit" class="btn btn-info" :disabled="form.processing" :class="{ 'opacity-25': form.processing }">
                                                     <i class="fa fa-check"></i> Submit
                                                 </button>
                                                 &nbsp;
-                                                <a :href="route('movement.index')" class="btn btn-inverse"><i class="fa fa-times"></i> Cancel</a>
+                                                <a :href="route('client.index')" class="btn btn-inverse"><i class="fa fa-times"></i> Cancel</a>
                                             </div>
                                         </div>
                                     </div>
