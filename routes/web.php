@@ -7,6 +7,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\MovementController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -64,23 +65,6 @@ Route::middleware('auth')->group(function() {
     ]);
     Route::put('users/changePassword/{id}', [UserController::class, 'changePassword'])->name('users.password');
 });
-
-Route::middleware('auth')->group(function() {
-    Route::get('/client/profile', function() {
-        return Inertia::render('Profile');
-    })->name('client.profile');
-    Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
-    
-});
-
-Route::middleware('auth')->group(function() {
-    Route::get('/movement', function() {
-        return Inertia::render('Movement');
-    })->name('movement');
-    Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
-    
-});
-
 
 
 Route::middleware('guest')->group(function() {

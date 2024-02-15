@@ -35,6 +35,7 @@ class MovementController extends Controller
 
         $movement = new Movement();
         $movement->name = $request->name;
+        $movement->categories = implode(" ", $request->categories);
      
         $movement->save();
         sleep(1);

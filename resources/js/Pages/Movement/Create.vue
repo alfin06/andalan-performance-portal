@@ -11,6 +11,7 @@ const page = usePage();
 
 const form = useForm({
                 name: '',
+                categories: [],
             });
 
 const props = defineProps({
@@ -55,22 +56,35 @@ const submit = () => {
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="name" class="control-label">Full Name</label>
+                                                    <label for="name" class="control-label">Movement Name</label>
                                                     <input type="text" v-model="form.name" name="name" class="form-control" placeholder="Name" />
                                                     <div v-if="form.errors.name" class="text-sm text-red-600">
                                                         {{ form.errors.name }}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-6">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="goal" class="control-label">Birth Date</label>
-                                                    <input type="date" v-model="form.birth_date" name="birth_date" class="form-control" placeholder="mm/dd/yyyy" />
-                                                    <div v-if="form.errors.birth_date" class="text-sm text-red-600">
-                                                        {{ form.errors.birth_date }}
+                                                    <div class="demo-checkbox">
+                                    <input type="checkbox" id="md_checkbox_21" class="filled-in chk-col-red" v-model="form.categories" value="cardio" />
+                                    <label for="md_checkbox_21">Cardio</label>
+                                    <input type="checkbox" id="md_checkbox_22" class="filled-in chk-col-blue-grey" v-model="form.categories" value="power" />
+                                    <label for="md_checkbox_22">Power</label>
+                                    <input type="checkbox" id="md_checkbox_23" class="filled-in chk-col-purple" v-model="form.categories" value="hamstring"  />
+                                    <label for="md_checkbox_23">Hamstring</label>
+                                    <input type="checkbox" id="md_checkbox_24" class="filled-in chk-col-brown" v-model="form.categories" value="push"  />
+                                    <label for="md_checkbox_24">Push</label>
+                                    <input type="checkbox" id="md_checkbox_25" class="filled-in chk-col-indigo" v-model="form.categories" value="pull"  />
+                                    <label for="md_checkbox_25">Pull</label>
+                                    <input type="checkbox" id="md_checkbox_26" class="filled-in chk-col-amber" v-model="form.categories" value="hinge"  />
+                                    <label for="md_checkbox_26">Hinge</label>
+                                    <input type="checkbox" id="md_checkbox_27" class="filled-in chk-col-light-blue" v-model="form.categories" value="squat"  />
+                                    <label for="md_checkbox_27">Squat</label>
                                                     </div>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                         </div>
                                         <!-- <div class="row p-t-20">
                                             <div class="col-md-6">

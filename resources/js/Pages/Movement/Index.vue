@@ -3,7 +3,7 @@ import { useForm, Link, usePage, Head } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
 import { computed } from 'vue';
 import Layout from '../../Layouts/Main';
-import Footer from '../../Layouts/Footer';
+// import Footer from '../../Layouts/Footer';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
@@ -125,7 +125,7 @@ $(document).ready(function() {
                     </div>
                 </div>
             </div>
-            <Footer></Footer>
+            <!-- <Footer></Footer> -->
         </div>
     </Layout>
 </template>
