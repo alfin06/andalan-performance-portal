@@ -68,20 +68,20 @@ const submit = () => {
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="demo-checkbox">
-                                    <input type="checkbox" id="md_checkbox_21" class="filled-in chk-col-red" v-model="form.categories" value="cardio" />
-                                    <label for="md_checkbox_21">Cardio</label>
-                                    <input type="checkbox" id="md_checkbox_22" class="filled-in chk-col-blue-grey" v-model="form.categories" value="power" />
-                                    <label for="md_checkbox_22">Power</label>
-                                    <input type="checkbox" id="md_checkbox_23" class="filled-in chk-col-purple" v-model="form.categories" value="hamstring"  />
-                                    <label for="md_checkbox_23">Hamstring</label>
-                                    <input type="checkbox" id="md_checkbox_24" class="filled-in chk-col-brown" v-model="form.categories" value="push"  />
-                                    <label for="md_checkbox_24">Push</label>
-                                    <input type="checkbox" id="md_checkbox_25" class="filled-in chk-col-indigo" v-model="form.categories" value="pull"  />
-                                    <label for="md_checkbox_25">Pull</label>
-                                    <input type="checkbox" id="md_checkbox_26" class="filled-in chk-col-amber" v-model="form.categories" value="hinge"  />
-                                    <label for="md_checkbox_26">Hinge</label>
-                                    <input type="checkbox" id="md_checkbox_27" class="filled-in chk-col-light-blue" v-model="form.categories" value="squat"  />
-                                    <label for="md_checkbox_27">Squat</label>
+                                                        <input type="checkbox" id="md_checkbox_21" class="filled-in chk-col-red" v-model="form.categories" value="cardio" />
+                                                        <label for="md_checkbox_21">Cardio</label>
+                                                        <input type="checkbox" id="md_checkbox_22" class="filled-in chk-col-blue-grey" v-model="form.categories" value="power" />
+                                                        <label for="md_checkbox_22">Power</label>
+                                                        <input type="checkbox" id="md_checkbox_23" class="filled-in chk-col-purple" v-model="form.categories" value="hamstring"  />
+                                                        <label for="md_checkbox_23">Hamstring</label>
+                                                        <input type="checkbox" id="md_checkbox_24" class="filled-in chk-col-brown" v-model="form.categories" value="push"  />
+                                                        <label for="md_checkbox_24">Push</label>
+                                                        <input type="checkbox" id="md_checkbox_25" class="filled-in chk-col-indigo" v-model="form.categories" value="pull"  />
+                                                        <label for="md_checkbox_25">Pull</label>
+                                                        <input type="checkbox" id="md_checkbox_26" class="filled-in chk-col-amber" v-model="form.categories" value="hinge"  />
+                                                        <label for="md_checkbox_26">Hinge</label>
+                                                        <input type="checkbox" id="md_checkbox_27" class="filled-in chk-col-light-blue" v-model="form.categories" value="squat"  />
+                                                        <label for="md_checkbox_27">Squat</label>
                                                     </div>
                                                 </div>
                                             </div>

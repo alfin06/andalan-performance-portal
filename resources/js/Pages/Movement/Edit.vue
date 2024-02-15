@@ -10,7 +10,7 @@ import 'vue3-toastify/dist/index.css';
 const page = usePage();
 
 const props = defineProps({
-                client: {
+                movement: {
                     type: Object,
                     default: () => ({}),
                 },
@@ -27,6 +27,7 @@ const props = defineProps({
 const form = useForm({
                 id: props.movement.id,
                 name: props.movement.name,
+                categories: props.movement.categories,
                 // email: props.client.email,
                 // phone: props.client.phone,
                 // birth_date: format_bdate[0],
@@ -87,73 +88,37 @@ jQuery(document).ready(function() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="goal" class="control-label">Birth Date</label>
-                                                    <input type="date" v-model="form.birth_date" name="birth_date" class="form-control" placeholder="mm/dd/yyyy" />
-                                                    <div v-if="form.errors.birth_date" class="text-sm text-red-600">
-                                                        {{ form.errors.birth_date }}
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                                        </div>
-                                        <!-- <div class="row p-t-20">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="email" class="control-label">Email</label>
-                                                    <input type="text" v-model="form.email" name="email" class="form-control" placeholder="Email" />
-                                                    <div v-if="form.errors.email" class="text-sm text-red-600">
-                                                        {{ form.errors.email }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="phone" class="control-label">Phone</label>
-                                                    <input type="text" v-model="form.phone" name="phone" class="form-control" placeholder="Phone" />
-                                                    <div v-if="form.errors.phone" class="text-sm text-red-600">
-                                                        {{ form.errors.phone }}
-                                                    </div>
+                                                    <label for="categories" class="control-label"> Category</label>
+                                                    <input type="text" v-model="form.categories" name="categories" class="form-control" placeholder="Category" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row p-t-20">
-                                            <div class="col-md-6">
+                                        
+                                        <div class="row">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label for="program" class="control-label">Program</label>
-                                                    <input type="text" v-model="form.program" name="program" class="form-control" placeholder="Program" />
-                                                    <div v-if="form.errors.program" class="text-sm text-red-600">
-                                                        {{ form.errors.program }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="goal" class="control-label">Goal</label>
-                                                    <input type="text" v-model="form.goal" name="goal" class="form-control" placeholder="Goal" />
-                                                    <div v-if="form.errors.goal" class="text-sm text-red-600">
-                                                        {{ form.errors.goal }}
+                                                    <div class="demo-checkbox">
+                                                        <input type="checkbox" id="md_checkbox_21" class="filled-in chk-col-red" v-model="form.categories" value="cardio" />
+                                                        <label for="md_checkbox_21">Cardio</label>
+                                                        <input type="checkbox" id="md_checkbox_22" class="filled-in chk-col-blue-grey" v-model="form.categories" value="power" />
+                                                        <label for="md_checkbox_22">Power</label>
+                                                        <input type="checkbox" id="md_checkbox_23" class="filled-in chk-col-purple" v-model="form.categories" value="hamstring"  />
+                                                        <label for="md_checkbox_23">Hamstring</label>
+                                                        <input type="checkbox" id="md_checkbox_24" class="filled-in chk-col-brown" v-model="form.categories" value="push"  />
+                                                        <label for="md_checkbox_24">Push</label>
+                                                        <input type="checkbox" id="md_checkbox_25" class="filled-in chk-col-indigo" v-model="form.categories" value="pull"  />
+                                                        <label for="md_checkbox_25">Pull</label>
+                                                        <input type="checkbox" id="md_checkbox_26" class="filled-in chk-col-amber" v-model="form.categories" value="hinge"  />
+                                                        <label for="md_checkbox_26">Hinge</label>
+                                                        <input type="checkbox" id="md_checkbox_27" class="filled-in chk-col-light-blue" v-model="form.categories" value="squat"  />
+                                                        <label for="md_checkbox_27">Squat</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row p-t-20">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="start_date" class="control-label">Start Date</label>
-                                                    <input type="date" v-model="form.start_date" name="start_date" class="form-control" placeholder="mm/dd/yy" />
-                                                    <div v-if="form.errors.start_date" class="text-sm text-red-600">
-                                                        {{ form.errors.start_date }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="active" class="control-label">Is account active? </label><br/>
-                                                    <input type="checkbox" v-model="form.is_active" value="1" true-value="1" false-value="0" name="active" class="js-switch form-control" data-color="#26c6da" />
-                                                </div>
-                                            </div>
-                                        </div> -->
+                                       
                                         <div class="row p-t-20">
                                             <div class="col-md-12">
                                                 <button type="submit" class="btn btn-info" :disabled="form.processing" :class="{ 'opacity-25': form.processing }">
