@@ -41,6 +41,16 @@ Route::middleware('auth')->group(function() {
         'destroy' => 'client.destroy',
     ]);
 
+    Route::resource('movement', MovementController::class)->names([
+        'index'   => 'movement.index',
+        'store'   => 'movement.store',
+        'update'  => 'movement.update',
+        'create'  => 'movement.create',
+        'edit'    => 'movement.edit',
+        'destroy' => 'movement.destroy',
+    ]);
+
+
     /**********************/
     /* SUPERADMIN ACCESS  */
     /**********************/

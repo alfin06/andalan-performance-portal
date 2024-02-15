@@ -9,21 +9,46 @@ import 'vue3-toastify/dist/index.css';
 
 const page = usePage();
 
-const form = useForm({
-                name: '',
-            });
-
 const props = defineProps({
+                client: {
+                    type: Object,
+                    default: () => ({}),
+                },
                 failed: {
                     type: String,
                     required: false
                 },
             });
 
+//remove hours, minutes, and seconds
+// var format_bdate = props.client.birth_date.split(" ");
+// var format_sdate = props.client.start_date.split(" ");
+
+const form = useForm({
+                id: props.movement.id,
+                name: props.movement.name,
+                // email: props.client.email,
+                // phone: props.client.phone,
+                // birth_date: format_bdate[0],
+                // program: props.client.program,
+                // goal: props.client.goal,
+                // start_date: format_sdate[0],
+                // is_active: props.client.is_active,
+            });
+
 const submit = () => {
-    form.post(route("movement.store"));
-    toast.success('Movement added successfully!');
+    form.put(route("movement.update", props.movement.id));
+    toast.success('Movement updated succesfully!');
 };
+</script>
+<script>
+jQuery(document).ready(function() {
+    // Switchery
+    var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+    $('.js-switch').each(function() {
+        new Switchery($(this)[0], $(this).data());
+    });
+});
 </script>
 
 <style>
@@ -36,7 +61,7 @@ const submit = () => {
             <div class="container-fluid">
                 <div class="row page-titles">
                     <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">Movement</h3>
+                        <h3 class="text-themecolor">Edit Movement</h3>
                     </div>
                     <div class="col-md-7 align-self-center">
                         <ol class="breadcrumb">
@@ -50,7 +75,7 @@ const submit = () => {
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form @submit.prevent="submit" class="form-material">
+                                <form @submit.prevent="submit" class="form-material m-t-40">
                                     <div class="form-body">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -120,6 +145,12 @@ const submit = () => {
                                                     <div v-if="form.errors.start_date" class="text-sm text-red-600">
                                                         {{ form.errors.start_date }}
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="active" class="control-label">Is account active? </label><br/>
+                                                    <input type="checkbox" v-model="form.is_active" value="1" true-value="1" false-value="0" name="active" class="js-switch form-control" data-color="#26c6da" />
                                                 </div>
                                             </div>
                                         </div> -->

@@ -1,7 +1,12 @@
 <script setup>
 import {ref} from 'vue';
-import Layout from '../Layouts/Main'
+import { useForm, router, usePage, Head } from "@inertiajs/vue3";
+import Layout from '../Layouts/Main';
+import Footer from '../../Layouts/Footer';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
 
+const page = usePage();
 </script>
 
 <template>
