@@ -72,7 +72,28 @@ jQuery(document).ready(function() {
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card"> 
+                            <img class="card-img" src="/assets/images/background/bg.jpg" alt="Card image">
+                            <div class="card-img-overlay card-inverse social-profile d-flex ">
+                                <div class="align-self-center"> 
+                                    <h4 class="card-title">Start Date:</h4>
+                                    <h6 class="card-subtitle">{{ form.start_date }}</h6>
+                                    <h4 class="card-title">Program:</h4>
+                                    <h6 class="card-subtitle">{{ form.program }}</h6>
+                                    <h4 class="card-title">Goal:</h4>
+                                    <h6 class="card-subtitle">{{ form.goal }}</h6>
+                                    <div class="p-t-20">
+                                        <VButton @click="open">
+                                          Open Modal
+                                        </VButton>
+                                        <!-- <button class="btn btn-warning" @click="open"><i class="fa fa-pencil"></i> Change</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
                         <div class="card">
                             <div class="card-body">
                                 <form @submit.prevent="submit" class="form-material m-t-40">
@@ -118,35 +139,6 @@ jQuery(document).ready(function() {
                                             </div>
                                         </div>
                                         <div class="row p-t-20">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="program" class="control-label">Program</label>
-                                                    <input type="text" v-model="form.program" name="program" class="form-control" placeholder="Program" />
-                                                    <div v-if="form.errors.program" class="text-sm text-red-600">
-                                                        {{ form.errors.program }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="goal" class="control-label">Goal</label>
-                                                    <input type="text" v-model="form.goal" name="goal" class="form-control" placeholder="Goal" />
-                                                    <div v-if="form.errors.goal" class="text-sm text-red-600">
-                                                        {{ form.errors.goal }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row p-t-20">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="start_date" class="control-label">Start Date</label>
-                                                    <input type="date" v-model="form.start_date" name="start_date" class="form-control" placeholder="mm/dd/yy" />
-                                                    <div v-if="form.errors.start_date" class="text-sm text-red-600">
-                                                        {{ form.errors.start_date }}
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="active" class="control-label">Is account active? </label><br/>

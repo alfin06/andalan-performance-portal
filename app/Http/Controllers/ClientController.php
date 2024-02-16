@@ -13,7 +13,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::all();
+        $clients = Client::where('is_active', 1)->orderBy('name', 'asc')->get();
 
         return Inertia::render('Client/Index', [
             'clients' => $clients
@@ -31,6 +31,9 @@ class ClientController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'program' => 'required',
+            'goal' => 'required',
+            'start_date' => 'required',
         ]);
 
         $client = new Client();
@@ -73,9 +76,6 @@ class ClientController extends Controller
         $client->email = $request->email;
         $client->phone = $request->phone;
         $client->birth_date = $request->birth_date;
-        $client->program = $request->program;
-        $client->goal = $request->goal;
-        $client->start_date = $request->start_date;
         $client->is_active = $request->is_active;
         $client->updated_at = now();
         $client->save();

@@ -7,6 +7,15 @@ import Footer from '../../Layouts/Footer';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
+$(document).ready(function() {
+    $('#example23').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'csv', 'excel', 'pdf', 'print'
+        ]
+    }); 
+});
+
 const page = usePage();
 const clients = computed(() => page.props.clients);
 
@@ -34,16 +43,6 @@ function destroy(id) {
         toast.success('Client deleted successfully!');
     }
 }
-</script>
-<script>
-$(document).ready(function() {
-    $('#example23').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'csv', 'excel', 'pdf', 'print'
-        ]
-    });
-});
 </script>
 
 <style>
@@ -88,40 +87,25 @@ $(document).ready(function() {
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="table-responsive">
+                                        <div class="table-responsive text-nowrap">
                                             <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>No.</th>
+                                                        <th>Action</th>
                                                         <th>Full Name</th>
                                                         <th>Program</th>
-                                                        <th>Start Date</th>
-                                                        <th>Goal</th>
-                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="(item, index) in clients" :key="item.id" :style="[item.is_active == 0 ? {'color':'red'}:{}]">
-                                                        <td>{{ index+1 }}</td>
+                                                        <td width="1%">
+                                                            <Link :href="route('client.edit', item.id)" class="btn btn-sm btn-icon btn-pure btn-outline text-info" data-original-title="Edit"><i class="ti-pencil" aria-hidden="true"></i></Link>
+                                                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn text-danger" data-toggle="tooltip" data-original-title="Delete" @click="destroy(item.id)"><i class="ti-trash" aria-hidden="true"></i></button>
+                                                        </td>
                                                         <td>{{item.name}}</td>
                                                         <td>{{item.program}}</td>
-                                                        <td>{{(item.start_date.split(" "))[0]}}</td>
-                                                        <td>{{item.goal}}</td>
-                                                        <td>
-                                                            <Link :href="route('client.edit', item.id)" class="btn btn-sm btn-icon btn-pure btn-outline" data-original-title="Edit"><i class="ti-pencil" aria-hidden="true"></i></Link>
-                                                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete" @click="destroy(item.id)"><i class="ti-close" aria-hidden="true"></i></button>
-                                                        </td>
                                                     </tr>
                                                 </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="7">
-                                                            <div class="text-right">
-                                                                <ul class="pagination"> </ul>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
                                             </table>
                                         </div>
                                     </div>

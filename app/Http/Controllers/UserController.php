@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function index() {
-        $users = User::where('role', 'ADMIN')->get();
+        $users = User::where('role', 'ADMIN')->orderBy('name', 'asc')->get();
 
         return Inertia::render('Users/Index', [
             'users' => $users
