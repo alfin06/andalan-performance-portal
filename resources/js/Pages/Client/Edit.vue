@@ -84,10 +84,7 @@ jQuery(document).ready(function() {
                                     <h4 class="card-title">Goal:</h4>
                                     <h6 class="card-subtitle">{{ form.goal }}</h6>
                                     <div class="p-t-20">
-                                        <VButton @click="open">
-                                          Open Modal
-                                        </VButton>
-                                        <!-- <button class="btn btn-warning" @click="open"><i class="fa fa-pencil"></i> Change</button> -->
+                                        <button class="btn btn-warning" @click="open"><i class="fa fa-pencil"></i> Change</button> -->
                                     </div>
                                 </div>
                             </div>
