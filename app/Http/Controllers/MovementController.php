@@ -13,7 +13,7 @@ class MovementController extends Controller
 {
     public function index()
     {
-        $movements = Movement::all();
+        $movements = Movement::orderBy('name')->get();
 
         return Inertia::render('Movement/Index', [
             'movements' => $movements

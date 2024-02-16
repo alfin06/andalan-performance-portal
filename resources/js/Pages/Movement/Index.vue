@@ -92,30 +92,19 @@ $(document).ready(function() {
                                             <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>No.</th>
-                                                        <th>Full Name</th>
                                                         <th>Action</th>
+                                                        <th>Full Name</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="(item, index) in clients" :key="item.id" :style="[item.is_active == 0 ? {'color':'red'}:{}]">
-                                                        <td>{{ index+1 }}</td>
-                                                        <td>{{item.name}}</td>
-                                                        <td>
-                                                            <Link :href="route('movement.edit', item.id)" class="btn btn-sm btn-icon btn-pure btn-outline" data-original-title="Edit"><i class="ti-pencil" aria-hidden="true"></i></Link>
-                                                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete" @click="destroy(item.id)"><i class="ti-close" aria-hidden="true"></i></button>
+                                                        <td width="1%">
+                                                            <Link :href="route('movement.edit', item.id)" class="btn btn-sm btn-icon btn-pure btn-outline text-info" data-original-title="Edit"><i class="ti-pencil" aria-hidden="true"></i></Link>
+                                                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn text-danger" data-toggle="tooltip" data-original-title="Delete" @click="destroy(item.id)"><i class="ti-trash" aria-hidden="true"></i></button>
                                                         </td>
+                                                        <td>{{item.name}}</td>
                                                     </tr>
                                                 </tbody>
-                                                <tfoot>
-                                                    <tr>
-                                                        <td colspan="7">
-                                                            <div class="text-right">
-                                                                <ul class="pagination"> </ul>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tfoot>
                                             </table>
                                         </div>
                                     </div>

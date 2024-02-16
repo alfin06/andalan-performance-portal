@@ -25,9 +25,6 @@ Route::middleware('auth')->group(function() {
     Route::get('/', function() {
         return Inertia::render('Home');
     })->name('home');
-    Route::get('/home', function() {
-        return Inertia::render('Home');
-    })->name('home');
     Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('user/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('user/profile', [AuthController::class, 'updateProfile'])->name('profile');

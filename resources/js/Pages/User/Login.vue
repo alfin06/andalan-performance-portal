@@ -26,7 +26,7 @@ function auth() {
     // simulate AJAX
     setTimeout(() => {
         loader.hide()
-    }, 3000);
+    }, 4500);
     router.post('login', form);
 }
 </script>
