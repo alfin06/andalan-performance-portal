@@ -23,11 +23,12 @@ const props = defineProps({
 //remove hours, minutes, and seconds
 // var format_bdate = props.client.birth_date.split(" ");
 // var format_sdate = props.client.start_date.split(" ");
+var categories_array = props.movement.categories.split(" ");
 
 const form = useForm({
                 id: props.movement.id,
                 name: props.movement.name,
-                categories: props.movement.categories,
+                categories: categories_array,
                 // email: props.client.email,
                 // phone: props.client.phone,
                 // birth_date: format_bdate[0],

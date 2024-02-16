@@ -66,6 +66,7 @@ class MovementController extends Controller
         ]);
 
         $movement->name = $request->movement;
+        $movement->categories = '';//$request->categories;
       
         $movement->updated_at = now();
         $movement->save();
