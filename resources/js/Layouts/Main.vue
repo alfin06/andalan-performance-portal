@@ -65,14 +65,9 @@ const props = defineProps({
             <nav class="sidebar-nav">
                 <ul id="sidebarnav">
                     <li> <a class="waves-effect waves-dark" :href="route('home')" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard </span></a></li>
-                    <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-database"></i><span class="hide-menu">Master Data </span></a>
-                        <ul aria-expanded="false" class="collapse">
-                            <li><a href="movement">Movement List</a></li>
-                            <li><a :href="route('client.index')" class="waves-effect waves-dark">Client List</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-devider" v-if="user.role === 'SUPERADMIN'"></li>
+                    <li> <a class="waves-effect waves-dark" :href="route('movement.index')" aria-expanded="false"><i class="mdi mdi-fire"></i><span class="hide-menu">Movement </span></a></li>
+                    <li> <a class="waves-effect waves-dark" :href="route('client.index')" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Client </span></a></li>
+  <li class="nav-devider" v-if="user.role === 'SUPERADMIN'"></li>
                     <li class="nav-small-cap"  v-if="user.role === 'SUPERADMIN'">Superadmin Access Only</li>
                     <li><a class="waves-effect waves-dark" :href="route('users.index')" aria-expanded="false" v-if="user.role === 'SUPERADMIN'"><i class="mdi mdi-account"></i><span class="hide-menu">Users </span></a></li>
                 </ul>
