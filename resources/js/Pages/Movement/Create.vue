@@ -22,6 +22,7 @@ const props = defineProps({
             });
 
 const submit = () => {
+    //console.log(form.categories);
     form.post(route("movement.store"));
     toast.success('Movement added successfully!');
 };

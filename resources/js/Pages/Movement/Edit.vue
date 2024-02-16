@@ -39,7 +39,8 @@ const form = useForm({
             });
 
 const submit = () => {
-    form.put(route("movement.update", props.movement.id));
+    //console.log(form.categories);
+  form.put(route("movement.update", props.movement.id));
     toast.success('Movement updated succesfully!');
 };
 </script>
@@ -82,17 +83,11 @@ jQuery(document).ready(function() {
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="name" class="control-label">Full Name</label>
+                                                    <label for="name" class="control-label">Movement Name</label>
                                                     <input type="text" v-model="form.name" name="name" class="form-control" placeholder="Name" />
                                                     <div v-if="form.errors.name" class="text-sm text-red-600">
                                                         {{ form.errors.name }}
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="categories" class="control-label"> Category</label>
-                                                    <input type="text" v-model="form.categories" name="categories" class="form-control" placeholder="Category" />
                                                 </div>
                                             </div>
                                         </div>

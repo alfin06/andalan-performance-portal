@@ -65,9 +65,8 @@ class MovementController extends Controller
             'name' => 'required',
         ]);
 
-        $movement->name = $request->movement;
-        $movement->categories = '';//$request->categories;
-      
+        $movement->name = $request->name;
+        $movement->categories = implode(" ", $request->categories);
         $movement->updated_at = now();
         $movement->save();
         sleep(1);
