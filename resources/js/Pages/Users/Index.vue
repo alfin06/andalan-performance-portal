@@ -94,7 +94,6 @@ function destroy(id) {
                                                         <th>Action</th>
                                                         <th>Name</th>
                                                         <th>Role</th>
-                                                        
                                                     </tr>
                                                 </thead>
                                                 <tbody>

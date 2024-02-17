@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\MovementController;
+use App\Http\Controllers\TrainingController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -22,9 +23,12 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 Route::middleware('auth')->group(function() {
-    Route::get('/', function() {
-        return Inertia::render('Home');
-    })->name('home');
+    Route::get('/', [TrainingController::class, 'home'])->name('home');
+    
+    /* Training */
+    Route::get('training/{id}/index/', [TrainingController::class, 'index'])->name('training.index');
+   
+    /* Account */
     Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('user/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('user/profile', [AuthController::class, 'updateProfile'])->name('profile');
@@ -39,6 +43,7 @@ Route::middleware('auth')->group(function() {
         'destroy' => 'client.destroy',
     ]);
 
+    /* Movement List */
     Route::resource('movement', MovementController::class)->names([
         'index'   => 'movement.index',
         'store'   => 'movement.store',

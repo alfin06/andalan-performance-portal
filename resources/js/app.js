@@ -8,7 +8,7 @@ import {LoadingPlugin} from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 
 createInertiaApp({
-    title: title => '${title} | Andalan Performance',
+    title: title => 'Andalan Performance Web Portal',
     // Vite
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })

@@ -69,7 +69,7 @@ const props = defineProps({
                     <li> <a class="waves-effect waves-dark" :href="route('client.index')" aria-expanded="false"><i class="mdi mdi-account-multiple"></i><span class="hide-menu">Client </span></a></li>
   <li class="nav-devider" v-if="user.role === 'SUPERADMIN'"></li>
                     <li class="nav-small-cap"  v-if="user.role === 'SUPERADMIN'">Superadmin Access Only</li>
-                    <li><a class="waves-effect waves-dark" :href="route('users.index')" aria-expanded="false" v-if="user.role === 'SUPERADMIN'"><i class="mdi mdi-account"></i><span class="hide-menu">Users </span></a></li>
+                    <li><a class="waves-effect waves-dark" :href="route('users.index')" aria-expanded="false" v-if="user.role === 'SUPERADMIN'"><i class="mdi mdi-account"></i><span class="hide-menu">User </span></a></li>
                 </ul>
             </nav>
         </div>

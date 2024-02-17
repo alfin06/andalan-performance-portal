@@ -27,7 +27,7 @@ const form = useForm({
             });
 
 const props = defineProps({
-                users: {
+                clients: {
                     type: Object,
                     default: () => ({}),
                 },
