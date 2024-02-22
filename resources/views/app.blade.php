@@ -19,6 +19,8 @@
     <link href="{{ asset('assets/plugins/switchery/dist/switchery.min.css') }}" rel="stylesheet" />
     <!-- Custom CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!-- Multiselect -->
+    <link href="{{ asset('assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- The replacement of @vite('resources/js/app.js') -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -45,7 +47,8 @@
     <!-- ============================================================== -->
     <!-- This page plugins -->
     <!-- ============================================================== -->
-    
+    <!-- Multiselect -->
+    <script type="text/javascript" src="{{ asset('assets/plugins/select2/dist/js/select2.full.min.js') }}"></script>
     <!--c3 JavaScript -->
     <script src="{{ asset('assets/plugins/d3/d3.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/c3-master/c3.min.js') }}"></script>

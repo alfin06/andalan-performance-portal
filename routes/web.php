@@ -27,6 +27,9 @@ Route::middleware('auth')->group(function() {
     
     /* Training */
     Route::get('training/{id}/index/', [TrainingController::class, 'index'])->name('training.index');
+    Route::post('training/addTab/', [TrainingController::class, 'addTab'])->name('training.addTab');
+    Route::get('training/{tab_id}/notes/', [TrainingController::class, 'notes'])->name('training.notes');
+    Route::post('training/updateNotes/', [TrainingController::class, 'updateNotes'])->name('training.updateNotes');
    
     /* Account */
     Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');

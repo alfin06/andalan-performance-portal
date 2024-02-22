@@ -1,58 +1,139 @@
 <script setup>
 import { useForm, Link, usePage, Head } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import Layout from '../../Layouts/Main';
 import Footer from '../../Layouts/Footer';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 
 const page = usePage();
-
 const props = defineProps({
-                client: {
-                    type: Object,
-                    default: () => ({}),
-                },
-                tabs: {
-                    type: Object,
-                    default: () => ({}),
-                },
-                data: {
-                    type: Object,
-                    default: () => ({}),
-                },
-            });
+    client: {
+        type: Object,
+        default: () => ({}),
+    },
+    tabs: {
+        type: Object,
+        default: () => ({}),
+    },
+    data: {
+        type: Object,
+        default: () => ({}),
+    },
+});
 
 //remove hours, minutes, and seconds
 var format_bdate = props.client.birth_date.split(" ");
 var format_sdate = props.client.start_date.split(" ");
 var name = props.client.name;
 var program = props.client.program;
+const today_date = new Date().toISOString().slice(0,10);
 
-const form = useForm({
-                id: props.client.id,
-                name: props.client.name,
-                email: props.client.email,
-                phone: props.client.phone,
-                birth_date: format_bdate[0],
-                program: props.client.program,
-                goal: props.client.goal,
-                start_date: format_sdate[0],
-                is_active: props.client.is_active,
-            });
+// TAB Head Section
+const tab = useForm({
+    client_id: props.client.id,
+    name: 'asd',
+    date: today_date,
+});
+const submitTab = () => {
+    tab.post(route("training.addTab"));
+    toast.success('Tab added succesfully!');
+    tab.reset();
+    $('#myModalTab').modal('hide');
+};
 
-const submit = () => {
-    form.put(route("client.update", props.client.id));
-    toast.success('Client updated succesfully!');
+// NOTE Section
+// Note button clicked -> save the tab id
+const note = useForm({
+    tab_notes: '',
+    tab_id: '',
+    tab_client_id: ''
+});
+const showNotes = (tab) => {
+    $('#myModalNote').modal('show');
+
+    note.tab_notes = tab.tab_notes;
+    note.tab_id = tab.id;
+    note.tab_client_id = tab.client_id;
+};
+const updateNotes = () => {
+    note.post(route("training.updateNotes"));
+    toast.success('Notes updated succesfully!');
+    $('#myModalNote').modal('hide');
+};
+
+// MOVEMENT Section
+const tab_name = ref("");
+const mov = useForm({
+    date: today_date,
+});
+const showMovement = (tab) => {
+    tab_name.value = tab.tab_name;
+    $('#movementModal').modal('show');
 };
 </script>
 <script>
+function FormatDate(myDate) {
+    const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    let date = myDate.getDate();
+    let month = myDate.getMonth() + 1;
+    let year = myDate.getFullYear();
+    let day = myDate.getDay();
+
+    return weekday[day] + ", " + date + "/" + month + "/" + year;
+}
+
+function FormatInputDate(myDate) {
+    let date = myDate.getDate();
+    let month = myDate.getMonth() + 1;
+    let year = myDate.getFullYear();
+
+    return '02' + "/" + '22' + "/" + '2024';
+}
+
 jQuery(document).ready(function() {
+
     // Switchery
     var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
     $('.js-switch').each(function() {
         new Switchery($(this)[0], $(this).data());
+    });
+
+    // For multiselect
+    $(".select2").select2();
+    $(".ajax").select2({
+        ajax: {
+            url: "https://api.github.com/search/repositories",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    q: params.term, // search term
+                    page: params.page
+                };
+            },
+            processResults: function(data, params) {
+                // parse the results into the format expected by Select2
+                // since we are using custom formatting functions we do not need to
+                // alter the remote JSON data, except to indicate that infinite
+                // scrolling can be used
+                params.page = params.page || 1;
+                return {
+                    results: data.items,
+                    pagination: {
+                        more: (params.page * 30) < data.total_count
+                    }
+                };
+            },
+            cache: true
+        },
+        escapeMarkup: function(markup) {
+            return markup;
+        }, // let our custom formatter work
+        minimumInputLength: 1,
+        templateResult: formatRepo, // omitted for brevity, see the source of this page
+        templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
     });
 });
 </script>
@@ -65,124 +146,135 @@ jQuery(document).ready(function() {
     <Layout>
         <div class="page-wrapper" id="page">
             <div class="container-fluid">
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document" style="max-width:1000px;">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Add Daily Movement (Week 1)</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group col-3">
-                                    <label>Date</label>
-                                    <input type="date" class="form-control" > </div>
-                                <form class="row">
-                                    <div class="form-group col-4">
-                                        <label>Category</label>
-                                        <select class="custom-select form-control pull-right">
-                                            <option selected="">Pick Category</option>
-                                            <option value="1">Hinge</option>
-                                            <option value="2">Power</option>
-                                            <option value="3">Pull</option>
-                                            <option value="4">Push</option>
-                                            <option value="5">Cardio</option>
-                                            <option value="5">Squat</option>
-                                            <option value="6">Hamstring</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-4">
-                                        <label>Movement Plan</label>
-                                        <select class="custom-select form-control pull-right">
-                                            <option selected="">Pick Movement</option>
-                                            <option value="1">Assisted Pull Up ( 5 sets)</option>
-                                            <option value="2">Line Jump | Lateral <span>( 5 sets)</span></option>
-                                            <option value="3">Line Jump | Sagital <span>( 0 sets)</span></option>
-                                            <option value="4">FEE Split Squat <span>( 0 sets)</span></option>
-                                            <option value="5">Reverse Plank <span>( 0 sets)</span></option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-2">
-                                        <label>Status</label>
-                                        <select class="custom-select form-control pull-right">
-                                            <option selected="">Good</option>
-                                            <option value="1">Medium</option>
-                                            <option value="2">Bad</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6" >
-                                        <label>Details</label> <br />
-                                        <input type="text" class="form-control" placeholder="Sets" style="width:80px;margin-right:10px;">
-                                        <input type="text" class="form-control" placeholder="T." style="width:80px;margin-right:10px;">
-                                        <input type="text" class="form-control" placeholder="Wt." style="width:80px;margin-right:10px;">
-                                        <input type="text" class="form-control" placeholder="Rest" style="width:80px;margin-right:10px;">
-                                    </div>
-                                    <div class="col-6" >
-                                        <label>Reps Achieved</label> <br />
-                                        <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                        <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                        <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                        <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                        <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                        <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                    </div>
-                                </form>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-success" data-dismiss="modal">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal fade" id="myModalWeek" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Add Tab</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-                            </div>
-                            <div class="modal-body">
-                              
-                                <form class="row">
-                                    <div class="form-group col-8">
-                                        <input type="text" class="form-control" placeholder="Tab Name" > </div>
-                                </form>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-success" data-dismiss="modal">Add</button>
+                <form @submit.prevent="submitMovement" class="form-material">
+                    <div class="modal fade" id="movementModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document" style="max-width:1000px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Daily Movement: {{ tab_name }}</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group col-3">
+                                        <label>Date</label>
+                                        <input type="date" v-model="mov.date" class="form-control" > </div>
+                                    <form class="row">
+                                        <div class="form-group col-4">
+                                            <label>Category</label>
+                                            <select class="select2 m-b-10 select2-multiple custom-select form-control" style="width: 100%" multiple="multiple" data-placeholder="Choose" v-model="mov.category">
+                                                <option value="1">Hinge</option>
+                                                <option value="2">Power</option>
+                                                <option value="3">Pull</option>
+                                                <option value="4">Push</option>
+                                                <option value="5">Cardio</option>
+                                                <option value="5">Squat</option>
+                                                <option value="6">Hamstring</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <label>Movement Plan</label>
+                                            <select class="custom-select form-control pull-right">
+                                                <option selected="">Pick Movement</option>
+                                                <option value="1">Assisted Pull Up ( 5 sets)</option>
+                                                <option value="2">Line Jump | Lateral <span>( 5 sets)</span></option>
+                                                <option value="3">Line Jump | Sagital <span>( 0 sets)</span></option>
+                                                <option value="4">FEE Split Squat <span>( 0 sets)</span></option>
+                                                <option value="5">Reverse Plank <span>( 0 sets)</span></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-2">
+                                            <label>Status</label>
+                                            <select class="custom-select form-control pull-right">
+                                                <option selected="">Good</option>
+                                                <option value="1">Medium</option>
+                                                <option value="2">Bad</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-6" >
+                                            <label>Details</label> <br />
+                                            <input type="text" class="form-control" placeholder="Sets" style="width:80px;margin-right:10px;">
+                                            <input type="text" class="form-control" placeholder="T." style="width:80px;margin-right:10px;">
+                                            <input type="text" class="form-control" placeholder="Wt." style="width:80px;margin-right:10px;">
+                                            <input type="text" class="form-control" placeholder="Rest" style="width:80px;margin-right:10px;">
+                                        </div>
+                                        <div class="col-6" >
+                                            <label>Reps Achieved</label> <br />
+                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-success" data-dismiss="modal">Add</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
-                <div class="modal fade" id="myModalNote" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Add Notes </h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-                            </div>
-                            <div class="modal-body">
-                              
-                                <form class="row">
-                                    <div class="form-group col-4">
-                                        <h6 class="card-subtitle">Date : 23/03/2024</h6><br />
-                                        <textarea name="notes_date23032024" rows="4" cols="50" placeholder="Type Notes Here..."></textarea>
-                                    </div>
-                                </form>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-success" data-dismiss="modal">Add</button>
+                <form @submit.prevent="submitTab" class="form-material">
+                    <div class="modal fade" id="myModalTab" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Tab</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="row">
+                                        <div class="form-group col-12">
+                                            <input type="text" v-model="tab.name" class="form-control" placeholder="Tab Name" > 
+                                            <div v-if="tab.errors.name" class="text-sm text-red-600">
+                                                {{ tab.errors.name }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <input type="date" id="tab_date" v-model="tab.date" class="form-control" placeholder="mm/dd/yyyy"> 
+                                            <div v-if="tab.errors.date" class="text-sm text-red-600">
+                                                {{ tab.errors.date }}
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-info" :disabled="tab.processing" :class="{ 'opacity-25': tab.processing }"><i class="ti ti-plus"></i> Add</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
+
+                <form id="form" @submit.prevent="updateNotes" class="form-material">
+                    <div class="modal fade" id="myModalNote" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Notes </h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="row">
+                                        <div class="form-group col-12">
+                                            <textarea name="tab_notes" id="tab_notes" v-model="note.tab_notes" rows="4" cols="50" class="form-control" placeholder="Type Notes Here..."></textarea>
+                                            <input type="hidden" name="tab_id" v-model="note.tab_id" id="tab_id" />
+                                            <input type="hidden" name="tab_client_id" v-model="note.tab_client_id" id="tab_client_id" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-info"><i class="ti ti-check"></i> Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
 
                 <div class="row page-titles">
                     <div class="col-lg-12">
@@ -191,7 +283,7 @@ jQuery(document).ready(function() {
                                 <div class="d-flex no-block">
                                     <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="/assets/images/icon/staff.png" alt="Income" /></div>
                                     <div class="align-self-center">
-                                        <h6 class="text-muted m-t-10 m-b-0"><strong>Start Date:</strong> {{ format_sdate[0] }}</h6>
+                                        <h6 class="text-muted m-t-10 m-b-0"><strong>Start Date:</strong> {{ FormatDate(new Date(format_sdate[0])) }}</h6>
                                         <h2 class="m-t-0">{{ name }}</h2> <h6 class="text-muted m-t-10 m-b-0"><strong>Program:</strong> {{ program }}</h6>
                                     </div> 
                                 </div>
@@ -212,7 +304,7 @@ jQuery(document).ready(function() {
                                         </a>
                                     </li>
                                     <li class="nav-item"> 
-                                        <a class="nav-link" data-toggle="modal" href="#week3" data-target="#myModalWeek">
+                                        <a class="nav-link" data-toggle="modal" href="#week3" data-target="#myModalTab">
                                             <span class="hidden-sm-up"><i class="ti-plus"></i></span> 
                                             <span class="hidden-xs-down"><i class="ti-plus"></i></span>
                                         </a> 
@@ -221,19 +313,16 @@ jQuery(document).ready(function() {
                                 <!-- Tab panes -->
                                 <div class="tab-content tabcontent-border">
                                     <div class="tab-pane p-20" v-for="(tab, index) in tabs" :key="tab.id" :id="tab.id" role="tabpanel">
-                                        <div class="d-flex m-t-20">
-                                            <div></div>
-                                            <div class="ml-auto">
-                                                <button class="pull-right btn btn-success" data-toggle="modal" data-target="#myModal">Add Movement Plan <i class="ti-plus"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex m-t-20">
-                                            <div>
-                                                <h4 class="card-title"><span class="lstick"></span>{{ tab.tab_date }}</h4>
+                                        <div class="d-flex m-t-20 row">
+                                            <div class="col-md-6">
+                                                <h4 class="card-title"><span class="lstick"></span>{{ FormatDate(new Date((tab.tab_date.split(" "))[0])) }}</h4>
                                                 <h6 class="card-subtitle">Notes: {{ tab.tab_notes }}</h6>
                                             </div>
-                                            <div class="ml-auto">
-                                                <button class="pull-right btn btn-rounded btn-primary" data-toggle="modal" data-target="#myModalNote">Add Notes <i class="ti-plus"></i></button>
+                                            <div class="col-md-6 ml-auto">
+                                                <button class="pull-right btn btn-success btn-rounded" id="movementBtn" @click.prevent="showMovement(tab)" data-toggle="modal" data-target="#movementModal">Add Movement Plan <i class="ti-plus"></i></button>
+                                                <button class="pull-right btn btn-rounded btn-primary" id="noteButton" @click.prevent="showNotes(tab)">Notes <i class="ti-pencil"></i></button>
+                                                <!-- <button class="pull-right btn btn-rounded btn-primary" id="noteButton" data-toggle="modal" @click.prevent="updateNotes(tab)" :data-id="tab.id" data-target="#myModalNote">Notes <i class="ti-pencil"></i></button> -->
+                                                <!-- <Link :href="route('training.notes', tab.id)" class="pull-right btn btn-rounded btn-primary" data-original-title="Edit">Notes <i class="ti-pencil"></i></Link> -->
                                             </div>
                                         </div>
                                         <div class="table-responsive m-t-20">
@@ -250,76 +339,41 @@ jQuery(document).ready(function() {
                                                         <th></th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Reverse Plank  </td>
-                                                        <td><span class="label label-success label-rounded">Good</span></td>
-                                                        <td>1</td>
-                                                        <td>20</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>60"</td>
-                                                        <td class="display:flex;"><button class="btn btn-success btn-sm btn-rounded" data-toggle="modal" data-target="#myModal"><i class="ti-plus"></i> Subs</button>
-                                                            <button class="btn btn-info btn-sm btn-rounded" data-toggle="modal" data-target="#myModal"><i class="ti-pencil"></i> Edit</button>
+                                                <tbody v-for="(x, index) in data" :key="data.id">
+                                                    <tr data-toggle="collapse" :data-target="'#sub'+data.id" class="accordion-toggle">
+                                                        <td><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
+                                                        <td>
+                                                            <span class="label label-success label-rounded" v-if="x.status == 'Good'">{{x.status}}</span>
+                                                            <span class="label label-danger label-rounded" v-if="x.status == 'Bad'">{{x.status}}</span>
                                                         </td>
-                                                    </tr>
-                                                    <tr  data-toggle="collapse" data-target="#sub1" class="accordion-toggle">
-                                                        <td><span class="label label-primary">subs</span> Broad Jump Continuous </td>
-                                                        <td><span class="label label-success label-rounded">Good</span></td>
-                                                        <td>1</td>
-                                                        <td>20</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>60"</td>
+                                                        <td>{{ x.sets }}</td>
+                                                        <td>{{ x.t }}</td>
+                                                        <td>{{ x.wt }}</td>
+                                                        <td>{{ x.rest }}</td>
+                                                        <td>{{ x.reps_achieved }}</td>
                                                         <td class="display:flex;">
-                                                            <button class="btn btn-info btn-sm btn-rounded" data-toggle="modal" data-target="#myModal"><i class="ti-pencil"></i> Edit</button>
+                                                            <button class="btn btn-success btn-sm btn-rounded" v-if="x.subs!='Y'" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Subs</button>
+                                                            <button class="btn btn-info btn-sm btn-rounded" data-toggle="modal" data-target="#movementModal"><i class="ti-pencil"></i> Edit</button>
                                                         </td>
                                                     </tr>
-
-                                                    <tr>
+                                                    <tr v-if="data.subs=='Y'">
                                                         <td colspan="8" class="hiddenRow">
-                                                           <div class="accordian-body collapse" id="sub1"> 
+                                                           <div class="accordian-body collapse" :id="'sub'+data.id"> 
                                                             <table>
                                                                 <tr>
-                                                                    <td>Barbell Chest Supported Row </td>
-                                                                    <td><span class="label label-danger label-rounded">Bad</span></td>
-                                                                    <td>1</td>
-                                                                    <td>20</td>
-                                                                    <td>-</td>
-                                                                    <td>-</td>
-                                                                    <td>60"</td>
+                                                                    <td>{{ x.movement_name }} </td>
+                                                                    <td><span class="label label-danger label-rounded">{{ x.status }}</span></td>
+                                                                    <td>{{ x.sets }}</td>
+                                                                    <td>{{ x.t }}</td>
+                                                                    <td>{{ x.wt }}</td>
+                                                                    <td>{{ x.rest }}</td>
+                                                                    <td>{{ x.reps_achieved }}</td>
                                                                     <td class="display:flex;">
-                                                                        <button class="btn btn-info btn-sm btn-rounded" data-toggle="modal" data-target="#myModal"><i class="ti-pencil"></i> Edit</button>
+                                                                        <button class="btn btn-info btn-sm btn-rounded" data-toggle="modal" data-target="#movementModal"><i class="ti-pencil"></i> Edit</button>
                                                                     </td>
                                                                 </tr>
                                                             </table>
                                                             </div>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td><span class="label label-primary">subs</span> Cable Half Kneeling Row </td>
-                                                        <td><span class="label label-danger label-rounded">Bad</span></td>
-                                                        <td>1</td>
-                                                        <td>20</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>60"</td>
-                                                        <td class="display:flex;">
-                                                            <button class="btn btn-info btn-sm btn-rounded" data-toggle="modal" data-target="#myModal"><i class="ti-pencil"></i> Edit</button>
-                                                        </td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td><span class="label label-primary">subs</span> Cable Half Kneeling Row </td>
-                                                        <td><span class="label label-danger label-rounded">Bad</span></td>
-                                                        <td>1</td>
-                                                        <td>20</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>60"</td>
-                                                        <td class="display:flex;">
-                                                            <button class="btn btn-info btn-sm btn-rounded" data-toggle="modal" data-target="#myModal"><i class="ti-pencil"></i> Edit</button>
                                                         </td>
                                                     </tr>
                                                 </tbody>
