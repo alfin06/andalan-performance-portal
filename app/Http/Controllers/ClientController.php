@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Client;
 use App\Models\User;
 use Inertia\Inertia;
@@ -80,6 +81,24 @@ class ClientController extends Controller
         $client->updated_at = now();
         $client->save();
         sleep(1);
+
+        return redirect()->route('client.index')->with('message', 'Client updated successfully');
+    }
+
+    public function updateProgram(Request $request)
+    {
+        $request->validate([
+            'program' => 'required',
+        ]);
+
+        $client = Client::where('id', $request->id)
+        ->first();
+        $client->program = $request->program;
+        $client->updated_at = now();
+        $client->save();
+        sleep(1);
+
+        DB::insert('insert into program_history (client_id, program, updated_at, updated_by) values (?, ?, ?, ?)', [$request->id, $request->program,now(), Auth::id()]);
 
         return redirect()->route('client.index')->with('message', 'Client updated successfully');
     }

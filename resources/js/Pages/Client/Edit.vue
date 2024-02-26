@@ -40,6 +40,20 @@ const submit = () => {
     form.put(route("client.update", props.client.id));
     toast.success('Client updated succesfully!');
 };
+
+const showProgram = (form) => {
+    //toast.success('Program updated succesfully!');
+  //  tab_name.value = tab.tab_name;
+    $('#programModal').modal('show');
+};
+
+const updateProgram = () => {
+ //   note.post(route("training.updateNotes"));
+ //   toast.success('Notes updated succesfully!');
+    form.post(route("client.updateProgram"));
+    $('#programModal').modal('hide');
+    toast.success('Program updated succesfully!');
+};
 </script>
 <script>
 jQuery(document).ready(function() {
@@ -71,6 +85,35 @@ jQuery(document).ready(function() {
                         </ol>
                     </div>
                 </div>
+               
+                <form id="form" @submit.prevent="updateProgram" class="form-material">
+                    <div class="modal fade" id="programModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Change Program </h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="row">
+                                        <div class="form-group col-12">
+                                            <input type="text" v-model="form.program" name="program" class="form-control" placeholder="Progran" />
+                                                    <div v-if="form.errors.program" class="text-sm text-red-600">
+                                                        {{ form.errors.program }}
+                                                    </div>
+                                            <input type="hidden" name="client_id" v-model="form.id" id="client_id" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-info"><i class="ti ti-check"></i> Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+             
                 <div class="row">
                     <div class="col-lg-4 col-xlg-3 col-md-5">
                         <div class="card"> 
@@ -84,7 +127,7 @@ jQuery(document).ready(function() {
                                     <h4 class="card-title">Goal:</h4>
                                     <h6 class="card-subtitle">{{ form.goal }}</h6>
                                     <div class="p-t-20">
-                                        <button class="btn btn-warning" @click="open"><i class="fa fa-pencil"></i> Change</button> -->
+                                        <button class="btn btn-warning"  @click.prevent="showProgram(form)" data-toggle="modal" data-target="#programModal"><i class="fa fa-pencil"></i> Change</button> 
                                     </div>
                                 </div>
                             </div>

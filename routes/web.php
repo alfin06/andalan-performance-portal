@@ -44,8 +44,9 @@ Route::middleware('auth')->group(function() {
         'create'  => 'client.create',
         'edit'    => 'client.edit',
         'destroy' => 'client.destroy',
+        'updateProgram' =>'client.updateProgram',
     ]);
-
+    Route::post('client/updateProgram/', [ClientController::class, 'updateProgram'])->name('client.updateProgram');
     /* Movement List */
     Route::resource('movement', MovementController::class)->names([
         'index'   => 'movement.index',
