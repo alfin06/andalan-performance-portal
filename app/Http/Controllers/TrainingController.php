@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Training;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use App\Models\Client;
 use App\Models\Tab;
@@ -27,17 +29,26 @@ class TrainingController extends Controller
     {
         $client = Client::where('id', $client_id)->first();
         $tabs = Tab::where('client_id', $client_id)->get();
-        $data = Training::Join('movements', 'trainings.movement_id', '=', 'movements.id')
+        $data = Training::select('trainings.tab_id', 'trainings.movement_name', 'trainings.status', 'trainings.sets', 'trainings.t', 'trainings.wt', 'trainings.rest',
+                                 'trainings.subs', 'trainings.reps1', 'trainings.reps2', 'trainings.reps3', 'trainings.reps4',
+                                 'trainings.reps5', 'trainings.reps6',
+                                 'subs.tab_id AS sub_tab_id', 'subs.movement_name AS sub_mov_name', 'subs.status AS sub_status', 'subs.sets AS sub_sets', 'subs.t AS sub_t', 'subs.wt AS sub_wt', 'subs.rest AS sub_rest',
+                                 'subs.reps1 AS sub_reps1', 'subs.reps2 AS sub_reps2', 'subs.reps3 AS sub_reps3', 'subs.reps4 AS sub_reps4',
+                                 'subs.reps5 AS sub_reps5', 'subs.reps6 AS sub_reps6')
                     ->leftJoin('Subs', 'trainings.id', '=', 'subs.training_id')
                     ->where('trainings.client_id', '=', $client_id)
                     ->get();
+        $movement = Movement::all();
+        $mCategory = DB::table('master_category')->orderBy('category_name')->get();
         
         return Inertia::render(
             'Dashboard/Index',
             [
                 'client' => $client,
                 'tabs' => $tabs,
-                'data' => $data
+                'data' => $data,
+                'movement' => $movement,
+                'mcategory' => $mCategory
             ]
         );
     }
@@ -116,6 +127,33 @@ class TrainingController extends Controller
         $tab->updated_by = Auth::id();
         $tab->updated_at = now();
         $tab->save();
+        sleep(1);
+    }
+
+    public function addMovement(Request $request)
+    {
+        $movement_plan = explode("-", $request->movement);
+        $movement_id = $movement_plan[0];
+        $movement_name = $movement_plan[1];
+
+        $training = new Training();
+        $training->client_id = $request->tab_client_id;
+        $training->tab_id = $request->tab_id;
+        $training->movement_id = $movement_id;
+        $training->movement_name = $movement_name;
+        $training->status = $request->status;
+        $training->sets = $request->sets;
+        $training->t = $request->t;
+        $training->wt = $request->wt;
+        $training->rest = $request->rest;
+        $training->reps1 = $request->reps1;
+        $training->reps2 = $request->reps2;
+        $training->reps3 = $request->reps3;
+        $training->reps4 = $request->reps4;
+        $training->reps5 = $request->reps5;
+        $training->reps6 = $request->reps6;
+        $training->created_by = Auth::id();
+        $training->save();
         sleep(1);
     }
 }

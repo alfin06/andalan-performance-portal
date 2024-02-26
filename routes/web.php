@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\MovementController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -30,7 +31,11 @@ Route::middleware('auth')->group(function() {
     Route::post('training/addTab/', [TrainingController::class, 'addTab'])->name('training.addTab');
     Route::get('training/{tab_id}/notes/', [TrainingController::class, 'notes'])->name('training.notes');
     Route::post('training/updateNotes/', [TrainingController::class, 'updateNotes'])->name('training.updateNotes');
+    Route::post('training/addMovement/', [TrainingController::class, 'addMovement'])->name('training.addMovement');
    
+    /* Helper */
+    Route::post('training/{id}/mov', [AdminController::class, 'showMovement'])->name('mov');
+
     /* Account */
     Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('user/profile', [AuthController::class, 'profile'])->name('profile');
