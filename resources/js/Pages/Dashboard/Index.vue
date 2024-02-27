@@ -21,6 +21,14 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    movement: {
+        type: Object,
+        default: () => ({}),
+    },
+    mcategory: {
+        type: Object,
+        default: () => ({}),
+    },
 });
 
 //remove hours, minutes, and seconds
@@ -67,9 +75,52 @@ const updateNotes = () => {
 const tab_name = ref("");
 const mov = useForm({
     date: today_date,
+    category: [],
+    movement: '',
+    status: '',
+    sets: '',
+    t: '',
+    wt: '',
+    rest: '',
+    reps1: '',
+    reps2: '',
+    reps3: '',
+    reps4: '',
+    reps5: '',
+    reps6: '',
+    tab_id: '',
+    tab_client_id: '',
+    id: ''
 });
 const showMovement = (tab) => {
-    tab_name.value = tab.tab_name;
+    tab_name.value = "Add Daily Movement: " + tab.tab_name;
+    mov.tab_id = tab.id;
+    mov.tab_client_id = tab.client_id;
+    $('#movementModal').modal('show');
+};
+const submitMovement = () => {
+    mov.post(route("training.addMovement"));
+    toast.success('Daily movement added succesfully!');
+    $('#movementModal').modal('hide');
+};
+const editMovement = (tab, x) => {
+    tab_name.value = "Edit Daily Movement: " + tab.tab_name;
+    mov.tab_id = tab.id;
+    mov.tab_client_id = tab.client_id;
+    mov.id = x.id;
+    mov.date = new Date(x.date).toISOString().slice(0,10);
+    //mov.movement = x.movement_id + '-' + x.movement_name;
+    //mov.status = x.status;
+    mov.sets = x.sets;
+    mov.t = x.t;
+    mov.wt = x.wt;
+    mov.rest = x.rest;
+    mov.reps1 = x.reps1;
+    mov.reps2 = x.reps2;
+    mov.reps3 = x.reps3;
+    mov.mov.reps4 = x.reps4;
+    mov.reps5 = x.reps5;
+    mov.reps6 = x.reps6;
     $('#movementModal').modal('show');
 };
 </script>
@@ -84,15 +135,43 @@ function FormatDate(myDate) {
     return weekday[day] + ", " + date + "/" + month + "/" + year;
 }
 
-function FormatInputDate(myDate) {
-    let date = myDate.getDate();
-    let month = myDate.getMonth() + 1;
-    let year = myDate.getFullYear();
+$(document).ready(function() {
+    // Movement dropdown
+    $("#mov_category").change(function() {
+        // Selected country id
+        var category_id = $(this).val();
 
-    return '02' + "/" + '22' + "/" + '2024';
-}
+        // Empty movement plan
+        $('#mov_plan').find('option').remove()
 
-jQuery(document).ready(function() {
+        if(category_id != '') {
+            // Fetch movement plan options
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var ajaxurl = 'mov';
+            $.ajax({
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url : ajaxurl,
+                type: 'POST',
+                data: {categories:category_id},
+                dataType: 'json',
+                success:function(response) {
+                    var len = response.length;
+                    $("#mov_plan").append("<option value=''>Choose a movement</option");
+                    for(var i=0; i<len; i++) {
+                        var id = response[i]['id'];
+                        var name = response[i]['name'];
+                        $("#mov_plan").append("<option value='"+id+'-'+name+"'>"+name+"</option");
+                    }
+                }
+            });
+        }
+    });
 
     // Switchery
     var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
@@ -151,66 +230,68 @@ jQuery(document).ready(function() {
                         <div class="modal-dialog" role="document" style="max-width:1000px;">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Add Daily Movement: {{ tab_name }}</h4>
+                                    <h4 class="modal-title">{{ tab_name }}</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="form-group col-3">
+                                    <div class="form-group col-4">
                                         <label>Date</label>
-                                        <input type="date" v-model="mov.date" class="form-control" > </div>
+                                        <input type="date" v-model="mov.date" class="form-control" > 
+                                    </div>
                                     <form class="row">
                                         <div class="form-group col-4">
                                             <label>Category</label>
-                                            <select class="select2 m-b-10 select2-multiple custom-select form-control" style="width: 100%" multiple="multiple" data-placeholder="Choose" v-model="mov.category">
-                                                <option value="1">Hinge</option>
-                                                <option value="2">Power</option>
-                                                <option value="3">Pull</option>
-                                                <option value="4">Push</option>
-                                                <option value="5">Cardio</option>
-                                                <option value="5">Squat</option>
-                                                <option value="6">Hamstring</option>
+                                            <select class="select2 m-b-10 select2-multiple custom-select form-control" id="mov_category" style="width: 100%" multiple="multiple" v-model="mov.category" data-placeholder="Choose">
+                                                <option v-for="(mc, index) in mcategory" :key="mcategory.id" :value="mc.category_name">{{ mc.category_name }}</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-4">
                                             <label>Movement Plan</label>
-                                            <select class="custom-select form-control pull-right">
-                                                <option selected="">Pick Movement</option>
-                                                <option value="1">Assisted Pull Up ( 5 sets)</option>
-                                                <option value="2">Line Jump | Lateral <span>( 5 sets)</span></option>
-                                                <option value="3">Line Jump | Sagital <span>( 0 sets)</span></option>
-                                                <option value="4">FEE Split Squat <span>( 0 sets)</span></option>
-                                                <option value="5">Reverse Plank <span>( 0 sets)</span></option>
+                                            <select class="custom-select form-control pull-right" id="mov_plan" v-model="mov.movement">
+                                                <option value="">Choose a movement</option>
+                                                <option v-for="(mo, index) in movement" :key="movement.id" :value="mo.id+'-'+mo.name">{{ mo.name }}</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-2">
+                                        <div class="form-group col-3">
                                             <label>Status</label>
-                                            <select class="custom-select form-control pull-right">
-                                                <option selected="">Good</option>
-                                                <option value="1">Medium</option>
-                                                <option value="2">Bad</option>
-                                            </select>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <input type="radio" id="good" value="Good" class="form-control" v-model="mov.status" />
+                                                    <label for="good">Good</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input type="radio" id="medium" value="Medium" class="form-control" v-model="mov.status" />
+                                                    <label for="medium">Medium</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input type="radio" id="bad" value="Bad" class="form-control" v-model="mov.status" />
+                                                    <label for="bad">Bad</label>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-6" >
                                             <label>Details</label> <br />
-                                            <input type="text" class="form-control" placeholder="Sets" style="width:80px;margin-right:10px;">
-                                            <input type="text" class="form-control" placeholder="T." style="width:80px;margin-right:10px;">
-                                            <input type="text" class="form-control" placeholder="Wt." style="width:80px;margin-right:10px;">
-                                            <input type="text" class="form-control" placeholder="Rest" style="width:80px;margin-right:10px;">
+                                            <input type="text" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
+                                            <input type="text" class="form-control" placeholder="T." v-model="mov.t" style="width:80px;margin-right:10px;">
+                                            <input type="text" class="form-control" placeholder="Wt." v-model="mov.wt" style="width:80px;margin-right:10px;">
+                                            <input type="text" class="form-control" placeholder="Rest" v-model="mov.rest" style="width:80px;margin-right:10px;">
                                         </div>
                                         <div class="col-6" >
                                             <label>Reps Achieved</label> <br />
-                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
-                                            <input type="text" class="form-control"  style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control" v-model="mov.reps1" style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control" v-model="mov.reps2" style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control" v-model="mov.reps3" style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control" v-model="mov.reps4" style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control" v-model="mov.reps5" style="width:60px;margin-right:5px;">
+                                            <input type="text" class="form-control" v-model="mov.reps6" style="width:60px;margin-right:5px;">
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
+                                    <input type="hidden" name="tab_id" v-model="mov.tab_id" id="tab_id" />
+                                    <input type="hidden" name="tab_client_id" v-model="mov.tab_client_id" id="tab_client_id" />
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-success" data-dismiss="modal">Add</button>
+                                    <button type="submit" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-plus"></i> Add</button>
                                 </div>
                             </div>
                         </div>
@@ -321,8 +402,6 @@ jQuery(document).ready(function() {
                                             <div class="col-md-6 ml-auto">
                                                 <button class="pull-right btn btn-success btn-rounded" id="movementBtn" @click.prevent="showMovement(tab)" data-toggle="modal" data-target="#movementModal">Add Movement Plan <i class="ti-plus"></i></button>
                                                 <button class="pull-right btn btn-rounded btn-primary" id="noteButton" @click.prevent="showNotes(tab)">Notes <i class="ti-pencil"></i></button>
-                                                <!-- <button class="pull-right btn btn-rounded btn-primary" id="noteButton" data-toggle="modal" @click.prevent="updateNotes(tab)" :data-id="tab.id" data-target="#myModalNote">Notes <i class="ti-pencil"></i></button> -->
-                                                <!-- <Link :href="route('training.notes', tab.id)" class="pull-right btn btn-rounded btn-primary" data-original-title="Edit">Notes <i class="ti-pencil"></i></Link> -->
                                             </div>
                                         </div>
                                         <div class="table-responsive m-t-20">
@@ -340,7 +419,7 @@ jQuery(document).ready(function() {
                                                     </tr>
                                                 </thead>
                                                 <tbody v-for="(x, index) in data" :key="data.id">
-                                                    <tr data-toggle="collapse" :data-target="'#sub'+data.id" class="accordion-toggle">
+                                                    <tr data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id">
                                                         <td><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
                                                         <td>
                                                             <span class="label label-success label-rounded" v-if="x.status == 'Good'">{{x.status}}</span>
@@ -350,24 +429,24 @@ jQuery(document).ready(function() {
                                                         <td>{{ x.t }}</td>
                                                         <td>{{ x.wt }}</td>
                                                         <td>{{ x.rest }}</td>
-                                                        <td>{{ x.reps_achieved }}</td>
+                                                        <td>{{ x.reps1 + ' | ' + x.reps2 + ' | ' + x.reps3 + ' | ' + x.reps4 + ' | ' + x.reps5 + ' | ' + x.reps6 }}</td>
                                                         <td class="display:flex;">
                                                             <button class="btn btn-success btn-sm btn-rounded" v-if="x.subs!='Y'" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Subs</button>
-                                                            <button class="btn btn-info btn-sm btn-rounded" data-toggle="modal" data-target="#movementModal"><i class="ti-pencil"></i> Edit</button>
+                                                            <button class="btn btn-info btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="editMovement(tab, x)" data-toggle="modal" data-target="#movementModal"><i class="ti-pencil"></i> Edit</button>
                                                         </td>
                                                     </tr>
-                                                    <tr v-if="data.subs=='Y'">
+                                                    <tr v-if="x.subs=='Y' && x.tab_id == tab.id">
                                                         <td colspan="8" class="hiddenRow">
-                                                           <div class="accordian-body collapse" :id="'sub'+data.id"> 
+                                                           <div class="accordian-body collapse" :id="'sub'+index"> 
                                                             <table>
                                                                 <tr>
-                                                                    <td>{{ x.movement_name }} </td>
-                                                                    <td><span class="label label-danger label-rounded">{{ x.status }}</span></td>
-                                                                    <td>{{ x.sets }}</td>
-                                                                    <td>{{ x.t }}</td>
-                                                                    <td>{{ x.wt }}</td>
-                                                                    <td>{{ x.rest }}</td>
-                                                                    <td>{{ x.reps_achieved }}</td>
+                                                                    <td>{{ x.sub_mov_name }} </td>
+                                                                    <td><span class="label label-danger label-rounded">{{ x.sub_status }}</span></td>
+                                                                    <td>{{ x.sub_sets }}</td>
+                                                                    <td>{{ x.sub_t }}</td>
+                                                                    <td>{{ x.sub_wt }}</td>
+                                                                    <td>{{ x.sub_rest }}</td>
+                                                                    <td>{{ x.sub_reps1 + ' | ' + x.sub_reps2 + ' | ' + x.sub_reps3 + ' | ' + x.sub_reps4 + ' | ' + x.sub_reps5 + ' | ' + x.sub_reps6 }}</td>
                                                                     <td class="display:flex;">
                                                                         <button class="btn btn-info btn-sm btn-rounded" data-toggle="modal" data-target="#movementModal"><i class="ti-pencil"></i> Edit</button>
                                                                     </td>

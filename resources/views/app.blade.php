@@ -6,6 +6,7 @@
     <meta name="description" content="Andalan Performance Web Portal">
     <meta name="author" content="Finicode Dev Team">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/andalan-navlogo.png') }}">
