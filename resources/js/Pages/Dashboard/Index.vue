@@ -89,10 +89,11 @@ const mov = useForm({
     reps5: '',
     reps6: '',
     tab_id: '',
-    tab_client_id: ''
+    tab_client_id: '',
+    id: ''
 });
 const showMovement = (tab) => {
-    tab_name.value = tab.tab_name;
+    tab_name.value = "Add Daily Movement: " + tab.tab_name;
     mov.tab_id = tab.id;
     mov.tab_client_id = tab.client_id;
     $('#movementModal').modal('show');
@@ -103,9 +104,23 @@ const submitMovement = () => {
     $('#movementModal').modal('hide');
 };
 const editMovement = (tab, x) => {
-    tab_name.value = tab.tab_name;
+    tab_name.value = "Edit Daily Movement: " + tab.tab_name;
     mov.tab_id = tab.id;
     mov.tab_client_id = tab.client_id;
+    mov.id = x.id;
+    mov.date = new Date(x.date).toISOString().slice(0,10);
+    //mov.movement = x.movement_id + '-' + x.movement_name;
+    //mov.status = x.status;
+    mov.sets = x.sets;
+    mov.t = x.t;
+    mov.wt = x.wt;
+    mov.rest = x.rest;
+    mov.reps1 = x.reps1;
+    mov.reps2 = x.reps2;
+    mov.reps3 = x.reps3;
+    mov.mov.reps4 = x.reps4;
+    mov.reps5 = x.reps5;
+    mov.reps6 = x.reps6;
     $('#movementModal').modal('show');
 };
 </script>
@@ -147,7 +162,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 success:function(response) {
                     var len = response.length;
-                    $("#mov_plan").append("<option value=''>Please choose</option");
+                    $("#mov_plan").append("<option value=''>Choose a movement</option");
                     for(var i=0; i<len; i++) {
                         var id = response[i]['id'];
                         var name = response[i]['name'];
@@ -215,7 +230,7 @@ $(document).ready(function() {
                         <div class="modal-dialog" role="document" style="max-width:1000px;">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Add Daily Movement: {{ tab_name }}</h4>
+                                    <h4 class="modal-title">{{ tab_name }}</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
@@ -232,7 +247,9 @@ $(document).ready(function() {
                                         </div>
                                         <div class="form-group col-4">
                                             <label>Movement Plan</label>
-                                            <select class="custom-select form-control pull-right" id="mov_plan" v-model="mov.movement" data-placeholder="Choose a movement">
+                                            <select class="custom-select form-control pull-right" id="mov_plan" v-model="mov.movement">
+                                                <option value="">Choose a movement</option>
+                                                <option v-for="(mo, index) in movement" :key="movement.id" :value="mo.id+'-'+mo.name">{{ mo.name }}</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-3">

@@ -137,6 +137,7 @@ class TrainingController extends Controller
         $movement_name = $movement_plan[1];
 
         $training = new Training();
+        $training->date = $request->date;
         $training->client_id = $request->tab_client_id;
         $training->tab_id = $request->tab_id;
         $training->movement_id = $movement_id;
