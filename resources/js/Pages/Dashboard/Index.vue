@@ -41,8 +41,7 @@ const today_date = new Date().toISOString().slice(0,10);
 // TAB Head Section
 const tab = useForm({
     client_id: props.client.id,
-    name: 'asd',
-    date: today_date,
+    name: '',
 });
 const submitTab = () => {
     tab.post(route("training.addTab"));
@@ -314,12 +313,6 @@ $(document).ready(function() {
                                                 {{ tab.errors.name }}
                                             </div>
                                         </div>
-                                        <div class="form-group col-12">
-                                            <input type="date" id="tab_date" v-model="tab.date" class="form-control" placeholder="mm/dd/yyyy"> 
-                                            <div v-if="tab.errors.date" class="text-sm text-red-600">
-                                                {{ tab.errors.date }}
-                                            </div>
-                                        </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -394,9 +387,12 @@ $(document).ready(function() {
                                 <!-- Tab panes -->
                                 <div class="tab-content tabcontent-border">
                                     <div class="tab-pane p-20" v-for="(tab, index) in tabs" :key="tab.id" :id="tab.id" role="tabpanel">
+                                        <div>
+                                            
+                                        </div>
                                         <div class="d-flex m-t-20 row">
                                             <div class="col-md-6">
-                                                <h4 class="card-title"><span class="lstick"></span>{{ FormatDate(new Date((tab.tab_date.split(" "))[0])) }}</h4>
+                                                <h4 class="card-title"><span class="lstick"></span>Date</h4>
                                                 <h6 class="card-subtitle">Notes: {{ tab.tab_notes }}</h6>
                                             </div>
                                             <div class="col-md-6 ml-auto">

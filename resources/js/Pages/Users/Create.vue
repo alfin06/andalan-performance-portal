@@ -30,7 +30,15 @@ const props = defineProps({
 
 const submit = () => {
     form.post(route("users.store"));
-    toast.success('User added!');
+    if(!form.errors)
+    {
+        toast.success('User added successfully!');
+    }
+    else 
+    {
+        toast.failed('User added failed!');
+    }
+    
 };
 </script>
 

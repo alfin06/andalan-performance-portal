@@ -40,6 +40,7 @@ class TrainingController extends Controller
                     ->get();
         $movement = Movement::all();
         $mCategory = DB::table('master_category')->orderBy('category_name')->get();
+        $head_training = DB::table('head_training')->orderBy('head_date')->get();
         
         return Inertia::render(
             'Dashboard/Index',
@@ -48,7 +49,8 @@ class TrainingController extends Controller
                 'tabs' => $tabs,
                 'data' => $data,
                 'movement' => $movement,
-                'mcategory' => $mCategory
+                'mcategory' => $mCategory,
+                'head_training' => $head_training
             ]
         );
     }
@@ -88,13 +90,11 @@ class TrainingController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'date' => 'required',
         ]);
 
         $tab = new Tab();
         $tab->tab_name = $request->name;
         $tab->client_id = $request->client_id;
-        $tab->tab_date = $request->date;
         $tab->created_by = Auth::id();
         $tab->save();
         sleep(1);
