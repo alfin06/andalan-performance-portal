@@ -163,6 +163,14 @@ const subsMovement = (tab, x) => {
     mov.date = mov_date[0];
     $('#movementModal').modal('show');
 };
+const deleteMovement = (x) => {
+    if(confirm("Are you sure want to delete "+x.movement_name+"?"))
+    {
+        mov.id = x.id;
+        mov.post(route("training.deleteMovement"));
+        toast.success('Daily movement deleted succesfully!');
+    }
+};
 </script>
 <script>
 function FormatDate(myDate) {
@@ -473,6 +481,7 @@ $(document).ready(function() {
                                                                 <td class="display:flex;width=1%;">
                                                                     <button class="btn btn-success btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x)"><i class="ti-plus"></i> Subs</button>
                                                                     <button class="btn btn-info btn-sm btn-rounded" @click.prevent="editMovement(tab, x)"><i class="ti-pencil"></i> Edit</button>
+                                                                    <button class="btn btn-danger btn-sm btn-rounded" @click.prevent="deleteMovement(x)"><i class="ti-trash"></i> Delete</button>
                                                                 </td>
                                                                 <td><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
                                                                 <td>
@@ -499,7 +508,7 @@ $(document).ready(function() {
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <br />
+                                                <hr />
                                             </div>
                                         </div>
                                     </div>

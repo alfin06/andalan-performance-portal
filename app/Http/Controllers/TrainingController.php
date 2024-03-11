@@ -251,4 +251,10 @@ class TrainingController extends Controller
         $training->save();
         sleep(1);
     }
+
+    public function deleteMovement(Request $request)
+    {
+        Training::where('id', $request->id)->delete();
+        sleep(1);
+    }
 }
