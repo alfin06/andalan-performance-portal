@@ -42,6 +42,21 @@ class TrainingController extends Controller
         $movement = Movement::all();
         $mCategory = DB::table('master_category')->orderBy('category_name')->get();
         $head_training = DB::table('head_trainings')->orderBy('head_date')->get();
+
+        $history = Training::select('movement_id', 'movement_name', DB::raw('SUM(sets) AS total_sets'), DB::raw('COUNT(id) AS count'))
+                            ->where('client_id', $client_id)
+                            ->orderBy('movement_name')
+                            ->groupBy('movement_id', 'movement_name')
+                            ->get();
+
+        $history_detail = Training::select('trainings.movement_id', 'tabs.tab_name', DB::raw('DATE_FORMAT(trainings.date, "%d/%m/%Y") AS training_date'),
+                                            'trainings.status', 'trainings.sets', 'trainings.t', 'trainings.wt', 'trainings.rest',
+                                            'trainings.reps1', 'trainings.reps2', 'trainings.reps3', 'trainings.reps4',
+                                            'trainings.reps5', 'trainings.reps6')
+                                ->join('tabs', 'trainings.tab_id', 'tabs.id')
+                                ->where('trainings.client_id', $client_id)
+                                ->orderBy('trainings.movement_id')
+                                ->get();
         
         return Inertia::render(
             'Dashboard/Index',
@@ -51,7 +66,9 @@ class TrainingController extends Controller
                 'data' => $data,
                 'movement' => $movement,
                 'mcategory' => $mCategory,
-                'head_training' => $head_training
+                'head_training' => $head_training,
+                'history' => $history,
+                'history_detail' => $history_detail
             ]
         );
     }

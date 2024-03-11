@@ -33,6 +33,14 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    history: {
+        type: Object,
+        default: () => ({}),
+    },
+    history_detail: {
+        type: Object,
+        default: () => ({}),
+    },
 });
 
 //remove hours, minutes, and seconds
@@ -515,11 +523,11 @@ $(document).ready(function() {
                                 </div>
                             </div>
                         </div>
+
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Movement History</h4>
                                 <h6 class="card-subtitle">Click table row to see details</h6>
-
                                 <table class="table table-condensed table-bordered">
                                     <thead>
                                         <tr>
@@ -528,15 +536,15 @@ $(document).ready(function() {
                                             <th>Total Sets</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                                    <tbody v-for="(hi, index) in history">
+                                        <tr data-toggle="collapse" :data-target="'#demo'+index" class="accordion-toggle">
                                             <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
-                                            <td>Reverse Plank <span class="label label-rounded label-success pull-right">3</span></td>
-                                            <td>10</td>
+                                            <td>{{ hi.movement_name }} <span class="label label-rounded label-success pull-right">{{ hi.count }}</span></td>
+                                            <td>{{ hi.total_sets }}</td>
                                         </tr>
                                         <tr>
                                             <td colspan="12" class="hiddenRow">
-                                                <div class="accordian-body collapse" id="demo1"> 
+                                                <div class="accordian-body collapse" :id="'demo'+index"> 
                                                     <table class="table">
                                                         <thead>
                                                             <tr class="info">
@@ -550,59 +558,21 @@ $(document).ready(function() {
                                                                 <th>Reps Achieved</th>	
                                                             </tr>
                                                         </thead>
-                                                        <tbody>                        
-                                                            <tr data-toggle="collapse"  class="accordion-toggle" data-target="#demo10">
-                                                                <td>Week 1</td>
-                                                                <td>23/01/2024</td>
-                                                                <td><span class="label label-success label-rounded">Good</span></td>
-                                                                <td>3 </td>
-                                                                <td> - </td>
-                                                                <td> - </td>
-                                                                <td> 60" </td>
-                                                                <td></td>
-                                                            </tr>
-                                                            <tr data-toggle="collapse"  class="accordion-toggle" data-target="#demo10">
-                                                                <td>Week 2</td>
-                                                                <td>26/01/2024</td>
-                                                                <td><span class="label label-danger label-rounded">bad</span></td>
-                                                                <td>3 </td>
-                                                                <td> - </td>
-                                                                <td> - </td>
-                                                                <td> 60" </td>
-                                                                <td></td>
-                                                            </tr>
-                                                            <tr data-toggle="collapse"  class="accordion-toggle" data-target="#demo10">
-                                                                <td>Week 3</td>
-                                                                <td>23/01/2024</td>
-                                                                <td><span class="label label-success label-rounded">Good</span></td>
-                                                                <td>4 </td>
-                                                                <td> - </td>
-                                                                <td> - </td>
-                                                                <td> 5" </td>
-                                                                <td></td>
+                                                        <tbody v-for="(hd, index) in history_detail">                        
+                                                            <tr v-if="hd.movement_id==hi.movement_id">
+                                                                <td>{{ hd.tab_name }}</td>
+                                                                <td>{{ hd.training_date }}</td>
+                                                                <td><span class="label label-success label-rounded">{{ hd.status }}</span></td>
+                                                                <td>{{ hd.sets }}</td>
+                                                                <td>{{ hd.t }}</td>
+                                                                <td>{{ hd.wt }}</td>
+                                                                <td>{{ hd.rest }}</td>
+                                                                <td>{{ hd.reps1 + ' | ' + hd.reps2 + ' | ' + hd.reps3 + ' | ' + hd.reps4 + ' | ' + hd.reps5 + ' | ' + hd.reps6 }}</td>
                                                             </tr>
                                                         </tbody>
                                                    </table>                                          
                                                 </div> 
                                             </td>
-                                        </tr>
-                                        <tr data-toggle="collapse" data-target="#demo2" class="accordion-toggle">
-                                            <td>
-                                                <button class="btn btn-default btn-xs">
-                                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                                </button>
-                                            </td>
-                                             <td>FFE Split Squat</td>
-                                             <td>5</td>
-                                        </tr>
-                                        <tr data-toggle="collapse" data-target="#demo3" class="accordion-toggle">
-                                            <td>
-                                                <button class="btn btn-default btn-xs">
-                                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                                </button>
-                                            </td>
-                                             <td>Assisted Pull Up</td>
-                                             <td>3</td>
                                         </tr>
                                     </tbody>
                                 </table>
