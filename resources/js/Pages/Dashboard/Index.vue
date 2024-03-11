@@ -29,6 +29,10 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    head_training: {
+        type: Object,
+        default: () => ({}),
+    },
 });
 
 //remove hours, minutes, and seconds
@@ -37,6 +41,7 @@ var format_sdate = props.client.start_date.split(" ");
 var name = props.client.name;
 var program = props.client.program;
 const today_date = new Date().toISOString().slice(0,10);
+var add_edit = "add";
 
 // TAB Head Section
 const tab = useForm({
@@ -55,14 +60,17 @@ const submitTab = () => {
 const note = useForm({
     tab_notes: '',
     tab_id: '',
-    tab_client_id: ''
+    tab_client_id: '',
+    head_id: '',
+
 });
-const showNotes = (tab) => {
+const showNotes = (tab, h) => {
     $('#myModalNote').modal('show');
 
-    note.tab_notes = tab.tab_notes;
+    note.tab_notes = h.head_notes;
     note.tab_id = tab.id;
     note.tab_client_id = tab.client_id;
+    note.head_id = h.id;
 };
 const updateNotes = () => {
     note.post(route("training.updateNotes"));
@@ -75,7 +83,7 @@ const tab_name = ref("");
 const mov = useForm({
     date: today_date,
     category: [],
-    movement: '',
+    mov_plan: '',
     status: '',
     sets: '',
     t: '',
@@ -92,24 +100,47 @@ const mov = useForm({
     id: ''
 });
 const showMovement = (tab) => {
+    add_edit = "add";
     tab_name.value = "Add Daily Movement: " + tab.tab_name;
+    $("#hid_plan").val('');
     mov.tab_id = tab.id;
     mov.tab_client_id = tab.client_id;
     $('#movementModal').modal('show');
 };
 const submitMovement = () => {
-    mov.post(route("training.addMovement"));
-    toast.success('Daily movement added succesfully!');
+    mov.mov_plan = document.getElementById("hid_plan").value;
+    if(mov.mov_plan == "") {
+        mov.mov_plan = document.getElementById("hid_plan2").value;
+    }
+    alert(mov.mov_plan);
+
+    if(add_edit == "add") {
+        mov.post(route("training.addMovement"));
+        toast.success('Daily movement added succesfully!');
+    }
+    else if(add_edit == "edit") {
+        mov.post(route("training.updateMovement"));
+        toast.success('Daily movement updated succesfully!');
+    }
+    else {
+        mov.post(route("training.subsMovement"));
+        toast.success('Daily movement substitute added succesfully!');
+    }
+    mov.reset();
     $('#movementModal').modal('hide');
 };
 const editMovement = (tab, x) => {
-    tab_name.value = "Edit Daily Movement: " + tab.tab_name;
+    add_edit = "edit";
+    var mov_date = x.date.split(" ");
+    tab_name.value = "Edit Daily Movement: " + tab.tab_name + " | " + mov_date[0];
     mov.tab_id = tab.id;
     mov.tab_client_id = tab.client_id;
     mov.id = x.id;
-    mov.date = new Date(x.date).toISOString().slice(0,10);
-    //mov.movement = x.movement_id + '-' + x.movement_name;
-    //mov.status = x.status;
+    mov.date = mov_date[0];
+    $("#mov_plan").val(x.movement_id + '-' + x.movement_name).change();
+    $("#hid_plan").val(x.movement_id + '-' + x.movement_name);
+    mov.mov_plan = x.movement_id + '-' + x.movement_name;
+    mov.status = x.status;
     mov.sets = x.sets;
     mov.t = x.t;
     mov.wt = x.wt;
@@ -117,9 +148,20 @@ const editMovement = (tab, x) => {
     mov.reps1 = x.reps1;
     mov.reps2 = x.reps2;
     mov.reps3 = x.reps3;
-    mov.mov.reps4 = x.reps4;
+    mov.reps4 = x.reps4;
     mov.reps5 = x.reps5;
     mov.reps6 = x.reps6;
+    $('#movementModal').modal('show');
+};
+const subsMovement = (tab, x) => {
+    mov.reset();
+    var mov_date = x.date.split(" ");
+    add_edit = "subs";
+    tab_name.value = "Subs Daily Movement: " + tab.tab_name + " | " + mov_date[0] + " | " + x.movement_name;
+    mov.tab_id = tab.id;
+    mov.tab_client_id = tab.client_id;
+    mov.id = x.id;
+    mov.date = mov_date[0];
     $('#movementModal').modal('show');
 };
 </script>
@@ -172,6 +214,11 @@ $(document).ready(function() {
         }
     });
 
+    $("#mov_plan").change(function() {
+        $("#hid_plan").val($(this).val());
+        $("#hid_plan2").val($(this).val());
+    });
+
     // Switchery
     var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
     $('.js-switch').each(function() {
@@ -179,7 +226,9 @@ $(document).ready(function() {
     });
 
     // For multiselect
-    $(".select2").select2();
+    $(".select2").select2({
+        dropdownParent: $("#myForm")
+    });
     $(".ajax").select2({
         ajax: {
             url: "https://api.github.com/search/repositories",
@@ -217,6 +266,9 @@ $(document).ready(function() {
 </script>
 
 <style>
+.sub {
+    background: #FFADB0;
+}
 </style>
 
 <template>
@@ -233,23 +285,25 @@ $(document).ready(function() {
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="form-group col-4">
+                                    <div class="form-group col-4" v-if="add_edit=='add'">
                                         <label>Date</label>
                                         <input type="date" v-model="mov.date" class="form-control" > 
                                     </div>
-                                    <form class="row">
+                                    <form class="row" id="myForm">
                                         <div class="form-group col-4">
                                             <label>Category</label>
-                                            <select class="select2 m-b-10 select2-multiple custom-select form-control" id="mov_category" style="width: 100%" multiple="multiple" v-model="mov.category" data-placeholder="Choose">
+                                            <select class="select2 m-b-10 select2-multiple custom-select form-control" id="mov_category" style="width:100%;" multiple="multiple" v-model="mov.category" data-placeholder="Choose a movement">
                                                 <option v-for="(mc, index) in mcategory" :key="mcategory.id" :value="mc.category_name">{{ mc.category_name }}</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-4">
                                             <label>Movement Plan</label>
-                                            <select class="custom-select form-control pull-right" id="mov_plan" v-model="mov.movement">
-                                                <option value="">Choose a movement</option>
+                                            <select class="select2 form-control custom-select" id="mov_plan" style="width:100%;" >
+                                                <option>Choose a movement</option>
                                                 <option v-for="(mo, index) in movement" :key="movement.id" :value="mo.id+'-'+mo.name">{{ mo.name }}</option>
                                             </select>
+                                            <input type="hidden" id="hid_plan" name="hid_plan" v-model="mov.mov_plan" />
+                                            <input type="hidden" id="hid_plan2" name="hid_plan2" />
                                         </div>
                                         <div class="form-group col-3">
                                             <label>Status</label>
@@ -290,7 +344,9 @@ $(document).ready(function() {
                                     <input type="hidden" name="tab_id" v-model="mov.tab_id" id="tab_id" />
                                     <input type="hidden" name="tab_client_id" v-model="mov.tab_client_id" id="tab_client_id" />
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-plus"></i> Add</button>
+                                    <button type="submit" v-if="add_edit=='add'" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-plus"></i> Add</button>
+                                    <button type="submit" v-if="add_edit=='edit'" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-check"></i> Update</button>
+                                    <button type="submit" v-if="add_edit=='subs'" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-plus"></i> Subs</button>
                                 </div>
                             </div>
                         </div>
@@ -387,72 +443,65 @@ $(document).ready(function() {
                                 <!-- Tab panes -->
                                 <div class="tab-content tabcontent-border">
                                     <div class="tab-pane p-20" v-for="(tab, index) in tabs" :key="tab.id" :id="tab.id" role="tabpanel">
-                                        <div>
-                                            
-                                        </div>
-                                        <div class="d-flex m-t-20 row">
-                                            <div class="col-md-6">
-                                                <h4 class="card-title"><span class="lstick"></span>Date</h4>
-                                                <h6 class="card-subtitle">Notes: {{ tab.tab_notes }}</h6>
+                                        <button class="pull-right btn btn-success btn-rounded" id="movementBtn" @click.prevent="showMovement(tab)" data-toggle="modal" data-target="#movementModal">Add Movement Plan <i class="ti-plus"></i></button>
+                                        <div v-for="(h, index) in head_training" :key="h.id" :id="h.id">
+                                            <div v-if="h.tab_id==tab.id">
+                                                <div class="d-flex m-t-20 row">
+                                                    <div class="col-md-6">
+                                                        <h4 class="card-title"><span class="lstick"></span>{{ FormatDate(new Date((h.head_date.split(" "))[0])) }}</h4>
+                                                        <h6 class="card-subtitle">
+                                                            <button class="btn btn-rounded btn-sm btn-outline-primary" id="noteButton" @click.prevent="showNotes(tab, h)"><i class="ti-pencil"></i></button> 
+                                                            Notes: {{ h.head_notes }}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                                <div class="table-responsive m-t-20">
+                                                    <table id="table_print" class="display nowrap table table-hover  table-bordered" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Planned Movement</th>
+                                                                <th>Status</th>
+                                                                <th>Sets</th>
+                                                                <th>T.</th>
+                                                                <th>Wt.</th>
+                                                                <th>Rest</th>
+                                                                <th>Reps Achieved</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody v-for="(x, index) in data" :key="data.id">
+                                                            <tr data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id && x.head_training_id == h.id">
+                                                                <td class="display:flex;width=1%;">
+                                                                    <button class="btn btn-success btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x)"><i class="ti-plus"></i> Subs</button>
+                                                                    <button class="btn btn-info btn-sm btn-rounded" @click.prevent="editMovement(tab, x)"><i class="ti-pencil"></i> Edit</button>
+                                                                </td>
+                                                                <td><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
+                                                                <td>
+                                                                    <span class="label label-success label-rounded" v-if="x.status == 'Good'">{{x.status}}</span>
+                                                                    <span class="label label-warning label-rounded" v-if="x.status == 'Medium'">{{x.status}}</span>
+                                                                    <span class="label label-danger label-rounded" v-if="x.status == 'Bad'">{{x.status}}</span>
+                                                                </td>
+                                                                <td>{{ x.sets }}</td>
+                                                                <td>{{ x.t }}</td>
+                                                                <td>{{ x.wt }}</td>
+                                                                <td>{{ x.rest }}</td>
+                                                                <td>{{ x.reps1 + ' | ' + x.reps2 + ' | ' + x.reps3 + ' | ' + x.reps4 + ' | ' + x.reps5 + ' | ' + x.reps6 }}</td>
+                                                            </tr>
+                                                            <tr v-if="x.tab_id == tab.id && x.head_training_id == h.id && x.subs=='Y'" class="accordian-body collapse sub" :id="'sub'+index">
+                                                                <td></td>
+                                                                <td>{{ x.sub_mov_name }} </td>
+                                                                <td><span class="label label-danger label-rounded">{{ x.sub_status }}</span></td>
+                                                                <td>{{ x.sub_sets }}</td>
+                                                                <td>{{ x.sub_t }}</td>
+                                                                <td>{{ x.sub_wt }}</td>
+                                                                <td>{{ x.sub_rest }}</td>
+                                                                <td>{{ x.sub_reps1 + ' | ' + x.sub_reps2 + ' | ' + x.sub_reps3 + ' | ' + x.sub_reps4 + ' | ' + x.sub_reps5 + ' | ' + x.sub_reps6 }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <br />
                                             </div>
-                                            <div class="col-md-6 ml-auto">
-                                                <button class="pull-right btn btn-success btn-rounded" id="movementBtn" @click.prevent="showMovement(tab)" data-toggle="modal" data-target="#movementModal">Add Movement Plan <i class="ti-plus"></i></button>
-                                                <button class="pull-right btn btn-rounded btn-primary" id="noteButton" @click.prevent="showNotes(tab)">Notes <i class="ti-pencil"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="table-responsive m-t-20">
-                                            <table id="table_print" class="display nowrap table table-hover  table-bordered" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Planned Movement</th>
-                                                        <th>Status</th>
-                                                        <th>Sets</th>
-                                                        <th>T.</th>
-                                                        <th>Wt.</th>
-                                                        <th>Rest</th>
-                                                        <th>Reps Achieved</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody v-for="(x, index) in data" :key="data.id">
-                                                    <tr data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id">
-                                                        <td><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
-                                                        <td>
-                                                            <span class="label label-success label-rounded" v-if="x.status == 'Good'">{{x.status}}</span>
-                                                            <span class="label label-danger label-rounded" v-if="x.status == 'Bad'">{{x.status}}</span>
-                                                        </td>
-                                                        <td>{{ x.sets }}</td>
-                                                        <td>{{ x.t }}</td>
-                                                        <td>{{ x.wt }}</td>
-                                                        <td>{{ x.rest }}</td>
-                                                        <td>{{ x.reps1 + ' | ' + x.reps2 + ' | ' + x.reps3 + ' | ' + x.reps4 + ' | ' + x.reps5 + ' | ' + x.reps6 }}</td>
-                                                        <td class="display:flex;">
-                                                            <button class="btn btn-success btn-sm btn-rounded" v-if="x.subs!='Y'" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Subs</button>
-                                                            <button class="btn btn-info btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="editMovement(tab, x)" data-toggle="modal" data-target="#movementModal"><i class="ti-pencil"></i> Edit</button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr v-if="x.subs=='Y' && x.tab_id == tab.id">
-                                                        <td colspan="8" class="hiddenRow">
-                                                           <div class="accordian-body collapse" :id="'sub'+index"> 
-                                                            <table>
-                                                                <tr>
-                                                                    <td>{{ x.sub_mov_name }} </td>
-                                                                    <td><span class="label label-danger label-rounded">{{ x.sub_status }}</span></td>
-                                                                    <td>{{ x.sub_sets }}</td>
-                                                                    <td>{{ x.sub_t }}</td>
-                                                                    <td>{{ x.sub_wt }}</td>
-                                                                    <td>{{ x.sub_rest }}</td>
-                                                                    <td>{{ x.sub_reps1 + ' | ' + x.sub_reps2 + ' | ' + x.sub_reps3 + ' | ' + x.sub_reps4 + ' | ' + x.sub_reps5 + ' | ' + x.sub_reps6 }}</td>
-                                                                    <td class="display:flex;">
-                                                                        <button class="btn btn-info btn-sm btn-rounded" data-toggle="modal" data-target="#movementModal"><i class="ti-pencil"></i> Edit</button>
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
                                         </div>
                                     </div>
                                 </div>

@@ -68,6 +68,7 @@
     <!-- ============================================================== -->
     <script src="{{ asset('assets/plugins/switchery/dist/switchery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script>
         function myFunction() {
             var input, filter, ul, li, a, i, txtValue;
