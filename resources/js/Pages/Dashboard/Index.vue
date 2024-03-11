@@ -191,6 +191,28 @@ function FormatDate(myDate) {
     return weekday[day] + ", " + date + "/" + month + "/" + year;
 }
 
+function CalculateAge(format_bdate) {
+    // Parse the date string into a Date object
+    var birthDate = new Date(format_bdate);
+
+    // Get the current date
+    var currentDate = new Date();
+
+    // Calculate the difference in years
+    var age = currentDate.getFullYear() - birthDate.getFullYear();
+
+    // Check if the birthday has already occurred this year
+    if (
+    currentDate.getMonth() < birthDate.getMonth() ||
+    (currentDate.getMonth() === birthDate.getMonth() &&
+        currentDate.getDate() < birthDate.getDate())
+    ) {
+    age--;
+    }
+
+    return age;
+}
+
 $(document).ready(function() {
     // Movement dropdown
     $("#mov_category").change(function() {
@@ -429,7 +451,7 @@ $(document).ready(function() {
                                     <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="/assets/images/icon/staff.png" alt="Income" /></div>
                                     <div class="align-self-center">
                                         <h6 class="text-muted m-t-10 m-b-0"><strong>Start Date:</strong> {{ FormatDate(new Date(format_sdate[0])) }}</h6>
-                                        <h2 class="m-t-0">{{ name }}</h2> <h6 class="text-muted m-t-10 m-b-0"><strong>Program:</strong> {{ program }}</h6>
+                                        <h2 class="m-t-0">{{ name + " (" + CalculateAge(format_bdate[0]) + " y.o.)" }}</h2> <h6 class="text-muted m-t-10 m-b-0"><strong>Program:</strong> {{ program }}</h6>
                                     </div> 
                                 </div>
                             </div>
