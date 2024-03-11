@@ -112,7 +112,6 @@ const submitMovement = () => {
     if(mov.mov_plan == "") {
         mov.mov_plan = document.getElementById("hid_plan2").value;
     }
-    alert(mov.mov_plan);
 
     if(add_edit == "add") {
         mov.post(route("training.addMovement"));
