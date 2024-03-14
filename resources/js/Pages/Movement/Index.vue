@@ -41,7 +41,8 @@ $(document).ready(function() {
         dom: 'Bfrtip',
         buttons: [
             'csv', 'excel', 'pdf', 'print'
-        ]
+        ],
+        "pageLength": 50
     });
 });
 </script>
@@ -94,6 +95,7 @@ $(document).ready(function() {
                                                     <tr>
                                                         <th>Action</th>
                                                         <th>Full Name</th>
+                                                        <th>Category</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -103,6 +105,7 @@ $(document).ready(function() {
                                                             <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn text-danger" data-toggle="tooltip" data-original-title="Delete" @click="destroy(item.id)"><i class="ti-trash" aria-hidden="true"></i></button>
                                                         </td>
                                                         <td>{{item.name}}</td>
+                                                        <td>{{item.categories}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

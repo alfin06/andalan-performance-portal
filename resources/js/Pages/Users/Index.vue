@@ -100,7 +100,7 @@ function destroy(id) {
                                                     <tr v-for="(item, index) in users" :key="item.id">
                                                         <td width="1%">
                                                             <Link :href="route('users.edit', item.id)" class="btn btn-sm btn-icon btn-pure btn-outline text-info" data-original-title="Edit"><i class="ti-pencil" aria-hidden="true"></i></Link>
-                                                            <a :href="'https://wa.me/'+item.phone" alt="Whatsapp" target="_blank" data-toggle="tooltip" data-original-title="Whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                                                            <!-- <a :href="'https://wa.me/'+item.phone" alt="Whatsapp" target="_blank" data-toggle="tooltip" data-original-title="Whatsapp"><i class="fa fa-whatsapp" aria-hidden="true"></i></a> -->
                                                             <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn text-danger" data-toggle="tooltip" data-original-title="Delete" @click="destroy(item.id)"><i class="ti-trash" aria-hidden="true"></i></button>
                                                         </td>
                                                         <td>{{item.name}}</td>
