@@ -523,7 +523,7 @@ $(document).ready(function() {
                                                                 <td>{{ x.t }}</td>
                                                                 <td>{{ x.wt }}</td>
                                                                 <td>{{ x.rest }}</td>
-                                                                <td>{{ x.reps1 + ' | ' + x.reps2 + ' | ' + x.reps3 + ' | ' + x.reps4 + ' | ' + x.reps5 + ' | ' + x.reps6 }}</td>
+                                                                <td>{{ (x.reps1||"-") + ' | ' + (x.reps2||"-") + ' | ' + (x.reps3||"-") + ' | ' + (x.reps4||"-") + ' | ' + (x.reps5||"-") + ' | ' + (x.reps6||"-") }}</td>
                                                             </tr>
                                                             <tr v-if="x.tab_id == tab.id && x.head_training_id == h.id && x.subs=='Y'" class="accordian-body collapse sub" :id="'sub'+index">
                                                                 <td></td>
@@ -533,7 +533,7 @@ $(document).ready(function() {
                                                                 <td>{{ x.sub_t }}</td>
                                                                 <td>{{ x.sub_wt }}</td>
                                                                 <td>{{ x.sub_rest }}</td>
-                                                                <td>{{ x.sub_reps1 + ' | ' + x.sub_reps2 + ' | ' + x.sub_reps3 + ' | ' + x.sub_reps4 + ' | ' + x.sub_reps5 + ' | ' + x.sub_reps6 }}</td>
+                                                                <td>{{ (x.sub_reps1||"-") + ' | ' + (x.sub_reps2||"-") + ' | ' + (x.sub_reps3||"-") + ' | ' + (x.sub_reps4||"-") + ' | ' + (x.sub_reps5||"-") + ' | ' + (x.sub_reps6||"-") }}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
