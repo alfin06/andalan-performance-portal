@@ -689,7 +689,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'ADMIN',
-  `phone` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -697,12 +697,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table andalan.users: ~2 rows (approximately)
+-- Dumping data for table andalan.users: ~4 rows (approximately)
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `last_login`, `password`, `role`, `phone`, `remember_token`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
 	(1, 'Finicode', 'finicodedigital@gmail.com', NULL, '2024-03-14 10:19:06', '$2y$10$UU9kucaD6b.7JP7SpsNMZ.7KKUrTaNVzVYYhns5uZmrguu7NtqkQe', 'SUPERADMIN', '', NULL, NULL, '2024-03-14 10:19:06', NULL, NULL),
-	(8, 'Test User', 'test@gmail.com', NULL, '2024-02-12 18:49:46', '$2y$10$Q718w3dYN8NV2ECd6AOIuuPrP9aNb.IgIBbsqGXO/tuaiON0IFsrG', 'ADMIN', '12345678', NULL, '2024-02-07 18:32:13', '2024-02-15 04:05:07', NULL, NULL);
+	(8, 'Test User', 'test@gmail.com', NULL, '2024-02-12 18:49:46', '$2y$10$Q718w3dYN8NV2ECd6AOIuuPrP9aNb.IgIBbsqGXO/tuaiON0IFsrG', 'ADMIN', '12345678', NULL, '2024-02-07 18:32:13', '2024-02-15 04:05:07', NULL, NULL),
+	(23, 'asd123', 'asd@asd.com', NULL, NULL, '$2y$10$OCCP1ZqqI76LardkjRSGX.6nYEVRV2u4uStyNd/r57eqnjYeIma96', 'ADMIN', '812345678', NULL, '2024-03-14 18:16:43', '2024-03-14 18:17:19', NULL, NULL),
+	(24, 'Test2', 'test1@test1.com', NULL, NULL, '$2y$10$K8TimQHjVLBcRWRqVmu/4edge8sOLT1BZ99Oz.6snYoJHbkNYUYGS', 'ADMIN', '12345678', NULL, '2024-03-14 11:17:55', '2024-03-14 11:17:55', NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
