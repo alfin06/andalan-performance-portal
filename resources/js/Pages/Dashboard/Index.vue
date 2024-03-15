@@ -451,7 +451,7 @@ $(document).ready(function() {
                                     <div class="m-r-20 align-self-center"><span class="lstick m-r-20"></span><img src="/assets/images/icon/staff.png" alt="Income" /></div>
                                     <div class="align-self-center">
                                         <h6 class="text-muted m-t-10 m-b-0"><strong>Start Date:</strong> {{ FormatDate(new Date(format_sdate[0])) }}</h6>
-                                        <h2 class="m-t-0">{{ name + " (" + CalculateAge(format_bdate[0]) + " y.o.)" }}</h2> <h6 class="text-muted m-t-10 m-b-0"><strong>Program:</strong> {{ program }}</h6>
+                                        <h2 class="m-t-0">{{ name }}</h2> <h6 class="text-muted m-t-10 m-b-0"><strong>Program:</strong> {{ program }}</h6>
                                     </div> 
                                 </div>
                             </div>
@@ -555,14 +555,14 @@ $(document).ready(function() {
                                         <tr>
                                             <th></th>
                                             <th>Movement Name</th>
-                                            <th>Total Sets</th>
+                                            <!-- <th>Total Sets</th> -->
                                         </tr>
                                     </thead>
                                     <tbody v-for="(hi, index) in history">
                                         <tr data-toggle="collapse" :data-target="'#demo'+index" class="accordion-toggle">
                                             <td><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span></button></td>
                                             <td>{{ hi.movement_name }} <span class="label label-rounded label-success pull-right">{{ hi.count }}</span></td>
-                                            <td>{{ hi.total_sets }}</td>
+                                            <!-- <td>{{ hi.total_sets }}</td> -->
                                         </tr>
                                         <tr>
                                             <td colspan="12" class="hiddenRow">
