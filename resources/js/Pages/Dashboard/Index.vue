@@ -589,7 +589,7 @@ $(document).ready(function() {
                                                                 <td>{{ hd.t }}</td>
                                                                 <td>{{ hd.wt }}</td>
                                                                 <td>{{ hd.rest }}</td>
-                                                                <td>{{ hd.reps1 + ' | ' + hd.reps2 + ' | ' + hd.reps3 + ' | ' + hd.reps4 + ' | ' + hd.reps5 + ' | ' + hd.reps6 }}</td>
+                                                                <td>{{ (hd.reps1||"-") + ' | ' + (hd.reps2||"-") + ' | ' + (hd.reps3||"-") + ' | ' + (hd.reps4||"-") + ' | ' + (hd.reps5||"-") + ' | ' + (hd.reps6||"-") }}</td>
                                                             </tr>
                                                         </tbody>
                                                    </table>                                          
