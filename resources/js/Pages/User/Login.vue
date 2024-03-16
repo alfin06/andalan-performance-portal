@@ -44,7 +44,12 @@ function auth() {
 }
 
 #logo {
-    width:60%;
+    width:50%;
+}
+
+#loginForm {
+    padding-left:50px;
+    padding-right:50px;
 }
 </style>
 
@@ -65,13 +70,13 @@ function auth() {
                         </div>
                     </div>
                     <div className="card-body">
-                        <form @submit.prevent="auth" id="loginForm" ref="formContainer" class="form-horizontal form-material text-center">
+                        <form @submit.prevent="auth" id="loginForm" ref="formContainer" class="form-horizontal form-material">
                             <div class="form-group">
                                 <label htmlFor="email" className="form-label">Email</label>
                                 <input 
                                     type="text" 
                                     v-model="form.email"
-                                    className="form-control text-center" 
+                                    className="form-control" 
                                     placeholder="Enter your email"
                                     id="email">
                                 <div v-if="form.errors.email" class="text-white bg-danger p-2 rounded my-2">{{ form.errors.email }}</div>
@@ -81,7 +86,7 @@ function auth() {
                                 <input 
                                     type="password" 
                                     v-model="form.password"
-                                    className="form-control text-center" 
+                                    className="form-control" 
                                     placeholder="Enter your password"
                                     id="password">
                                 <div v-if="form.errors.password" class="text-white bg-danger p-2 rounded my-2">{{ form.errors.password }}</div>
