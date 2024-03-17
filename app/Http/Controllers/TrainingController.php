@@ -36,7 +36,7 @@ class TrainingController extends Controller
                                  'subs.tab_id AS sub_tab_id', 'subs.movement_name AS sub_mov_name', 'subs.status AS sub_status', 'subs.sets AS sub_sets', 'subs.t AS sub_t', 'subs.wt AS sub_wt', 'subs.rest AS sub_rest',
                                  'subs.reps1 AS sub_reps1', 'subs.reps2 AS sub_reps2', 'subs.reps3 AS sub_reps3', 'subs.reps4 AS sub_reps4',
                                  'subs.reps5 AS sub_reps5', 'subs.reps6 AS sub_reps6')
-                    ->leftJoin('Subs', 'trainings.id', '=', 'subs.training_id')
+                    ->leftJoin('subs', 'trainings.id', '=', 'subs.training_id')
                     ->where('trainings.client_id', '=', $client_id)
                     ->get();
         $movement = Movement::all();
