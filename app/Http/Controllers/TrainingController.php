@@ -41,7 +41,7 @@ class TrainingController extends Controller
                     ->get();
         $movement = Movement::all();
         $mCategory = DB::table('master_category')->orderBy('category_name')->get();
-        $head_training = DB::table('head_trainings')->orderBy('head_date')->get();
+        $head_training = DB::table('head_trainings')->where('client_id', $client_id)->orderBy('head_date')->get();
 
         $history = Training::select('movement_id', 'movement_name', DB::raw('SUM(sets) AS total_sets'), DB::raw('COUNT(id) AS count'))
                             ->where('client_id', $client_id)

@@ -465,7 +465,7 @@ $(document).ready(function() {
                             <div class="card-body">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="nav-item" v-for="(tab, index) in tabs" :key="tab.id"> 
-                                        <a class="nav-link" data-toggle="tab" :href='"#"+tab.id' role="tab">
+                                        <a class="nav-link" data-toggle="tab" :href='"#tab_"+tab.id' role="tab">
                                             <span class="hidden-sm-up"><i class="ti-home"></i></span> 
                                             <span class="hidden-xs-down">{{ tab.tab_name }}</span>
                                         </a>
@@ -479,7 +479,7 @@ $(document).ready(function() {
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content tabcontent-border">
-                                    <div class="tab-pane p-20" v-for="(tab, index) in tabs" :key="tab.id" :id="tab.id" role="tabpanel">
+                                    <div class="tab-pane p-20" v-for="(tab, index) in tabs" :key="tab.id" :id='"tab_" + tab.id' role="tabpanel">
                                         <button class="pull-right btn btn-success btn-rounded" id="movementBtn" @click.prevent="showMovement(tab)" data-toggle="modal" data-target="#movementModal">Add Movement Plan <i class="ti-plus"></i></button>
                                         <div v-for="(h, index) in head_training" :key="h.id" :id="h.id">
                                             <div v-if="h.tab_id==tab.id">
