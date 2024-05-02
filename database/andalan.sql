@@ -37,9 +37,12 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table andalan.clients: ~0 rows (approximately)
+-- Dumping data for table andalan.clients: ~2 rows (approximately)
+INSERT INTO `clients` (`id`, `name`, `client_id`, `email`, `password`, `phone`, `program`, `start_date`, `goal`, `birth_date`, `is_active`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+	(1, 'andrei', NULL, 'rosegoldclover@gmail.com', NULL, '+6281387581993', 'kurus', '2024-03-17 10:00:00', 'pingin kurus', '2023-09-14 10:00:00', 1, '2024-03-17 03:46:04', '2024-03-17 03:46:04', NULL, NULL),
+	(2, 'nike', NULL, NULL, NULL, NULL, 'regular', '2024-04-27 10:00:00', 'Healthy and fit', '1993-06-02 10:00:00', 1, '2024-04-28 07:43:37', '2024-04-28 07:43:37', NULL, NULL);
 
 -- Dumping structure for table andalan.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
@@ -68,9 +71,15 @@ CREATE TABLE IF NOT EXISTS `head_trainings` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table andalan.head_trainings: ~0 rows (approximately)
+-- Dumping data for table andalan.head_trainings: ~5 rows (approximately)
+INSERT INTO `head_trainings` (`id`, `head_date`, `head_notes`, `tab_id`, `client_id`, `updated_at`, `created_at`, `created_by`, `updated_by`) VALUES
+	(1, '2024-04-27 10:00:00', NULL, 1, 1, '2024-04-28 07:44:55', '2024-04-28 07:44:55', 2, NULL),
+	(2, '2024-04-27 10:00:00', NULL, 2, 1, '2024-04-28 07:45:36', '2024-04-28 07:45:36', 2, NULL),
+	(3, '2024-04-28 10:00:00', NULL, 1, 1, '2024-04-28 07:46:09', '2024-04-28 07:46:09', 2, NULL),
+	(4, '2024-05-05 10:00:00', NULL, 4, 2, '2024-04-28 07:49:15', '2024-04-28 07:49:15', 2, NULL),
+	(5, '2024-04-27 10:00:00', NULL, 4, 2, '2024-04-28 07:49:35', '2024-04-28 07:49:35', 2, NULL);
 
 -- Dumping structure for table andalan.master_category
 CREATE TABLE IF NOT EXISTS `master_category` (
@@ -81,17 +90,18 @@ CREATE TABLE IF NOT EXISTS `master_category` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table andalan.master_category: ~7 rows (approximately)
+-- Dumping data for table andalan.master_category: ~8 rows (approximately)
 INSERT INTO `master_category` (`id`, `category_name`, `updated_at`, `created_at`, `created_by`, `updated_by`) VALUES
-	(1, 'Hinge', NULL, '2024-02-22 10:35:28', NULL, NULL),
-	(2, 'Power', NULL, '2024-02-22 10:35:28', NULL, NULL),
-	(3, 'Pull', NULL, '2024-02-22 10:35:28', NULL, NULL),
-	(4, 'Push', NULL, '2024-02-22 10:35:28', NULL, NULL),
-	(5, 'Cardio', NULL, '2024-02-22 10:35:28', NULL, NULL),
-	(6, 'Squat', NULL, '2024-02-22 10:35:28', NULL, NULL),
-	(7, 'Hamstring', NULL, '2024-02-22 10:35:28', NULL, NULL);
+	(1, 'Hinge', NULL, '2024-02-21 20:35:28', NULL, NULL),
+	(2, 'Power', NULL, '2024-02-21 20:35:28', NULL, NULL),
+	(3, 'Pull', NULL, '2024-02-21 20:35:28', NULL, NULL),
+	(4, 'Push', NULL, '2024-02-21 20:35:28', NULL, NULL),
+	(5, 'Cardio', NULL, '2024-02-21 20:35:28', NULL, NULL),
+	(6, 'Squat', NULL, '2024-02-21 20:35:28', NULL, NULL),
+	(7, 'Hamstring', NULL, '2024-02-21 20:35:28', NULL, NULL),
+	(8, 'Power Cardio', NULL, '2024-05-02 19:48:59', NULL, NULL);
 
 -- Dumping structure for table andalan.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -609,9 +619,11 @@ CREATE TABLE IF NOT EXISTS `subs` (
   `updated_by` int(11) DEFAULT NULL,
   `head_training_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table andalan.subs: ~0 rows (approximately)
+-- Dumping data for table andalan.subs: ~1 rows (approximately)
+INSERT INTO `subs` (`id`, `training_id`, `client_id`, `tab_id`, `movement_id`, `movement_name`, `status`, `sets`, `t`, `wt`, `rest`, `reps1`, `reps2`, `reps3`, `reps4`, `reps5`, `reps6`, `updated_at`, `created_at`, `created_by`, `updated_by`, `head_training_id`) VALUES
+	(1, 8, 2, 4, 2, 'Alternating Bridge March Back on Bench', 'Bad', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-04-28 07:51:27', '2024-04-28 07:51:27', 2, NULL, 4);
 
 -- Dumping structure for table andalan.tabs
 CREATE TABLE IF NOT EXISTS `tabs` (
@@ -625,9 +637,16 @@ CREATE TABLE IF NOT EXISTS `tabs` (
   `created_by` int(11) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table andalan.tabs: ~0 rows (approximately)
+-- Dumping data for table andalan.tabs: ~6 rows (approximately)
+INSERT INTO `tabs` (`id`, `tab_name`, `client_id`, `tab_date`, `tab_notes`, `updated_at`, `created_at`, `created_by`, `updated_by`) VALUES
+	(1, 'Week 1', 1, NULL, NULL, '2024-04-28 07:37:04', '2024-04-28 07:37:04', 2, NULL),
+	(2, 'Week 2', 1, NULL, NULL, '2024-04-28 07:44:01', '2024-04-28 07:44:01', 2, NULL),
+	(3, 'week3', 1, NULL, NULL, '2024-04-28 07:48:32', '2024-04-28 07:48:32', 2, NULL),
+	(4, 'week 1', 2, NULL, NULL, '2024-04-28 07:48:58', '2024-04-28 07:48:58', 2, NULL),
+	(5, 'week2', 2, NULL, NULL, '2024-04-28 07:49:49', '2024-04-28 07:49:49', 2, NULL),
+	(6, 'week 4', 1, NULL, NULL, '2024-04-28 17:30:23', '2024-04-28 17:30:23', 1, NULL);
 
 -- Dumping structure for table andalan.trainings
 CREATE TABLE IF NOT EXISTS `trainings` (
@@ -656,9 +675,17 @@ CREATE TABLE IF NOT EXISTS `trainings` (
   `updated_by` int(11) DEFAULT NULL,
   `head_training_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table andalan.trainings: ~0 rows (approximately)
+-- Dumping data for table andalan.trainings: ~7 rows (approximately)
+INSERT INTO `trainings` (`id`, `date`, `client_id`, `tab_id`, `categories`, `movement_id`, `movement_name`, `status`, `sets`, `t`, `wt`, `rest`, `subs`, `reps1`, `reps2`, `reps3`, `reps4`, `reps5`, `reps6`, `updated_at`, `created_at`, `created_by`, `updated_by`, `head_training_id`) VALUES
+	(4, '2024-04-27 10:00:00', 1, 2, '', 73, 'Alternating Pogo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-04-28 07:45:36', '2024-04-28 07:45:36', 2, NULL, 2),
+	(5, '2024-04-28 10:00:00', 1, 1, '', 72, 'Alternating Lateral Hop', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-04-28 07:46:09', '2024-04-28 07:46:09', 2, NULL, 3),
+	(6, '2024-04-28 10:00:00', 1, 1, '', 86, 'Ball Side Step Side to Side Scoop Pass', 'Struggling', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-04-28 07:46:38', '2024-04-28 07:46:38', 2, NULL, 3),
+	(7, '2024-04-27 10:00:00', 1, 1, '', 71, '90° Slide Double', 'Fail', '4', '0', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-04-28 07:48:19', '2024-04-28 07:48:19', 2, NULL, 1),
+	(8, '2024-05-05 10:00:00', 2, 4, '', 188, 'Barbell Chest Supported Row', 'Good', '5', '5', '5', '5', 'Y', NULL, NULL, NULL, NULL, NULL, NULL, '2024-04-28 07:51:46', '2024-04-28 07:49:15', 2, 2, 4),
+	(9, '2024-05-05 10:00:00', 2, 4, '', 4, 'Alternating Reverse Plank Spring Ankle', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-04-28 07:49:26', '2024-04-28 07:49:26', 2, NULL, 4),
+	(10, '2024-04-27 10:00:00', 2, 4, '', 139, 'Lateral Jump', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-04-28 07:49:35', '2024-04-28 07:49:35', 2, NULL, 5);
 
 -- Dumping structure for table andalan.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -677,12 +704,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table andalan.users: ~2 rows (approximately)
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `last_login`, `password`, `role`, `phone`, `remember_token`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-	(1, 'Finicode', 'finicodedigital@gmail.com', NULL, '2024-03-16 07:25:34', '$2y$10$UU9kucaD6b.7JP7SpsNMZ.7KKUrTaNVzVYYhns5uZmrguu7NtqkQe', 'SUPERADMIN', '', NULL, NULL, '2024-03-16 07:25:34', NULL, NULL),
-	(2, 'Derry Drew', 'yrredrew@gmail.com', NULL, '2024-03-16 07:33:19', '$2y$10$XIsbaugNf2Spz/L8qAgzIeoxiHfZ7BjNn7RDOqrz8oBBxMmYyVrHe', 'SUPERADMIN', NULL, NULL, '2024-03-16 07:32:44', '2024-03-16 07:33:19', NULL, NULL);
+	(1, 'Finicode', 'finicodedigital@gmail.com', NULL, '2024-05-02 19:36:14', '$2y$10$UU9kucaD6b.7JP7SpsNMZ.7KKUrTaNVzVYYhns5uZmrguu7NtqkQe', 'SUPERADMIN', '', NULL, NULL, '2024-05-02 19:36:14', NULL, NULL),
+	(2, 'Derry Drew', 'yrredrew@gmail.com', NULL, '2024-04-28 07:36:42', '$2y$10$XIsbaugNf2Spz/L8qAgzIeoxiHfZ7BjNn7RDOqrz8oBBxMmYyVrHe', 'SUPERADMIN', NULL, NULL, '2024-03-15 17:32:44', '2024-04-28 07:36:42', NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

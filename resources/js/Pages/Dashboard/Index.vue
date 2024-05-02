@@ -107,12 +107,18 @@ const mov = useForm({
     tab_client_id: '',
     id: ''
 });
-const showMovement = (tab) => {
+const showMovement = (tab, head_date) => {
     add_edit = "add";
     tab_name.value = "Add Daily Movement: " + tab.tab_name;
     $("#hid_plan").val('');
     mov.tab_id = tab.id;
     mov.tab_client_id = tab.client_id;
+
+    if(head_date != null)
+    {
+        mov.date = head_date.split(" ")[0];
+    }
+    
     $('#movementModal').modal('show');
 };
 const submitMovement = () => {
@@ -345,17 +351,17 @@ $(document).ready(function() {
                                         <div class="form-group col-3">
                                             <label>Status</label>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <!-- <div class="col-md-4">
                                                     <input type="radio" id="good" value="Good" class="form-control" v-model="mov.status" />
-                                                    <label for="good">Good</label>
+                                                    <label for="good" class="label label-success">Good</label>
+                                                </div> -->
+                                                <div class="col-md-6">
+                                                    <input type="radio" id="medium" value="Struggling" class="form-control" v-model="mov.status" />
+                                                    <label for="medium" class="label label-warning">Struggling</label>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <input type="radio" id="medium" value="Medium" class="form-control" v-model="mov.status" />
-                                                    <label for="medium">Medium</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input type="radio" id="bad" value="Bad" class="form-control" v-model="mov.status" />
-                                                    <label for="bad">Bad</label>
+                                                <div class="col-md-6">
+                                                    <input type="radio" id="bad" value="Fail" class="form-control" v-model="mov.status" />
+                                                    <label for="bad" class="label label-danger">Fail</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -485,7 +491,10 @@ $(document).ready(function() {
                                             <div v-if="h.tab_id==tab.id">
                                                 <div class="d-flex m-t-20 row">
                                                     <div class="col-md-6">
-                                                        <h4 class="card-title"><span class="lstick"></span>{{ FormatDate(new Date((h.head_date.split(" "))[0])) }}</h4>
+                                                        <h4 class="card-title">
+                                                            <span class="lstick"></span>{{ FormatDate(new Date((h.head_date.split(" "))[0])) }}
+                                                            <button class="btn btn-success btn-rounded btn-sm" id="movementBtn" @click.prevent="showMovement(tab, h.head_date)" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i></button>
+                                                        </h4>
                                                         <h6 class="card-subtitle">
                                                             <button class="btn btn-rounded btn-sm btn-outline-primary" id="noteButton" @click.prevent="showNotes(tab, h)"><i class="ti-pencil"></i></button> 
                                                             Notes: {{ h.head_notes }}
@@ -509,15 +518,15 @@ $(document).ready(function() {
                                                         <tbody v-for="(x, index) in data" :key="data.id">
                                                             <tr data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id && x.head_training_id == h.id">
                                                                 <td class="display:flex;width=1%;">
-                                                                    <button class="btn btn-success btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x)"><i class="ti-plus"></i> Subs</button>
                                                                     <button class="btn btn-info btn-sm btn-rounded" @click.prevent="editMovement(tab, x)"><i class="ti-pencil"></i> Edit</button>
+                                                                    <button class="btn btn-success btn-sm btn-rounded" v-if="x.subs!='Y' && (x.status=='Struggling' ||  x.status=='Fail' )" @click.prevent="subsMovement(tab, x)"><i class="ti-plus"></i> Subs</button>
                                                                     <button class="btn btn-danger btn-sm btn-rounded" @click.prevent="deleteMovement(x)"><i class="ti-trash"></i> Delete</button>
                                                                 </td>
                                                                 <td><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
                                                                 <td>
-                                                                    <span class="label label-success label-rounded" v-if="x.status == 'Good'">{{x.status}}</span>
-                                                                    <span class="label label-warning label-rounded" v-if="x.status == 'Medium'">{{x.status}}</span>
-                                                                    <span class="label label-danger label-rounded" v-if="x.status == 'Bad'">{{x.status}}</span>
+                                                                    <!-- <span class="label label-success label-rounded" v-if="x.status == 'Good'">{{x.status}}</span> -->
+                                                                    <span class="label label-warning label-rounded" v-if="x.status == 'Struggling'">{{x.status}}</span>
+                                                                    <span class="label label-danger label-rounded" v-if="x.status == 'Fail'">{{x.status}}</span>
                                                                 </td>
                                                                 <td>{{ x.sets }}</td>
                                                                 <td>{{ x.t }}</td>
