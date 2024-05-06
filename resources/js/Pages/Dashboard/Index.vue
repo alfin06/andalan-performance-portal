@@ -222,7 +222,7 @@ function CalculateAge(format_bdate) {
 $(document).ready(function() {
     // Movement dropdown
     $("#mov_category").change(function() {
-        // Selected country id
+        // Selected category id
         var category_id = $(this).val();
 
         // Empty movement plan
@@ -260,6 +260,36 @@ $(document).ready(function() {
     $("#mov_plan").change(function() {
         $("#hid_plan").val($(this).val());
         $("#hid_plan2").val($(this).val());
+        var client_id = $("#tab_client_id").val();
+        var temp_mov = ($(this).val()).split("-");
+        var mov_plan = temp_mov[0];
+
+        // Display mov plan info
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var ajaxurl = 'mov_info';
+        $.ajax({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url : ajaxurl,
+            type: 'POST',
+            data: {client:client_id, mov_plan:mov_plan},
+            dataType: 'json',
+            success:function(response) {
+                if (response.length > 0)
+                {
+                    $("#mov_info").html(response[0]['count']);
+                }
+                else
+                {
+                    $("#mov_info").html(0);
+                }
+            }
+        });
     });
 
     // Switchery
@@ -340,7 +370,7 @@ $(document).ready(function() {
                                             </select>
                                         </div>
                                         <div class="form-group col-4">
-                                            <label>Movement Plan</label>
+                                            <label>Movement Plan (Count: <span id="mov_info">0</span>)</label>
                                             <select class="select2 form-control custom-select" id="mov_plan" style="width:100%;" >
                                                 <option>Choose a movement</option>
                                                 <option v-for="(mo, index) in movement" :key="movement.id" :value="mo.id+'-'+mo.name">{{ mo.name }}</option>
@@ -357,11 +387,11 @@ $(document).ready(function() {
                                                 </div> -->
                                                 <div class="col-md-6">
                                                     <input type="radio" id="medium" value="Struggling" class="form-control" v-model="mov.status" />
-                                                    <label for="medium" class="label label-warning">Struggling</label>
+                                                    <label for="medium">Struggling</label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="radio" id="bad" value="Fail" class="form-control" v-model="mov.status" />
-                                                    <label for="bad" class="label label-danger">Fail</label>
+                                                    <label for="bad">Fail</label>
                                                 </div>
                                             </div>
                                         </div>

@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function() {
    
     /* Helper */
     Route::post('training/{id}/mov', [AdminController::class, 'showMovement'])->name('mov');
+    Route::post('training/{id}/mov_info', [AdminController::class, 'showMovementInfo'])->name('mov_info');
 
     /* Account */
     Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
