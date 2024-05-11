@@ -22,7 +22,7 @@ class AdminController extends Controller
 
         foreach($categories as $category)
         {
-            $qry->orWhere('categories', 'LIKE', '%'.$category.'%');
+            $qry->where('categories', 'LIKE', '%'.$category.'%');
         }
 
         $results = $qry->groupBy('id', 'name')->get();

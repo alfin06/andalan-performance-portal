@@ -107,6 +107,29 @@ const mov = useForm({
     tab_client_id: '',
     id: ''
 });
+
+const showHead = (tab) => {
+    add_edit = "add";
+    tab_name.value = "Add New Schedule: " + tab.tab_name;
+    mov.tab_id = tab.id;
+    mov.tab_client_id = tab.client_id;
+    
+    if(head_date != null)
+    {
+        mov.date = head_date.split(" ")[0];
+    }
+    
+    $('#headModal').modal('show');
+};
+const submitHead = () => {
+    if(add_edit == "add") {
+        mov.post(route("training.addHead"));
+        toast.success('New schedule added succesfully!');
+    }
+    mov.reset();
+    $('#headModal').modal('hide');
+};
+
 const showMovement = (tab, head_date) => {
     add_edit = "add";
     tab_name.value = "Add Daily Movement: " + tab.tab_name;
@@ -166,7 +189,7 @@ const editMovement = (tab, x) => {
     mov.reps6 = x.reps6;
     $('#movementModal').modal('show');
 };
-const subsMovement = (tab, x) => {
+const subsMovement = (tab, x, status) => {
     mov.reset();
     var mov_date = x.date.split(" ");
     add_edit = "subs";
@@ -175,6 +198,7 @@ const subsMovement = (tab, x) => {
     mov.tab_client_id = tab.client_id;
     mov.id = x.id;
     mov.date = mov_date[0];
+    mov.status = status;
     $('#movementModal').modal('show');
 };
 const deleteMovement = (x) => {
@@ -349,6 +373,31 @@ $(document).ready(function() {
     <Layout>
         <div class="page-wrapper" id="page">
             <div class="container-fluid">
+                <form @submit.prevent="submitHead" class="form-material">
+                    <div class="modal fade" id="headModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document" style="max-width:1000px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{ tab_name }}</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group col-4" v-if="add_edit=='add'">
+                                        <label>Date</label>
+                                        <input type="date" v-model="mov.date" class="form-control" > 
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="hidden" name="tab_id" v-model="mov.tab_id" id="tab_id" />
+                                    <input type="hidden" name="tab_client_id" v-model="mov.tab_client_id" id="tab_client_id" />
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-plus"></i> Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
                 <form @submit.prevent="submitMovement" class="form-material">
                     <div class="modal fade" id="movementModal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document" style="max-width:1000px;">
@@ -363,13 +412,13 @@ $(document).ready(function() {
                                         <input type="date" v-model="mov.date" class="form-control" > 
                                     </div>
                                     <form class="row" id="myForm">
-                                        <div class="form-group col-4">
+                                        <div class="form-group col-5">
                                             <label>Category</label>
                                             <select class="select2 m-b-10 select2-multiple custom-select form-control" id="mov_category" style="width:100%;" multiple="multiple" v-model="mov.category" data-placeholder="Choose a movement">
                                                 <option v-for="(mc, index) in mcategory" :key="mcategory.id" :value="mc.category_name">{{ mc.category_name }}</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-4">
+                                        <div class="form-group col-5">
                                             <label>Movement Plan (Count: <span id="mov_info">0</span>)</label>
                                             <select class="select2 form-control custom-select" id="mov_plan" style="width:100%;" >
                                                 <option>Choose a movement</option>
@@ -378,13 +427,13 @@ $(document).ready(function() {
                                             <input type="hidden" id="hid_plan" name="hid_plan" v-model="mov.mov_plan" />
                                             <input type="hidden" id="hid_plan2" name="hid_plan2" />
                                         </div>
-                                        <div class="form-group col-3">
+                                        <!--<div class="form-group col-3">
                                             <label>Status</label>
                                             <div class="row">
-                                                <!-- <div class="col-md-4">
+                                                 <div class="col-md-4">
                                                     <input type="radio" id="good" value="Good" class="form-control" v-model="mov.status" />
                                                     <label for="good" class="label label-success">Good</label>
-                                                </div> -->
+                                                </div> 
                                                 <div class="col-md-6">
                                                     <input type="radio" id="medium" value="Struggling" class="form-control" v-model="mov.status" />
                                                     <label for="medium">Struggling</label>
@@ -393,8 +442,8 @@ $(document).ready(function() {
                                                     <input type="radio" id="bad" value="Fail" class="form-control" v-model="mov.status" />
                                                     <label for="bad">Fail</label>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </div> 
+                                        </div> -->
                                         <div class="col-6" >
                                             <label>Details</label> <br />
                                             <input type="text" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
@@ -516,7 +565,7 @@ $(document).ready(function() {
                                 <!-- Tab panes -->
                                 <div class="tab-content tabcontent-border">
                                     <div class="tab-pane p-20" v-for="(tab, index) in tabs" :key="tab.id" :id='"tab_" + tab.id' role="tabpanel">
-                                        <button class="pull-right btn btn-success btn-rounded" id="movementBtn" @click.prevent="showMovement(tab)" data-toggle="modal" data-target="#movementModal">Add Movement Plan <i class="ti-plus"></i></button>
+                                        <button class="pull-right btn btn-success btn-rounded" id="movementBtn" @click.prevent="showHead(tab)" data-toggle="modal" data-target="#headModal"><i class="ti-calendar"></i> Add Schedule</button>
                                         <div v-for="(h, index) in head_training" :key="h.id" :id="h.id">
                                             <div v-if="h.tab_id==tab.id">
                                                 <div class="d-flex m-t-20 row">
@@ -548,9 +597,11 @@ $(document).ready(function() {
                                                         <tbody v-for="(x, index) in data" :key="data.id">
                                                             <tr data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id && x.head_training_id == h.id">
                                                                 <td class="display:flex;width=1%;">
-                                                                    <button class="btn btn-info btn-sm btn-rounded" @click.prevent="editMovement(tab, x)"><i class="ti-pencil"></i> Edit</button>
-                                                                    <button class="btn btn-success btn-sm btn-rounded" v-if="x.subs!='Y' && (x.status=='Struggling' ||  x.status=='Fail' )" @click.prevent="subsMovement(tab, x)"><i class="ti-plus"></i> Subs</button>
-                                                                    <button class="btn btn-danger btn-sm btn-rounded" @click.prevent="deleteMovement(x)"><i class="ti-trash"></i> Delete</button>
+                                                                    <!-- <button class="btn btn-info btn-sm btn-rounded" @click.prevent="editMovement(tab, x)"><i class="ti-pencil"></i> Edit</button> -->
+                                                                    <button class="btn btn-warning btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Struggling')"> Struggling</button>
+                                                                    &nbsp;
+                                                                    <button class="btn btn-danger btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Fail')"> Fail</button>
+                                                                    <!-- <button class="btn btn-danger btn-sm btn-rounded" @click.prevent="deleteMovement(x)"><i class="ti-trash"></i> Delete</button> -->
                                                                 </td>
                                                                 <td><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
                                                                 <td>

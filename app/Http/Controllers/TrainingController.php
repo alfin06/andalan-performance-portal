@@ -148,6 +148,26 @@ class TrainingController extends Controller
         sleep(1);
     }
 
+    public function addHead(Request $request)
+    {
+        $head_training = Head_training::where('head_date', $request->date)
+                                     ->where('tab_id', $request->tab_id)
+                                     ->where('client_id', $request->tab_client_id)
+                                     ->first();
+        
+        if($head_training == null)
+        {
+            $head_training = new Head_training();
+            $head_training->head_date = $request->date;
+            $head_training->tab_id = $request->tab_id;
+            $head_training->client_id = $request->tab_client_id;
+            $head_training->created_by = Auth::id();
+            $head_training->save();
+        }
+
+        sleep(1);
+    }
+
     public function addMovement(Request $request)
     {
         $movement_plan = explode("-", $request->mov_plan);
@@ -233,7 +253,7 @@ class TrainingController extends Controller
         $sub->tab_id = $training->tab_id;
         $sub->movement_id = $training->movement_id;
         $sub->movement_name = $training->movement_name;
-        $sub->status = $training->status;
+        $sub->status = $request->status;
         $sub->sets = $training->sets;
         $sub->t = $training->t;
         $sub->wt = $training->wt;
@@ -251,7 +271,7 @@ class TrainingController extends Controller
         // Replace old training to the new training
         $training->movement_id = $movement_id;
         $training->movement_name = $movement_name;
-        $training->status = $request->status;
+        $training->status = "";
         $training->sets = $request->sets;
         $training->t = $request->t;
         $training->wt = $request->wt;

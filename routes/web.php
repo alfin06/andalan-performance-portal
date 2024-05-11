@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function() {
     Route::post('training/addTab/', [TrainingController::class, 'addTab'])->name('training.addTab');
     Route::get('training/{tab_id}/notes/', [TrainingController::class, 'notes'])->name('training.notes');
     Route::post('training/updateNotes/', [TrainingController::class, 'updateNotes'])->name('training.updateNotes');
+    Route::post('training/addHead/', [TrainingController::class, 'addHead'])->name('training.addHead');
     Route::post('training/addMovement/', [TrainingController::class, 'addMovement'])->name('training.addMovement');
     Route::post('training/updateMovement/', [TrainingController::class, 'updateMovement'])->name('training.updateMovement');
     Route::post('training/subsMovement/', [TrainingController::class, 'subsMovement'])->name('training.subsMovement');
