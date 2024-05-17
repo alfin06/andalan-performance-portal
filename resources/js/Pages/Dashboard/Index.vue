@@ -440,14 +440,14 @@ $(document).ready(function() {
                                     <form class="row" id="myForm">
                                         <div class="form-group col-5">
                                             <label>Category</label>
-                                            <select class="select2 m-b-10 select2-multiple custom-select form-control" id="mov_category" style="width:100%;" multiple="multiple" v-model="mov.category" data-placeholder="Choose a movement">
+                                            <select class="select2 m-b-10 select2-multiple custom-select form-control" id="mov_category" style="width:100%;" multiple="multiple" v-model="mov.category">
                                                 <option v-for="(mc, index) in mcategory" :key="mcategory.id" :value="mc.category_name">{{ mc.category_name }}</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-5">
                                             <label>Movement Plan (Count: <span id="mov_info">0</span>)</label>
                                             <select class="select2 form-control custom-select" id="mov_plan" style="width:100%;" >
-                                                <option>Choose a movement</option>
+                                                <option></option>
                                                 <option v-for="(mo, index) in movement" :key="movement.id" :value="mo.id+'-'+mo.name">{{ mo.name }}</option>
                                             </select>
                                             <input type="hidden" id="hid_plan" name="hid_plan" v-model="mov.mov_plan" />
