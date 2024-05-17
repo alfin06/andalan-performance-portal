@@ -29,6 +29,7 @@
     @routes
   </head>
   <body class="fix-header fix-sidebar card-no-border">
+    <input type="hidden" name="myToken" id="myToken" value="{{ csrf_token() }}" />
     @inertia
     <!-- ============================================================== -->
     <!-- All Jquery -->

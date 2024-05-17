@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login() {
+    public function login(Request $request) {
         if(!auth()->check()) {
             return Inertia::render('User/Login');
         }

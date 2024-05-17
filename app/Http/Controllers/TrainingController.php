@@ -17,7 +17,7 @@ use App\Models\Head_training;
 
 class TrainingController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
         $clients = Client::where('is_active', 1)->orderBy('name', 'asc')->get();
 

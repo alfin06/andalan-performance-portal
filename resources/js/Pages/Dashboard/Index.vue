@@ -248,27 +248,30 @@ $(document).ready(function() {
     $("#mov_category").change(function() {
         // Selected category id
         var category_id = $(this).val();
-
-        // Empty movement plan
-        $('#mov_plan').find('option').remove()
+        var token = jQuery('meta[name="csrf-token"]').attr('content');
+        var myToken = $('#myToken').val();
 
         if(category_id != '') {
             // Fetch movement plan options
             $.ajaxSetup({
                 headers: {
-                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content'),
+                    'X-Requested-With': 'XMLHttpRequest',
                 }
             });
             var ajaxurl = 'mov';
+            console.log("Start fetching movements.");
+            //console.log("Token: " + token);
+            //console.log("myToken: " + myToken);
+            // Empty movement plan
+            $('#mov_plan').find('option').remove();
             $.ajax({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
                 url : ajaxurl,
                 type: 'POST',
                 data: {categories:category_id},
                 dataType: 'json',
                 success:function(response) {
+                    console.log("Movement fetching done.");
                     var len = response.length;
                     $("#mov_plan").append("<option value=''>Choose a movement</option");
                     for(var i=0; i<len; i++) {
@@ -276,6 +279,29 @@ $(document).ready(function() {
                         var name = response[i]['name'];
                         $("#mov_plan").append("<option value='"+id+'-'+name+"'>"+name+"</option");
                     }
+                },
+                error:function() {
+                    console.log("Fail, let's reload and fetch the movements again!");
+                    location.reload();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                        url: 'mov',
+                        type: 'POST',
+                        data: {categories:category_id},
+                        dataType: 'json',
+                        success:function(response) {
+                            console.log("Movement fetching done.");
+                            var len = response.length;
+                            $("#mov_plan").append("<option value=''>Choose a movement</option");
+                            for(var i=0; i<len; i++) {
+                                var id = response[i]['id'];
+                                var name = response[i]['name'];
+                                $("#mov_plan").append("<option value='"+id+'-'+name+"'>"+name+"</option");
+                            }
+                        }
+                    });
                 }
             });
         }
