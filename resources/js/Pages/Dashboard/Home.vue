@@ -163,7 +163,7 @@ const props = defineProps({
     background-repeat: no-repeat;
     width: 100%;
     font-size: 16px;
-    padding: 12px 20px 12px 40px;
+    padding: 12px 10px 12px 10px;
     border: 1px solid #ddd;
     margin-bottom: 12px;
 }
@@ -211,5 +211,9 @@ flex: 0 1 auto;         /* Allow items to grow/shrink and set initial size */
   width: 80px; /* Set a fixed width for the image */
   height: auto; /* Keeps the aspect ratio */
   margin-bottom: 10px; /* Optional: add some space below the image */
+}
+.txt_client_name{
+    font-weight: 600;
+    color:#327180;
 }
 </style>

@@ -392,6 +392,15 @@ $(document).ready(function() {
 .sub {
     background: #FFADB0;
 }
+
+.day_container{
+    padding:20px;
+    margin:10px;
+    background-color: white;
+  /* Add shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Optional: rounded corners */
+}
 </style>
 
 <template>
@@ -591,18 +600,18 @@ $(document).ready(function() {
                                 <!-- Tab panes -->
                                 <div class="tab-content tabcontent-border">
                                     <div class="tab-pane p-20" v-for="(tab, index) in tabs" :key="tab.id" :id='"tab_" + tab.id' role="tabpanel">
-                                        <button class="pull-right btn btn-success btn-rounded" id="movementBtn" @click.prevent="showHead(tab)" data-toggle="modal" data-target="#headModal"><i class="ti-calendar"></i> Add Schedule</button>
+                                        <button class="pull-right btn btn-success btn-rounded" id="movementBtn" @click.prevent="showHead(tab)" data-toggle="modal" data-target="#headModal"><i class="ti-calendar"></i> Add Date</button>
                                         <div v-for="(h, index) in head_training" :key="h.id" :id="h.id">
-                                            <div v-if="h.tab_id==tab.id">
-                                                <div class="d-flex m-t-20 row">
+                                            <div v-if="h.tab_id==tab.id" class="day_container">
+                                                <div class="d-flex m-t-20 row ">
                                                     <div class="col-md-6">
                                                         <h4 class="card-title">
-                                                            <span class="lstick"></span>{{ FormatDate(new Date((h.head_date.split(" "))[0])) }}
-                                                            <button class="btn btn-success btn-rounded btn-sm" id="movementBtn" @click.prevent="showMovement(tab, h.head_date)" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i></button>
+                                                            {{ FormatDate(new Date((h.head_date.split(" "))[0])) }}<br />
+                                                            <button class="btn btn-success btn-rounded btn-sm" id="movementBtn" @click.prevent="showMovement(tab, h.head_date)" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Add Movement</button>
                                                         </h4>
                                                         <h6 class="card-subtitle">
-                                                            <button class="btn btn-rounded btn-sm btn-outline-primary" id="noteButton" @click.prevent="showNotes(tab, h)"><i class="ti-pencil"></i></button> 
                                                             Notes: {{ h.head_notes }}
+                                                            <button class="btn btn-rounded btn-sm btn-outline-primary" id="noteButton" @click.prevent="showNotes(tab, h)"><i class="ti-pencil"></i></button> 
                                                         </h6>
                                                     </div>
                                                 </div>
