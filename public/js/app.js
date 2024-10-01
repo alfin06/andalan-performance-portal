@@ -20930,22 +20930,24 @@ __webpack_require__.r(__webpack_exports__);
       password: ''
     });
     var props = __props;
-    function myFunction() {
-      var input, filter, ul, li, a, i, txtValue;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      ul = document.getElementById("list_name");
-      li = ul.getElementsByTagName("div");
-      for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("span")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          li[i].style.display = "";
-        } else {
-          li[i].style.display = "none";
-        }
-      }
-    }
+
+    // function myFunction() {
+    //     var input, filter, ul, li, a, i, txtValue;
+    //     input = document.getElementById("myInput");
+    //     filter = input.value.toUpperCase();
+    //     ul = document.getElementById("list_name");
+    //     li = ul.getElementsByTagName("div");
+    //     for (i = 0; i < li.length; i++) {
+    //         a = li[i].getElementsByTagName("span")[0];
+    //         txtValue = a.textContent || a.innerText;
+    //         if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    //             li[i].style.display = "";
+    //         } else {
+    //             li[i].style.display = "none";
+    //         }
+    //     }
+    // }
+
     function formatDate(dateString) {
       // Extract the date part if there's a time portion (split by space)
       var datePart = dateString.split(' ')[0];
@@ -20960,12 +20962,21 @@ __webpack_require__.r(__webpack_exports__);
         year: '2-digit'
       }).format(date);
     }
+    $(document).ready(function () {
+      $('#myInput').on('keyup', function () {
+        var input = $(this).val().toLowerCase();
+
+        // Loop through the .dv_addnew divs and show/hide based on search
+        $('#list_name .dv_addnew').filter(function () {
+          $(this).toggle($(this).find('.txt_client_name').text().toLowerCase().indexOf(input) > -1);
+        });
+      });
+    });
     var __returned__ = {
       page: page,
       clients: clients,
       form: form,
       props: props,
-      myFunction: myFunction,
       formatDate: formatDate,
       get useForm() {
         return _inertiajs_vue3__WEBPACK_IMPORTED_MODULE_0__.useForm;
@@ -23340,13 +23351,16 @@ var _hoisted_13 = ["href"];
 var _hoisted_14 = {
   "class": "dv_addnew"
 };
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_15 = {
+  "class": "txt_client_name"
+};
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "/images/6.png",
   alt: "",
   "class": "img_user"
 }, null, -1 /* HOISTED */);
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Start:", -1 /* HOISTED */);
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Start:", -1 /* HOISTED */);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Head"], {
     title: "Home"
@@ -23356,10 +23370,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         href: _ctx.route('client.create')
       }, [].concat(_hoisted_12), 8 /* PROPS */, _hoisted_10), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.clients, function (item, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-          key: item.id
+          key: item.id,
+          id: "list_name"
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
           href: _ctx.route('training.index', item.id)
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1 /* TEXT */), _hoisted_15, _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.formatDate(item.start_date)), 1 /* TEXT */)])])], 8 /* PROPS */, _hoisted_13)]);
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1 /* TEXT */), _hoisted_16, _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.formatDate(item.start_date)), 1 /* TEXT */)])])], 8 /* PROPS */, _hoisted_13)]);
       }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"container\">\r\n                                    <div class=\"row\" id=\"list_name\">\r\n                                        <div class=\"col-3 name_box\" v-for=\"(item, index) in clients\" :key=\"item.id\"> \r\n                                            <Link :href=\"route('training.index', item.id)\" class=\"name_a\">\r\n                                                <span>{{item.name}}</span><hr />\r\n                                                <h6><strong>Start date:</strong> {{(item.start_date.split(\" \"))[0]}}</h6>\r\n                                                <h6><strong>Program:</strong> {{item.program}}</h6>\r\n                                            </Link>\r\n                                        </div>\r\n                                    </div>\r\n                                </div> ")])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Footer"])])];
     }),
     _: 1 /* STABLE */

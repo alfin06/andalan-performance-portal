@@ -28,22 +28,22 @@ const props = defineProps({
                 },
             });
 
-function myFunction() {
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("list_name");
-    li = ul.getElementsByTagName("div");
-    for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("span")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
-    }
-}
+// function myFunction() {
+//     var input, filter, ul, li, a, i, txtValue;
+//     input = document.getElementById("myInput");
+//     filter = input.value.toUpperCase();
+//     ul = document.getElementById("list_name");
+//     li = ul.getElementsByTagName("div");
+//     for (i = 0; i < li.length; i++) {
+//         a = li[i].getElementsByTagName("span")[0];
+//         txtValue = a.textContent || a.innerText;
+//         if (txtValue.toUpperCase().indexOf(filter) > -1) {
+//             li[i].style.display = "";
+//         } else {
+//             li[i].style.display = "none";
+//         }
+//     }
+// }
 
     function formatDate(dateString) {
       // Extract the date part if there's a time portion (split by space)
@@ -59,6 +59,17 @@ function myFunction() {
         year: '2-digit'
       }).format(date);
     }
+
+    $(document).ready(function(){
+  $('#myInput').on('keyup', function() {
+    const input = $(this).val().toLowerCase();
+
+    // Loop through the .dv_addnew divs and show/hide based on search
+    $('#list_name .dv_addnew').filter(function() {
+      $(this).toggle($(this).find('.txt_client_name').text().toLowerCase().indexOf(input) > -1)
+    });
+  });
+});
 </script>
 <script> 
     // JavaScript anonymous function 
@@ -110,9 +121,9 @@ function myFunction() {
                                     <!-- Adding an image inside a div -->
                                     <img src="/images/5.png" alt="Example Image" class="img_adduser">
                                     </div></a>
-                                    <div v-for="(item, index) in clients" :key="item.id">
+                                    <div v-for="(item, index) in clients" :key="item.id" id="list_name">
                                         <a :href="route('training.index', item.id)">
-                                        <div  class="dv_addnew"><span>{{item.name}}</span>
+                                        <div  class="dv_addnew"><span class="txt_client_name">{{item.name}}</span>
                                         <br /><img src="/images/6.png" alt="" class="img_user">
                                         <h6><strong>Start:</strong> {{ formatDate(item.start_date) }}</h6>
                                         </div></a>
