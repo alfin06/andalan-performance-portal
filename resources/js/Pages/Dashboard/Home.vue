@@ -106,14 +106,16 @@ function myFunction() {
 
 
                                 <div class="flex-container">
-                                    <div class="image-container">
+                                    <a :href="route('client.create')"><div class="image-container">
                                     <!-- Adding an image inside a div -->
                                     <img src="/images/5.png" alt="Example Image" class="img_adduser">
-                                    </div>
-                                    <div class="dv_addnew" v-for="(item, index) in clients" :key="item.id">
-                                    <span>{{item.name}}</span>
-                                    <br /><img src="/images/6.png" alt="" class="img_user">
-                                    <h6><strong>Start:</strong> {{ formatDate(item.start_date) }}</h6>
+                                    </div></a>
+                                    <div v-for="(item, index) in clients" :key="item.id">
+                                        <a :href="route('training.index', item.id)">
+                                        <div  class="dv_addnew"><span>{{item.name}}</span>
+                                        <br /><img src="/images/6.png" alt="" class="img_user">
+                                        <h6><strong>Start:</strong> {{ formatDate(item.start_date) }}</h6>
+                                        </div></a>
                                     </div>
                                 </div>
                                 
@@ -183,6 +185,7 @@ padding:5px;
 flex: 0 1 auto;         /* Allow items to grow/shrink and set initial size */
 }
 .img_adduser{
+    padding-top:20px;
     width: 100px;
   max-width: 400px;
   height: auto;

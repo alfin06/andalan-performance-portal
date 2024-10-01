@@ -23327,30 +23327,39 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_9 = {
   "class": "flex-container"
 };
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_10 = ["href"];
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "image-container"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Adding an image inside a div "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "/images/5.png",
   alt: "Example Image",
   "class": "img_adduser"
 })], -1 /* HOISTED */);
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_12 = [_hoisted_11];
+var _hoisted_13 = ["href"];
+var _hoisted_14 = {
+  "class": "dv_addnew"
+};
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "/images/6.png",
   alt: "",
   "class": "img_user"
 }, null, -1 /* HOISTED */);
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Start:", -1 /* HOISTED */);
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Start:", -1 /* HOISTED */);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Head"], {
     title: "Home"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Layout"], null, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" contact "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.clients, function (item, index) {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" contact "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+        href: _ctx.route('client.create')
+      }, [].concat(_hoisted_12), 8 /* PROPS */, _hoisted_10), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.clients, function (item, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-          "class": "dv_addnew",
           key: item.id
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1 /* TEXT */), _hoisted_11, _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.formatDate(item.start_date)), 1 /* TEXT */)])]);
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+          href: _ctx.route('training.index', item.id)
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.name), 1 /* TEXT */), _hoisted_15, _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.formatDate(item.start_date)), 1 /* TEXT */)])])], 8 /* PROPS */, _hoisted_13)]);
       }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"container\">\r\n                                    <div class=\"row\" id=\"list_name\">\r\n                                        <div class=\"col-3 name_box\" v-for=\"(item, index) in clients\" :key=\"item.id\"> \r\n                                            <Link :href=\"route('training.index', item.id)\" class=\"name_a\">\r\n                                                <span>{{item.name}}</span><hr />\r\n                                                <h6><strong>Start date:</strong> {{(item.start_date.split(\" \"))[0]}}</h6>\r\n                                                <h6><strong>Program:</strong> {{item.program}}</h6>\r\n                                            </Link>\r\n                                        </div>\r\n                                    </div>\r\n                                </div> ")])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Footer"])])];
     }),
     _: 1 /* STABLE */
@@ -29271,7 +29280,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n* {\r\n    box-sizing: border-box;\n}\n#myInput {\r\n    /* background-image: url('/css/search.png'); */\r\n    background-position: 10px 12px;\r\n    background-repeat: no-repeat;\r\n    width: 100%;\r\n    font-size: 16px;\r\n    padding: 12px 20px 12px 40px;\r\n    border: 1px solid #ddd;\r\n    margin-bottom: 12px;\n}\n.name_box{\r\n    border: 1px solid #ddd;\r\n    margin-top: -1px; /* Prevent double borders */     \r\n    padding-left: 15px;\r\n    text-decoration: none;\r\n    font-size: 18px;\r\n    color: black;\n}\n.name_a{\r\n    background-color: #fbfbfb;\r\n    margin:10px;\r\n    padding: 5px;\n}\n.image-container,\r\n.dv_addnew {\r\n  text-align: center;\r\n  background-color: white;\r\n  /* Add shadow */\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);\r\n  border-radius: 8px; /* Optional: rounded corners */\r\n  width:140px;\r\n  height:160px;\r\n  margin:5px;\r\npadding:5px;\r\nflex: 0 1 auto;         /* Allow items to grow/shrink and set initial size */\n}\n.img_adduser{\r\n    width: 100px;\r\n  max-width: 400px;\r\n  height: auto;\n}\n.flex-container {\r\n    display: flex;           /* Use Flexbox layout */\r\n  flex-wrap: wrap;        /* Allow items to wrap to the next line */\r\n  justify-content: flex-start; /* Align items to the start (left) */\n}\n.img_user {\r\n  width: 80px; /* Set a fixed width for the image */\r\n  height: auto; /* Keeps the aspect ratio */\r\n  margin-bottom: 10px; /* Optional: add some space below the image */\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n* {\r\n    box-sizing: border-box;\n}\n#myInput {\r\n    /* background-image: url('/css/search.png'); */\r\n    background-position: 10px 12px;\r\n    background-repeat: no-repeat;\r\n    width: 100%;\r\n    font-size: 16px;\r\n    padding: 12px 20px 12px 40px;\r\n    border: 1px solid #ddd;\r\n    margin-bottom: 12px;\n}\n.name_box{\r\n    border: 1px solid #ddd;\r\n    margin-top: -1px; /* Prevent double borders */     \r\n    padding-left: 15px;\r\n    text-decoration: none;\r\n    font-size: 18px;\r\n    color: black;\n}\n.name_a{\r\n    background-color: #fbfbfb;\r\n    margin:10px;\r\n    padding: 5px;\n}\n.image-container,\r\n.dv_addnew {\r\n  text-align: center;\r\n  background-color: white;\r\n  /* Add shadow */\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);\r\n  border-radius: 8px; /* Optional: rounded corners */\r\n  width:140px;\r\n  height:160px;\r\n  margin:5px;\r\npadding:5px;\r\nflex: 0 1 auto;         /* Allow items to grow/shrink and set initial size */\n}\n.img_adduser{\r\n    padding-top:20px;\r\n    width: 100px;\r\n  max-width: 400px;\r\n  height: auto;\n}\n.flex-container {\r\n    display: flex;           /* Use Flexbox layout */\r\n  flex-wrap: wrap;        /* Allow items to wrap to the next line */\r\n  justify-content: flex-start; /* Align items to the start (left) */\n}\n.img_user {\r\n  width: 80px; /* Set a fixed width for the image */\r\n  height: auto; /* Keeps the aspect ratio */\r\n  margin-bottom: 10px; /* Optional: add some space below the image */\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
