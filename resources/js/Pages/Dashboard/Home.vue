@@ -44,6 +44,21 @@ function myFunction() {
         }
     }
 }
+
+    function formatDate(dateString) {
+      // Extract the date part if there's a time portion (split by space)
+      const datePart = dateString.split(' ')[0];
+
+      // Create a Date object from the string
+      const date = new Date(datePart);
+
+      // Use Intl.DateTimeFormat to format the date as '19 Oct 24'
+      return new Intl.DateTimeFormat('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: '2-digit'
+      }).format(date);
+    }
 </script>
 <script> 
     // JavaScript anonymous function 
@@ -78,18 +93,32 @@ function myFunction() {
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex">
-                                    <h4 class="card-title"><span class="lstick"></span>Client List</h4>
-                                    <div class="btn-group ml-auto m-t-10">
+                                    <h4 class="card-title"><span class="lstick"></span>Choose a Client</h4>
+                                    <!-- <div class="btn-group ml-auto m-t-10">
                                         <a href="JavaScript:void(0)" class="icon-options-vertical link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" :href="route('client.create')">Add New Client</a>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
 
-                                <div class="container">
+
+                                <div class="flex-container">
+                                    <div class="image-container">
+                                    <!-- Adding an image inside a div -->
+                                    <img src="/images/5.png" alt="Example Image" class="img_adduser">
+                                    </div>
+                                    <div class="dv_addnew" v-for="(item, index) in clients" :key="item.id">
+                                    <span>{{item.name}}</span>
+                                    <br /><img src="/images/6.png" alt="" class="img_user">
+                                    <h6><strong>Start:</strong> {{ formatDate(item.start_date) }}</h6>
+                                    </div>
+                                </div>
+                                
+
+                                <!-- <div class="container">
                                     <div class="row" id="list_name">
                                         <div class="col-3 name_box" v-for="(item, index) in clients" :key="item.id"> 
                                             <Link :href="route('training.index', item.id)" class="name_a">
@@ -99,7 +128,7 @@ function myFunction() {
                                             </Link>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -140,4 +169,33 @@ function myFunction() {
     margin:10px;
     padding: 5px;
 }        
+.image-container,
+.dv_addnew {
+  text-align: center;
+  background-color: white;
+  /* Add shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Optional: rounded corners */
+  width:140px;
+  height:160px;
+  margin:5px;
+padding:5px;
+flex: 0 1 auto;         /* Allow items to grow/shrink and set initial size */
+}
+.img_adduser{
+    width: 100px;
+  max-width: 400px;
+  height: auto;
+}
+.flex-container {
+    display: flex;           /* Use Flexbox layout */
+  flex-wrap: wrap;        /* Allow items to wrap to the next line */
+  justify-content: flex-start; /* Align items to the start (left) */
+
+}
+.img_user {
+  width: 80px; /* Set a fixed width for the image */
+  height: auto; /* Keeps the aspect ratio */
+  margin-bottom: 10px; /* Optional: add some space below the image */
+}
 </style>
