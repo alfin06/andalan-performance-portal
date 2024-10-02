@@ -395,11 +395,17 @@ $(document).ready(function() {
 
 .day_container{
     padding:20px;
-    margin:10px;
+    margin-bottom:10px;
     background-color: white;
   /* Add shadow */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
   border-radius: 8px; /* Optional: rounded corners */
+}
+.dateBtn{
+    margin-bottom:10px;
+}
+.tab-pane{
+    margin-top:15px;
 }
 </style>
 
@@ -586,7 +592,7 @@ $(document).ready(function() {
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="nav-item" v-for="(tab, index) in tabs" :key="tab.id"> 
                                         <a class="nav-link" data-toggle="tab" :href='"#tab_"+tab.id' role="tab">
-                                            <span class="hidden-sm-up"><i class="ti-home"></i></span> 
+                                            <span class="hidden-sm-up">{{ tab.tab_name }}</span> 
                                             <span class="hidden-xs-down">{{ tab.tab_name }}</span>
                                         </a>
                                     </li>
@@ -599,15 +605,15 @@ $(document).ready(function() {
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content tabcontent-border">
-                                    <div class="tab-pane p-20" v-for="(tab, index) in tabs" :key="tab.id" :id='"tab_" + tab.id' role="tabpanel">
-                                        <button class="pull-right btn btn-success btn-rounded" id="movementBtn" @click.prevent="showHead(tab)" data-toggle="modal" data-target="#headModal"><i class="ti-calendar"></i> Add Date</button>
+                                    <div class="tab-pane" v-for="(tab, index) in tabs" :key="tab.id" :id='"tab_" + tab.id' role="tabpanel">
+                                        <button class="btn btn-success btn-rounded dateBtn" id="dateBtn" @click.prevent="showHead(tab)" data-toggle="modal" data-target="#headModal"><i class="ti-calendar"></i> Add Date</button>
                                         <div v-for="(h, index) in head_training" :key="h.id" :id="h.id">
                                             <div v-if="h.tab_id==tab.id" class="day_container">
                                                 <div class="d-flex m-t-20 row ">
-                                                    <div class="col-md-6">
+                                                    <div class="col-12">
                                                         <h4 class="card-title">
-                                                            {{ FormatDate(new Date((h.head_date.split(" "))[0])) }}<br />
-                                                            <button class="btn btn-success btn-rounded btn-sm" id="movementBtn" @click.prevent="showMovement(tab, h.head_date)" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Add Movement</button>
+                                                            {{ FormatDate(new Date((h.head_date.split(" "))[0])) }}
+                                                            <button class="pull-right btn btn-success btn-rounded btn-sm" id="movementBtn" @click.prevent="showMovement(tab, h.head_date)" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Add Movement</button>
                                                         </h4>
                                                         <h6 class="card-subtitle">
                                                             Notes: {{ h.head_notes }}
@@ -619,46 +625,61 @@ $(document).ready(function() {
                                                     <table id="table_print" class="display nowrap table table-hover  table-bordered" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                                <th></th>
+                                                               
                                                                 <th>Planned Movement</th>
                                                                 <th>Status</th>
                                                                 <th>Sets</th>
                                                                 <th>T.</th>
                                                                 <th>Wt.</th>
                                                                 <th>Rest</th>
-                                                                <th>Reps Achieved</th>
+                                                                <th colspan="6">Reps Achieved</th>
+                                                                <th></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody v-for="(x, index) in data" :key="data.id">
                                                             <tr data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id && x.head_training_id == h.id">
-                                                                <td class="display:flex;width=1%;">
+                                                                
+                                                                <td @click.prevent="editMovement(tab, x)"><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
+                                                                <td>
+                                                                    <!-- <span class="label label-success label-rounded" v-if="x.status == 'Good'">{{x.status}}</span> -->
+                                                                    <span class="label label-warning label-rounded" v-if="x.status == 'Struggling'">{{x.status}}</span>
+                                                                    <span class="label label-danger label-rounded" v-if="x.status == 'Fail'">{{x.status}}</span>
+                                                                </td>
+                                                                <td @click.prevent="editMovement(tab, x)">{{ x.sets }}</td>
+                                                                <td @click.prevent="editMovement(tab, x)">{{ x.t }}</td>
+                                                                <td @click.prevent="editMovement(tab, x)">{{ x.wt }}</td>
+                                                                <td @click.prevent="editMovement(tab, x)">{{ x.rest }}</td>
+                                                                <td>{{ x.reps1 }}</td>
+                                                                <td>{{ x.reps2 }}</td>
+                                                                <td>{{ x.reps3 }}</td>
+                                                                <td>{{ x.reps4 }}</td>
+                                                                <td>{{ x.reps5 }}</td>
+                                                                <td>{{ x.reps6 }}</td>
+                                                                <!-- <td>{{ (x.reps1||"-") + ' | ' + (x.reps2||"-") + ' | ' + (x.reps3||"-") + ' | ' + (x.reps4||"-") + ' | ' + (x.reps5||"-") + ' | ' + (x.reps6||"-") }}</td> -->
+                                                                <td class="">
                                                                     <!-- <button class="btn btn-info btn-sm btn-rounded" @click.prevent="editMovement(tab, x)"><i class="ti-pencil"></i> Edit</button> -->
                                                                     <button class="btn btn-warning btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Struggling')"> Struggling</button>
                                                                     &nbsp;
                                                                     <button class="btn btn-danger btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Fail')"> Fail</button>
                                                                     <!-- <button class="btn btn-danger btn-sm btn-rounded" @click.prevent="deleteMovement(x)"><i class="ti-trash"></i> Delete</button> -->
                                                                 </td>
-                                                                <td><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
-                                                                <td>
-                                                                    <!-- <span class="label label-success label-rounded" v-if="x.status == 'Good'">{{x.status}}</span> -->
-                                                                    <span class="label label-warning label-rounded" v-if="x.status == 'Struggling'">{{x.status}}</span>
-                                                                    <span class="label label-danger label-rounded" v-if="x.status == 'Fail'">{{x.status}}</span>
-                                                                </td>
-                                                                <td>{{ x.sets }}</td>
-                                                                <td>{{ x.t }}</td>
-                                                                <td>{{ x.wt }}</td>
-                                                                <td>{{ x.rest }}</td>
-                                                                <td>{{ (x.reps1||"-") + ' | ' + (x.reps2||"-") + ' | ' + (x.reps3||"-") + ' | ' + (x.reps4||"-") + ' | ' + (x.reps5||"-") + ' | ' + (x.reps6||"-") }}</td>
                                                             </tr>
                                                             <tr v-if="x.tab_id == tab.id && x.head_training_id == h.id && x.subs=='Y'" class="accordian-body collapse sub" :id="'sub'+index">
-                                                                <td></td>
+                                                                
                                                                 <td>{{ x.sub_mov_name }} </td>
                                                                 <td><span class="label label-danger label-rounded">{{ x.sub_status }}</span></td>
                                                                 <td>{{ x.sub_sets }}</td>
                                                                 <td>{{ x.sub_t }}</td>
                                                                 <td>{{ x.sub_wt }}</td>
                                                                 <td>{{ x.sub_rest }}</td>
-                                                                <td>{{ (x.sub_reps1||"-") + ' | ' + (x.sub_reps2||"-") + ' | ' + (x.sub_reps3||"-") + ' | ' + (x.sub_reps4||"-") + ' | ' + (x.sub_reps5||"-") + ' | ' + (x.sub_reps6||"-") }}</td>
+                                                                <td>{{ x.sub_reps1 }}</td>
+                                                                <td>{{ x.sub_reps2 }}</td>
+                                                                <td>{{ x.sub_reps3 }}</td>
+                                                                <td>{{ x.sub_reps4 }}</td>
+                                                                <td>{{ x.sub_reps5 }}</td>
+                                                                <td>{{ x.sub_reps6 }}</td>
+                                                                <!-- <td>{{ (x.sub_reps1||"-") + ' | ' + (x.sub_reps2||"-") + ' | ' + (x.sub_reps3||"-") + ' | ' + (x.sub_reps4||"-") + ' | ' + (x.sub_reps5||"-") + ' | ' + (x.sub_reps6||"-") }}</td> -->
+                                                                <td></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -695,7 +716,7 @@ $(document).ready(function() {
                                                     <table class="table">
                                                         <thead>
                                                             <tr class="info">
-                                                                <th>Week</th>
+                                                                <th>Tab</th>
                                                                 <th>Date</th>
                                                                 <th>Status</th>
                                                                 <th>Sets</th>		
