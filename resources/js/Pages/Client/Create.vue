@@ -1,7 +1,7 @@
 <script setup>
 import { useForm, Link, usePage, Head } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import Layout from '../../Layouts/Main';
 import Footer from '../../Layouts/Footer';
 import { toast } from 'vue3-toastify';
@@ -19,6 +19,16 @@ const form = useForm({
                 birth_date: '',
             });
 
+const errors = reactive({
+    name: '',
+    email: '',
+    phone: '',
+    program: '',
+    start_date: '',
+    goal: '',
+    birth_date: '',
+});
+
 const props = defineProps({
                 failed: {
                     type: String,
@@ -26,9 +36,48 @@ const props = defineProps({
                 },
             });
 
+const validateFields = () => {
+  let valid = true;
+
+  // Check each field and set error messages accordingly
+  if (!form.name) {
+    errors.name = "Full Name is required";
+    valid = false;
+  } else {
+    errors.name = '';
+  }
+
+  if (!form.program) {
+    errors.program = "Program is required";
+    valid = false;
+  } else {
+    errors.program = '';
+  }
+
+  if (!form.start_date) {
+    errors.start_date = "Start Date is required";
+    valid = false;
+  } else {
+    errors.start_date = '';
+  }
+
+  if (!form.goal) {
+    errors.goal = "Goal is required";
+    valid = false;
+  } else {
+    errors.goal = '';
+  }
+
+  return valid;
+};
+
 const submit = () => {
-    form.post(route("client.store"));
-    toast.success('Client added successfully!');
+    if (validateFields()) {
+        form.post(route("client.store"));
+        toast.success('Client added successfully!');
+    } else {
+        toast.error('Please fill in all required fields.');
+    }
 };
 </script>
 
@@ -61,10 +110,10 @@ const submit = () => {
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="name" class="control-label">Full Name</label>
+                                                    <label for="name" class="control-label">Full Name <span class="text-danger">*</span></label>
                                                     <input type="text" v-model="form.name" name="name" class="form-control" placeholder="Name" />
-                                                    <div v-if="form.errors.name" class="text-sm text-red-600">
-                                                        {{ form.errors.name }}
+                                                    <div v-if="errors.name" class="text-sm text-red-600">
+                                                        {{ errors.name }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,19 +150,19 @@ const submit = () => {
                                         <div class="row p-t-20">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="program" class="control-label">Program</label>
+                                                    <label for="program" class="control-label">Program <span class="text-danger">*</span></label>
                                                     <input type="text" v-model="form.program" name="program" class="form-control" placeholder="Program" />
-                                                    <div v-if="form.errors.program" class="text-sm text-red-600">
-                                                        {{ form.errors.program }}
+                                                    <div v-if="errors.program" class="text-sm text-red-600">
+                                                        {{ errors.program }}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="goal" class="control-label">Goal</label>
+                                                    <label for="goal" class="control-label">Goal <span class="text-danger">*</span></label>
                                                     <input type="text" v-model="form.goal" name="goal" class="form-control" placeholder="Goal" />
-                                                    <div v-if="form.errors.goal" class="text-sm text-red-600">
-                                                        {{ form.errors.goal }}
+                                                    <div v-if="errors.goal" class="text-sm text-red-600">
+                                                        {{ errors.goal }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -121,10 +170,10 @@ const submit = () => {
                                         <div class="row p-t-20">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="start_date" class="control-label">Start Date</label>
+                                                    <label for="start_date" class="control-label">Start Date <span class="text-danger">*</span></label>
                                                     <input type="date" v-model="form.start_date" name="start_date" class="form-control" placeholder="mm/dd/yy" />
-                                                    <div v-if="form.errors.start_date" class="text-sm text-red-600">
-                                                        {{ form.errors.start_date }}
+                                                    <div v-if="errors.start_date" class="text-sm text-red-600">
+                                                        {{ errors.start_date }}
                                                     </div>
                                                 </div>
                                             </div>
