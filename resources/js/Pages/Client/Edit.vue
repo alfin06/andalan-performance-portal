@@ -21,7 +21,7 @@ const props = defineProps({
             });
 
 //remove hours, minutes, and seconds
-var format_bdate = props.client.birth_date.split(" ");
+//var format_bdate = props.client.birth_date.split(" ");
 var format_sdate = props.client.start_date.split(" ");
 
 const form = useForm({
@@ -29,7 +29,7 @@ const form = useForm({
                 name: props.client.name,
                 email: props.client.email,
                 phone: props.client.phone,
-                birth_date: format_bdate[0],
+                //birth_date: format_bdate[0],
                 program: props.client.program,
                 goal: props.client.goal,
                 start_date: format_sdate[0],
@@ -148,7 +148,7 @@ jQuery(document).ready(function() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="goal" class="control-label">Birth Date</label>
                                                     <input type="date" v-model="form.birth_date" name="birth_date" class="form-control" placeholder="mm/dd/yyyy" />
@@ -156,7 +156,7 @@ jQuery(document).ready(function() {
                                                         {{ form.errors.birth_date }}
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="row p-t-20">
                                             <div class="col-md-6">

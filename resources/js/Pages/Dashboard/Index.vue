@@ -44,7 +44,7 @@ const props = defineProps({
 });
 
 //remove hours, minutes, and seconds
-var format_bdate = props.client.birth_date.split(" ");
+//var format_bdate = props.client.birth_date.split(" ");
 var format_sdate = props.client.start_date.split(" ");
 var name = props.client.name;
 var program = props.client.program;
