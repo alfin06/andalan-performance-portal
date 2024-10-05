@@ -93,7 +93,11 @@ function destroy(id) {
                                                     <tr>
                                                         <th>Action</th>
                                                         <th>Full Name</th>
+                                                        <th>Email</th>
+                                                        <th>Phone</th>
                                                         <th>Program</th>
+                                                        <th>Goal</th>
+                                                        <th>Start Date</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -103,7 +107,11 @@ function destroy(id) {
                                                             <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn text-danger" data-toggle="tooltip" data-original-title="Delete" @click="destroy(item.id)"><i class="ti-trash" aria-hidden="true"></i></button>
                                                         </td>
                                                         <td>{{item.name}}</td>
+                                                        <td>{{item.email}}</td>
+                                                        <td>{{item.phone}}</td>
                                                         <td>{{item.program}}</td>
+                                                        <td>{{item.goal}}</td>
+                                                        <td>{{item.start_date}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
