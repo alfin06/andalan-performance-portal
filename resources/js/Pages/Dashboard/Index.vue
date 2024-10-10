@@ -97,12 +97,14 @@ const mov = useForm({
     t: '',
     wt: '',
     rest: '',
+    reps: '',
     reps1: '',
     reps2: '',
     reps3: '',
     reps4: '',
     reps5: '',
     reps6: '',
+    block: '',
     tab_id: '',
     tab_client_id: '',
     id: ''
@@ -178,6 +180,7 @@ const editMovement = (tab, x) => {
     mov.mov_plan = x.movement_id + '-' + x.movement_name;
     mov.status = x.status;
     mov.sets = x.sets;
+    mov.reps = x.reps;
     mov.t = x.t;
     mov.wt = x.wt;
     mov.rest = x.rest;
@@ -187,6 +190,7 @@ const editMovement = (tab, x) => {
     mov.reps4 = x.reps4;
     mov.reps5 = x.reps5;
     mov.reps6 = x.reps6;
+    mov.block = x.block;
     $('#movementModal').modal('show');
 };
 const subsMovement = (tab, x, status) => {
@@ -389,8 +393,11 @@ $(document).ready(function() {
 </script>
 
 <style>
-.sub {
+.fail {
     background: #FFADB0;
+}
+.struggle {
+    background: #ffe0ad;
 }
 
 .day_container{
@@ -448,18 +455,24 @@ $(document).ready(function() {
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="form-group col-4" v-if="add_edit=='add'">
-                                        <label>Date</label>
-                                        <input type="date" v-model="mov.date" class="form-control" > 
+                                    <div class="row">
+                                    <div class="form-group col-6" v-if="add_edit=='add'">
+                                        <label>Date</label><br />
+                                        <input type="date" v-model="mov.date" class="form-control" style="width:300px;"> 
                                     </div>
+                                    <div class="form-group col-6">
+                                        <label>Block</label><br />
+                                        <input type="text" v-model="mov.block" class="form-control" style="width:60px;"> 
+                                    </div>
+                                </div>
                                     <form class="row" id="myForm">
-                                        <div class="form-group col-5">
+                                        <div class="form-group col-6">
                                             <label>Category</label>
                                             <select class="select2 m-b-10 select2-multiple custom-select form-control" id="mov_category" style="width:100%;" multiple="multiple" v-model="mov.category">
                                                 <option v-for="(mc, index) in mcategory" :key="mcategory.id" :value="mc.category_name">{{ mc.category_name }}</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-5">
+                                        <div class="form-group col-6">
                                             <label>Movement Plan (Count: <span id="mov_info">0</span>)</label>
                                             <select class="select2 form-control custom-select" id="mov_plan" style="width:100%;" >
                                                 <option></option>
@@ -485,14 +498,15 @@ $(document).ready(function() {
                                                 </div>
                                             </div> 
                                         </div> -->
-                                        <div class="col-6" >
+                                        <div class="col-6 col-sm-12 col-lg-6 col-md-6" >
                                             <label>Details</label> <br />
-                                            <input type="text" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
+                                            <input type="number" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
+                                            <input type="text" class="form-control" placeholder="Reps" v-model="mov.reps" style="width:80px;margin-right:10px;">
                                             <input type="text" class="form-control" placeholder="T." v-model="mov.t" style="width:80px;margin-right:10px;">
                                             <input type="text" class="form-control" placeholder="Wt." v-model="mov.wt" style="width:80px;margin-right:10px;">
                                             <input type="text" class="form-control" placeholder="Rest" v-model="mov.rest" style="width:80px;margin-right:10px;">
                                         </div>
-                                        <div class="col-6" >
+                                        <div class="col-6 col-sm-12 col-lg-6 col-md-6" >
                                             <label>Reps Achieved</label> <br />
                                             <input type="text" class="form-control" v-model="mov.reps1" style="width:60px;margin-right:5px;">
                                             <input type="text" class="form-control" v-model="mov.reps2" style="width:60px;margin-right:5px;">
@@ -625,10 +639,11 @@ $(document).ready(function() {
                                                     <table id="table_print" class="display nowrap table table-hover  table-bordered" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                               
+                                                               <th>Block</th>
                                                                 <th>Planned Movement</th>
                                                                 <th>Status</th>
                                                                 <th>Sets</th>
+                                                                <th>Reps</th>
                                                                 <th>T.</th>
                                                                 <th>Wt.</th>
                                                                 <th>Rest</th>
@@ -638,7 +653,7 @@ $(document).ready(function() {
                                                         </thead>
                                                         <tbody v-for="(x, index) in data" :key="data.id">
                                                             <tr data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id && x.head_training_id == h.id">
-                                                                
+                                                                <td>{{ x.block }}</td>
                                                                 <td @click.prevent="editMovement(tab, x)"><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
                                                                 <td>
                                                                     <!-- <span class="label label-success label-rounded" v-if="x.status == 'Good'">{{x.status}}</span> -->
@@ -646,6 +661,7 @@ $(document).ready(function() {
                                                                     <span class="label label-danger label-rounded" v-if="x.status == 'Fail'">{{x.status}}</span>
                                                                 </td>
                                                                 <td @click.prevent="editMovement(tab, x)">{{ x.sets }}</td>
+                                                                <td @click.prevent="editMovement(tab, x)">{{ x.reps }}</td>
                                                                 <td @click.prevent="editMovement(tab, x)">{{ x.t }}</td>
                                                                 <td @click.prevent="editMovement(tab, x)">{{ x.wt }}</td>
                                                                 <td @click.prevent="editMovement(tab, x)">{{ x.rest }}</td>
@@ -664,11 +680,12 @@ $(document).ready(function() {
                                                                     <!-- <button class="btn btn-danger btn-sm btn-rounded" @click.prevent="deleteMovement(x)"><i class="ti-trash"></i> Delete</button> -->
                                                                 </td>
                                                             </tr>
-                                                            <tr v-if="x.tab_id == tab.id && x.head_training_id == h.id && x.subs=='Y'" class="accordian-body collapse sub" :id="'sub'+index">
-                                                                
+                                                            <tr v-if="x.tab_id == tab.id && x.head_training_id == h.id && x.subs=='Y'" :class="['accordian-body', 'collapse', x.sub_status === 'Struggling' ? 'struggle' : 'fail']" :id="'sub'+index">
+                                                                <td>{{ x.sub_block }}</td>
                                                                 <td>{{ x.sub_mov_name }} </td>
-                                                                <td><span class="label label-danger label-rounded">{{ x.sub_status }}</span></td>
+                                                                <td><span :class="['label', 'label-rounded', x.sub_status === 'Struggling' ? 'label-warning' : 'label-danger']">{{ x.sub_status }}</span></td>
                                                                 <td>{{ x.sub_sets }}</td>
+                                                                <td>{{ x.sub_reps }}</td>
                                                                 <td>{{ x.sub_t }}</td>
                                                                 <td>{{ x.sub_wt }}</td>
                                                                 <td>{{ x.sub_rest }}</td>
@@ -719,7 +736,8 @@ $(document).ready(function() {
                                                                 <th>Tab</th>
                                                                 <th>Date</th>
                                                                 <th>Status</th>
-                                                                <th>Sets</th>		
+                                                                <th>Sets</th>	
+                                                                <th>Reps</th>	
                                                                 <th>T.</th>	
                                                                 <th>Wt.</th>	
                                                                 <th>Rest</th>	
@@ -732,6 +750,7 @@ $(document).ready(function() {
                                                                 <td>{{ hd.training_date }}</td>
                                                                 <td><span class="label label-success label-rounded">{{ hd.status }}</span></td>
                                                                 <td>{{ hd.sets }}</td>
+                                                                <td>{{ hd.reps }}</td>
                                                                 <td>{{ hd.t }}</td>
                                                                 <td>{{ hd.wt }}</td>
                                                                 <td>{{ hd.rest }}</td>
