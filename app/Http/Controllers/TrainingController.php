@@ -38,6 +38,7 @@ class TrainingController extends Controller
                                  'subs.reps5 AS sub_reps5', 'subs.reps6 AS sub_reps6')
                     ->leftJoin('subs', 'trainings.id', '=', 'subs.training_id')
                     ->where('trainings.client_id', '=', $client_id)
+                    ->orderBy('trainings.block')
                     ->get();
         $movement = Movement::all();
         $mCategory = DB::table('master_category')->orderBy('category_name')->get();
