@@ -147,25 +147,38 @@ const showMovement = (tab, head_date) => {
     $('#movementModal').modal('show');
 };
 const submitMovement = () => {
+    var nomovement = false;
+
     mov.mov_plan = document.getElementById("hid_plan").value;
     if(mov.mov_plan == "") {
         mov.mov_plan = document.getElementById("hid_plan2").value;
+
+        if(mov.mov_plan == "") {
+            nomovement = true;
+        }
     }
 
-    if(add_edit == "add") {
-        mov.post(route("training.addMovement"));
-        toast.success('Daily movement added succesfully!');
+    if(nomovement)
+    {
+        alert('Please select a movement!');
+    }else{
+        if(add_edit == "add") {
+            mov.post(route("training.addMovement"));
+            toast.success('Daily movement added succesfully!');
+        }
+        else if(add_edit == "edit") {
+            mov.post(route("training.updateMovement"));
+            toast.success('Daily movement updated succesfully!');
+        }
+        else {
+            mov.post(route("training.subsMovement"));
+            toast.success('Daily movement substitute added succesfully!');
+        }
+        mov.reset();
+        $('#movementModal').modal('hide');
     }
-    else if(add_edit == "edit") {
-        mov.post(route("training.updateMovement"));
-        toast.success('Daily movement updated succesfully!');
-    }
-    else {
-        mov.post(route("training.subsMovement"));
-        toast.success('Daily movement substitute added succesfully!');
-    }
-    mov.reset();
-    $('#movementModal').modal('hide');
+
+    
 };
 const editMovement = (tab, x) => {
     add_edit = "edit";
