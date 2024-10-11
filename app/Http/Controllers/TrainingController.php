@@ -30,14 +30,15 @@ class TrainingController extends Controller
     {
         $client = Client::where('id', $client_id)->first();
         $tabs = Tab::where('client_id', $client_id)->get();
-        $data = Training::select('trainings.tab_id', 'trainings.movement_name', 'trainings.status', 'trainings.sets', 'trainings.t', 'trainings.wt', 'trainings.rest',
+        $data = Training::select('trainings.tab_id', 'trainings.movement_name', 'trainings.status', 'trainings.sets', 'trainings.t', 'trainings.wt', 'trainings.rest','trainings.reps','trainings.block',
                                  'trainings.subs', 'trainings.reps1', 'trainings.reps2', 'trainings.reps3', 'trainings.reps4',
                                  'trainings.reps5', 'trainings.reps6', 'trainings.date', 'trainings.movement_id', 'trainings.id', 'trainings.head_training_id',
-                                 'subs.tab_id AS sub_tab_id', 'subs.movement_name AS sub_mov_name', 'subs.status AS sub_status', 'subs.sets AS sub_sets', 'subs.t AS sub_t', 'subs.wt AS sub_wt', 'subs.rest AS sub_rest',
+                                 'subs.tab_id AS sub_tab_id', 'subs.movement_name AS sub_mov_name', 'subs.status AS sub_status', 'subs.sets AS sub_sets', 'subs.t AS sub_t', 'subs.wt AS sub_wt', 'subs.rest AS sub_rest','subs.reps AS sub_reps','subs.block AS sub_block',
                                  'subs.reps1 AS sub_reps1', 'subs.reps2 AS sub_reps2', 'subs.reps3 AS sub_reps3', 'subs.reps4 AS sub_reps4',
                                  'subs.reps5 AS sub_reps5', 'subs.reps6 AS sub_reps6')
                     ->leftJoin('subs', 'trainings.id', '=', 'subs.training_id')
                     ->where('trainings.client_id', '=', $client_id)
+                    ->orderBy('trainings.block')
                     ->get();
         $movement = Movement::all();
         $mCategory = DB::table('master_category')->orderBy('category_name')->get();
@@ -50,7 +51,7 @@ class TrainingController extends Controller
                             ->get();
 
         $history_detail = Training::select('trainings.movement_id', 'tabs.tab_name', DB::raw('DATE_FORMAT(trainings.date, "%d/%m/%Y") AS training_date'),
-                                            'trainings.status', 'trainings.sets', 'trainings.t', 'trainings.wt', 'trainings.rest',
+                                            'trainings.status', 'trainings.sets', 'trainings.t', 'trainings.wt', 'trainings.rest', 'trainings.reps', 'trainings.block',
                                             'trainings.reps1', 'trainings.reps2', 'trainings.reps3', 'trainings.reps4',
                                             'trainings.reps5', 'trainings.reps6')
                                 ->join('tabs', 'trainings.tab_id', 'tabs.id')
@@ -200,6 +201,8 @@ class TrainingController extends Controller
         $training->t = $request->t;
         $training->wt = $request->wt;
         $training->rest = $request->rest;
+        $training->reps = $request->reps;
+        $training->block = $request->block;
         $training->reps1 = $request->reps1;
         $training->reps2 = $request->reps2;
         $training->reps3 = $request->reps3;
@@ -226,6 +229,8 @@ class TrainingController extends Controller
         $training->t = $request->t;
         $training->wt = $request->wt;
         $training->rest = $request->rest;
+        $training->reps = $request->reps;
+        $training->block = $request->block;
         $training->reps1 = $request->reps1;
         $training->reps2 = $request->reps2;
         $training->reps3 = $request->reps3;
@@ -258,6 +263,8 @@ class TrainingController extends Controller
         $sub->t = $training->t;
         $sub->wt = $training->wt;
         $sub->rest = $training->rest;
+        $sub->reps = $sub->reps;
+        $sub->block = $sub->block;
         $sub->reps1 = $training->reps1;
         $sub->reps2 = $training->reps2;
         $sub->reps3 = $training->reps3;
@@ -277,6 +284,8 @@ class TrainingController extends Controller
         $training->wt = $request->wt;
         $training->rest = $request->rest;
         $training->subs = "Y";
+        $training->reps = $training->reps;
+        $training->block = $training->block;
         $training->reps1 = $request->reps1;
         $training->reps2 = $request->reps2;
         $training->reps3 = $request->reps3;

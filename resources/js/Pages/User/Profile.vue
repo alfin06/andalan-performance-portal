@@ -65,7 +65,7 @@ function profile() {
                             </div>
                             <div>
                             <hr> </div>
-                            <div class="card-body"> <small class="text-muted">Email address </small>
+                            <div class="card-body"> <small class="text-muted">Username </small>
                                 <h6>{{ user.email }}</h6>
                             </div>
                             <div class="card-body"> <small class="text-muted">Role </small>

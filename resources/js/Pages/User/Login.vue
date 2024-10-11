@@ -72,12 +72,12 @@ function auth() {
                     <div className="card-body">
                         <form @submit.prevent="auth" id="loginForm" ref="formContainer" class="form-horizontal form-material">
                             <div class="form-group">
-                                <label htmlFor="email" className="form-label">Email</label>
+                                <label htmlFor="email" className="form-label">Username</label>
                                 <input 
                                     type="text" 
                                     v-model="form.email"
                                     className="form-control" 
-                                    placeholder="Enter your email"
+                                    placeholder="Enter your username"
                                     id="email">
                                 <div v-if="form.errors.email" class="text-white bg-danger p-2 rounded my-2">{{ form.errors.email }}</div>
                             </div>
