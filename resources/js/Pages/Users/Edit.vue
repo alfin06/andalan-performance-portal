@@ -81,7 +81,7 @@ const changePassword = () => {
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="email" class="control-label">Email</label>
+                                                    <label for="email" class="control-label">Username</label>
                                                     <input type="text" v-model="form.email" name="email" class="form-control" placeholder="Email" />
                                                     <div v-if="form.errors.email" class="text-sm text-red-600">
                                                         {{ form.errors.email }}

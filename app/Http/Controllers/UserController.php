@@ -70,8 +70,9 @@ class UserController extends Controller
     public function update(Request $request, User $user) {
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
+            'email' => 'required|unique:users',
+        ], [
+            'email.unique' => 'This username has already been taken.',
         ]);
 
         $user = User::where('id', $request->id)->first();
