@@ -24,10 +24,13 @@ class UserController extends Controller
     }
 
     public function store(Request $request) {
+        // try {
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'password' => 'required|min:6',
+        ], [
+            'email.unique' => 'This username has already been taken.',
         ]);
 
         $user = new User();
@@ -38,7 +41,17 @@ class UserController extends Controller
         $user->save();
         sleep(1);
 
-        return redirect()->route('users.index')->with('message', 'User created successfully');
+        //return redirect()->route('users.index')->with('error', 'Duplicate entry detected!');
+        // return redirect()->route('users.index')->with('message', 'User created successfully');
+        // } catch (QueryException $e) {
+        //     // Check if the error is a duplicate entry
+        //     if ($e->errorInfo[1] == 1062) {
+        //         // Redirect back with an error message
+        //         return redirect()->route('users.index')->with('error', 'Duplicate entry detected!');
+        //     }
+        //     // Handle other exceptions
+        //     return redirect()->route('users.index')->with('error', 'An error occurred while saving the user.');
+        // }
     }
 
     public function show(User $user) {
