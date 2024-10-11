@@ -36,7 +36,7 @@ class ClientController extends Controller
             'goal' => 'required',
             'start_date' => 'required',
         ]);
-
+ 
         $client = new Client();
         $client->name = $request->name;
         $client->email = $request->email;
