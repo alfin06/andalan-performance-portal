@@ -268,6 +268,7 @@ public function addNewDate(Request $request)
         $head_training = new Head_training();
         $head_training->head_date = $request->date;
         $head_training->tab_id = $request->tab_id;
+        $head_training->client_id = $request->client_id;
         $head_training->created_by = Auth::id();
         $head_training->save();
     }

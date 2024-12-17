@@ -611,9 +611,7 @@
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        alert('Date added successfully');
-         // Close the modal
-         $('#headModal').modal('hide');
+        location.reload();
     })
     .catch(error => {
         console.error('Error:', error);
