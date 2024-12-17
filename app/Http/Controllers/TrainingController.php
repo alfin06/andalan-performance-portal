@@ -26,6 +26,50 @@ class TrainingController extends Controller
         ]);
     }
 
+    public function new_index($client_id)
+    {
+        $client = Client::where('id', $client_id)->first();
+        $tabs = Tab::where('client_id', $client_id)->get();
+
+        $data = Training::select(
+            'trainings.tab_id', 'trainings.movement_name', 'trainings.status', 'trainings.sets', 'trainings.t', 'trainings.wt', 'trainings.rest', 'trainings.reps', 'trainings.block',
+            'trainings.subs', 'trainings.reps1', 'trainings.reps2', 'trainings.reps3', 'trainings.reps4',
+            'trainings.reps5', 'trainings.reps6', 'trainings.date', 'trainings.movement_id', 'trainings.id', 'trainings.head_training_id',
+            'subs.tab_id AS sub_tab_id', 'subs.movement_name AS sub_mov_name', 'subs.status AS sub_status', 'subs.sets AS sub_sets', 'subs.t AS sub_t', 'subs.wt AS sub_wt', 'subs.rest AS sub_rest', 'subs.reps AS sub_reps', 'subs.block AS sub_block',
+            'subs.reps1 AS sub_reps1', 'subs.reps2 AS sub_reps2', 'subs.reps3 AS sub_reps3', 'subs.reps4 AS sub_reps4',
+            'subs.reps5 AS sub_reps5', 'subs.reps6 AS sub_reps6'
+        )
+        ->leftJoin('subs', 'trainings.id', '=', 'subs.training_id')
+        ->where('trainings.client_id', '=', $client_id)
+        ->orderBy('trainings.block')
+        ->get();
+
+        $movement = Movement::all();
+        $mCategory = DB::table('master_category')->orderBy('category_name')->get();
+        $head_training = DB::table('head_trainings')->where('client_id', $client_id)->orderBy('head_date')->get();
+
+        $history = Training::select(
+            'movement_id', 'movement_name', 
+            DB::raw('SUM(sets) AS total_sets'), 
+            DB::raw('COUNT(id) AS count')
+        )
+        ->where('client_id', $client_id)
+        ->orderBy('movement_name')
+        ->groupBy('movement_id', 'movement_name')
+        ->get();
+
+        return view('client.index_new', [
+            'id' => $client_id,
+            'client' => $client,
+            'tabs' => $tabs,
+            'data' => $data,
+            'movement' => $movement,
+            'mCategory' => $mCategory,
+            'head_training' => $head_training,
+            'history' => $history
+        ]);
+    }
+
     public function index(int $client_id)
     {
         $client = Client::where('id', $client_id)->first();
@@ -168,6 +212,70 @@ class TrainingController extends Controller
 
         sleep(1);
     }
+
+    public function updateDate(Request $request)
+    {
+        $head_id = $request->input('head_id');
+        $new_date = $request->input('head_date');
+    
+        try {
+            // Update the date in the database
+            DB::table('head_trainings')
+                ->where('id', $head_id)
+                ->update(['head_date' => $new_date]);
+    
+            return response()->json(['success' => true, 'message' => 'Date updated successfully!']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function deleteDate(Request $request)
+{
+    try {
+        // Validate the request
+        $request->validate([
+            'head_id' => 'required|exists:head_trainings,id' // Replace `your_table_name` with the actual table name
+        ]);
+
+        // Find the record and delete it
+        $date = Head_training::findOrFail($request->head_id);
+        $date->delete();
+
+        // Return a success response
+        return response()->json(['success' => true, 'message' => 'Date deleted successfully.']);
+    } catch (\Exception $e) {
+        // Handle errors and return a failure response
+        return response()->json(['success' => false, 'message' => 'Failed to delete the date.']);
+    }
+}
+
+public function addNewDate(Request $request)
+{
+    // Validate the incoming data if necessary
+    $validatedData = $request->validate([
+        'date' => 'required|date', // Validate the date format
+        'tab_id' => 'required|integer', // Validate tab_id as an integer
+    ]);
+
+    // Check if the head training record already exists
+    $head_training = Head_training::where('head_date', $request->date)
+                                 ->where('tab_id', $request->tab_id)
+                                 ->first();
+
+    // If the record doesn't exist, create a new one
+    if (!$head_training) {
+        $head_training = new Head_training();
+        $head_training->head_date = $request->date;
+        $head_training->tab_id = $request->tab_id;
+        $head_training->created_by = Auth::id();
+        $head_training->save();
+    }
+
+    // Return a response (success or failure message)
+    return response()->json(['message' => 'Head training added successfully']);
+}
+
 
     public function addMovement(Request $request)
     {

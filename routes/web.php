@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function() {
     
     /* Training */
     Route::get('training/{id}/index/', [TrainingController::class, 'index'])->name('training.index');
+    Route::get('profile/{id}/index', [TrainingController::class, 'new_index'])->name('training.index');
+
     Route::post('training/addTab/', [TrainingController::class, 'addTab'])->name('training.addTab');
     Route::get('training/{tab_id}/notes/', [TrainingController::class, 'notes'])->name('training.notes');
     Route::post('training/updateNotes/', [TrainingController::class, 'updateNotes'])->name('training.updateNotes');
@@ -40,6 +42,7 @@ Route::middleware('auth')->group(function() {
     Route::post('training/updateDate/', [TrainingController::class, 'updateDate'])->name('training.updateDate');
     Route::post('training/deleteDate/', [TrainingController::class, 'deleteDate'])->name('training.deleteDate');
     Route::post('training/addNewDate/', [TrainingController::class, 'addNewDate'])->name('training.addNewDate');
+    Route::get('training/{id}/index/', [TrainingController::class, 'index'])->name('training.index');
    
     /* Helper */
     Route::post('training/{id}/mov', [AdminController::class, 'showMovement'])->name('mov');
