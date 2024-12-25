@@ -58,7 +58,7 @@ const tab = useForm({
 });
 const submitTab = () => {
     tab.post(route("training.addTab"));
-    toast.success('Tab added succesfully!');
+    // toast.success('Tab added succesfully!');
     tab.reset();
     $('#myModalTab').modal('hide');
 };
@@ -91,7 +91,7 @@ const showDate = (tab, h) => {
 };
 const updateNotes = () => {
     note.post(route("training.updateNotes"));
-    toast.success('Notes updated succesfully!');
+   // toast.success('Notes updated succesfully!');
     $('#myModalNote').modal('hide');
 };
 
@@ -135,7 +135,7 @@ const showHead = (tab) => {
 const submitHead = () => {
     if(add_edit == "add") {
         mov.post(route("training.addHead"));
-        toast.success('New schedule added succesfully!');
+        // toast.success('New schedule added succesfully!');
     }
     mov.reset();
     $('#headModal').modal('hide');
@@ -173,15 +173,15 @@ const submitMovement = () => {
     }else{
         if(add_edit == "add") {
             mov.post(route("training.addMovement"));
-            toast.success('Daily movement added succesfully!');
+            //toast.success('Daily movement added succesfully!');
         }
         else if(add_edit == "edit") {
             mov.post(route("training.updateMovement"));
-            toast.success('Daily movement updated succesfully!');
+            //toast.success('Daily movement updated succesfully!');
         }
         else {
             mov.post(route("training.subsMovement"));
-            toast.success('Daily movement substitute added succesfully!');
+            //toast.success('Daily movement substitute added succesfully!');
         }
         mov.reset();
         $('#movementModal').modal('hide');
@@ -225,6 +225,27 @@ const subsMovement = (tab, x, status) => {
     mov.id = x.id;
     mov.date = mov_date[0];
     mov.status = status;
+    mov.block = x.block;
+
+  
+        
+        $("#mov_plan").val(x.movement_id + '-' + x.movement_name).change();
+        $("#hid_plan").val(x.movement_id + '-' + x.movement_name);
+        mov.mov_plan = x.movement_id + '-' + x.movement_name;
+
+        mov.sets = "";
+        mov.reps = "";
+        mov.t = "";
+        mov.wt = "";
+        mov.rest = "";
+        mov.reps1 = "";
+        mov.reps2 = "";
+        mov.reps3 = "";
+        mov.reps4 = "";
+        mov.reps5 = "";
+        mov.reps6 = "";
+   
+
     $('#movementModal').modal('show');
 };
 const deleteMovement = (x) => {
@@ -232,7 +253,7 @@ const deleteMovement = (x) => {
     {
         mov.id = x.id;
         mov.post(route("training.deleteMovement"));
-        toast.success('Daily movement deleted succesfully!');
+        // toast.success('Daily movement deleted succesfully!');
     }
 };
 function formatDate(date) {
@@ -492,12 +513,12 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
         <div class="page-wrapper" id="page">
             <div class="container-fluid">
                 <form @submit.prevent="submitHead" class="form-material">
-                    <div class="modal fade" id="headModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="headModal" tabindex="-1" role="dialog" >
                         <div class="modal-dialog" role="document" style="max-width:1000px;">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">{{ tab_name }}</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span >&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group col-4" v-if="add_edit=='add'">
@@ -517,12 +538,12 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                 </form>
 
                 <form @submit.prevent="submitMovement" class="form-material">
-                    <div class="modal fade" id="movementModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="movementModal" tabindex="-1" role="dialog" >
                         <div class="modal-dialog" role="document" style="max-width:1000px;">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">{{ tab_name }}</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span >&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
@@ -601,12 +622,12 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                 </form>
 
                 <form @submit.prevent="submitTab" class="form-material">
-                    <div class="modal fade" id="myModalTab" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="myModalTab" tabindex="-1" role="dialog" >
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Add Tab</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span >&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
                                     <form class="row">
@@ -628,12 +649,12 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                 </form>
 
                 <form id="form" @submit.prevent="updateNotes" class="form-material">
-                    <div class="modal fade" id="myModalNote" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="myModalNote" tabindex="-1" role="dialog" >
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Notes </h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span >&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
                                     <form class="row">
@@ -654,12 +675,12 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                 </form>
 
                 <!-- <form id="form2" @submit.prevent="updateDate" class="form-material"> -->
-                    <div class="modal fade" id="myModalDate" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="myModalDate" tabindex="-1" role="dialog" >
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Change Date</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span >&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
                                     <form class="row">
@@ -734,9 +755,9 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                                     <table id="table_print" class="display nowrap table table-hover  table-bordered" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr>
-                                                               <th>Block</th>
+                                                               <th></th>
                                                                 <th>Planned Movement</th>
-                                                                <th>Status</th>
+                                                                <!-- <th>Status</th> -->
                                                                 <th>Sets</th>
                                                                 <th>Reps</th>
                                                                 <th>T.</th>
@@ -759,11 +780,10 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                                             <tr data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id && x.head_training_id == h.id">
                                                                 <td>{{ x.block }}</td>
                                                                 <td @click.prevent="editMovement(tab, x)"><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
-                                                                <td>
-                                                                    <!-- <span class="label label-success label-rounded" v-if="x.status == 'Good'">{{x.status}}</span> -->
+                                                                <!-- <td>
                                                                     <span class="label label-warning label-rounded" v-if="x.status == 'Struggling'">{{x.status}}</span>
                                                                     <span class="label label-danger label-rounded" v-if="x.status == 'Fail'">{{x.status}}</span>
-                                                                </td>
+                                                                </td> -->
                                                                 <td @click.prevent="editMovement(tab, x)">{{ x.sets }}</td>
                                                                 <td @click.prevent="editMovement(tab, x)">{{ x.reps }}</td>
                                                                 <td @click.prevent="editMovement(tab, x)">{{ x.t }}</td>
@@ -778,16 +798,18 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                                                 <!-- <td>{{ (x.reps1||"-") + ' | ' + (x.reps2||"-") + ' | ' + (x.reps3||"-") + ' | ' + (x.reps4||"-") + ' | ' + (x.reps5||"-") + ' | ' + (x.reps6||"-") }}</td> -->
                                                                 <td class="">
                                                                     <!-- <button class="btn btn-info btn-sm btn-rounded" @click.prevent="editMovement(tab, x)"><i class="ti-pencil"></i> Edit</button> -->
-                                                                    <button class="btn btn-warning btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Struggling')"> Struggling</button>
+                                                                    <button class="btn btn-warning btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Struggling')">S</button>
                                                                     &nbsp;
-                                                                    <button class="btn btn-danger btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Fail')"> Fail</button>
+                                                                    <button class="btn btn-danger btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Fail')">F</button>
+                                                                    &nbsp;
+                                                                    <!-- <button class="btn btn-info btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Incomplete')">I</button> -->
                                                                     <!-- <button class="btn btn-danger btn-sm btn-rounded" @click.prevent="deleteMovement(x)"><i class="ti-trash"></i> Delete</button> -->
                                                                 </td>
                                                             </tr>
                                                             <tr v-if="x.tab_id == tab.id && x.head_training_id == h.id && x.subs=='Y'" :class="['accordian-body', 'collapse', x.sub_status === 'Struggling' ? 'struggle' : 'fail']" :id="'sub'+index">
                                                                 <td>{{ x.sub_block }}</td>
                                                                 <td>{{ x.sub_mov_name }} </td>
-                                                                <td><span :class="['label', 'label-rounded', x.sub_status === 'Struggling' ? 'label-warning' : 'label-danger']">{{ x.sub_status }}</span></td>
+                                                                <!-- <td><span :class="['label', 'label-rounded', x.sub_status === 'Struggling' ? 'label-warning' : 'label-danger']">{{ x.sub_status }}</span></td> -->
                                                                 <td>{{ x.sub_sets }}</td>
                                                                 <td>{{ x.sub_reps }}</td>
                                                                 <td>{{ x.sub_t }}</td>

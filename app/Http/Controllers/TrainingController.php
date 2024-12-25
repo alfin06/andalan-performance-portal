@@ -283,8 +283,8 @@ class TrainingController extends Controller
         $sub->t = $training->t;
         $sub->wt = $training->wt;
         $sub->rest = $training->rest;
-        $sub->reps = $sub->reps;
-        $sub->block = $sub->block;
+        $sub->reps = $training->reps;
+        $sub->block = $training->block;
         $sub->reps1 = $training->reps1;
         $sub->reps2 = $training->reps2;
         $sub->reps3 = $training->reps3;
@@ -304,8 +304,8 @@ class TrainingController extends Controller
         $training->wt = $request->wt;
         $training->rest = $request->rest;
         $training->subs = "Y";
-        $training->reps = $training->reps;
-        $training->block = $training->block;
+        $training->reps = $request->reps;
+        $training->block = $request->block;
         $training->reps1 = $request->reps1;
         $training->reps2 = $request->reps2;
         $training->reps3 = $request->reps3;
