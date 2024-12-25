@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function() {
     Route::post('training/{id}/mov', [AdminController::class, 'showMovement'])->name('mov');
     Route::post('training/{id}/mov_info', [AdminController::class, 'showMovementInfo'])->name('mov_info');
 
+    Route::post('/training/update-daily-movement-date', [TrainingController::class, 'updateDailyMovementDate']);
+
+
     /* Account */
     Route::get('user/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('user/profile', [AuthController::class, 'profile'])->name('profile');

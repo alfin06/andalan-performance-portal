@@ -80,6 +80,15 @@ const showNotes = (tab, h) => {
     note.tab_client_id = tab.client_id;
     note.head_id = h.id;
 };
+
+const showDate = (tab, h) => {
+    $('#myModalDate').modal('show');
+
+    note.tab_date = h.head_date;
+    // note.tab_id = tab.id;
+     note.tab_client_id = tab.client_id;
+     note.head_id = h.id;
+};
 const updateNotes = () => {
     note.post(route("training.updateNotes"));
     toast.success('Notes updated succesfully!');
@@ -226,16 +235,18 @@ const deleteMovement = (x) => {
         toast.success('Daily movement deleted succesfully!');
     }
 };
-</script>
-<script>
-function FormatDate(myDate) {
-    const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    let date = myDate.getDate();
-    let month = myDate.getMonth() + 1;
-    let year = myDate.getFullYear();
-    let day = myDate.getDay();
+function formatDate(date) {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
 
-    return weekday[day] + ", " + date + "/" + month + "/" + year;
+function FormatDate(myDate) {
+    return new Intl.DateTimeFormat('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+    }).format(myDate);
 }
 
 function CalculateAge(format_bdate) {
@@ -261,6 +272,12 @@ function CalculateAge(format_bdate) {
 }
 
 $(document).ready(function() {
+    $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content'),
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            });
     // Movement dropdown
     $("#mov_category").change(function() {
         // Selected category id
@@ -270,12 +287,7 @@ $(document).ready(function() {
 
         if(category_id != '') {
             // Fetch movement plan options
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content'),
-                    'X-Requested-With': 'XMLHttpRequest',
-                }
-            });
+        
             var ajaxurl = 'mov';
             console.log("Start fetching movements.");
             //console.log("Token: " + token);
@@ -359,16 +371,12 @@ $(document).ready(function() {
         });
     });
 
-    // Switchery
-    var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+        // Switchery
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
     $('.js-switch').each(function() {
         new Switchery($(this)[0], $(this).data());
     });
 
-    // For multiselect
-    $(".select2").select2({
-        dropdownParent: $("#myForm")
-    });
     $(".ajax").select2({
         ajax: {
             url: "https://api.github.com/search/repositories",
@@ -399,10 +407,59 @@ $(document).ready(function() {
             return markup;
         }, // let our custom formatter work
         minimumInputLength: 1,
-        templateResult: formatRepo, // omitted for brevity, see the source of this page
-        templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+     //   templateResult: formatRepo, // omitted for brevity, see the source of this page
+      //  templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
     });
+
+
+$('#changeDailyDate').on('click', function () {
+        changeDailyDate(); // Call the function
+    });
+
+        // For multiselect
+        $(".select2").select2({
+        dropdownParent: $("#myForm")
+    });
+
+    // Define the function
+function changeDailyDate() {
+  
+    // Collect form data
+    const daily_date = $('#daily_date').val();
+    const head_id = $('#head_id_date').val();
+
+    // Perform the AJAX request
+    $.ajax({
+        url: '/training/update-daily-movement-date', // Laravel route
+        method: 'POST',
+        data: {
+            daily_date: daily_date,
+            head_id: head_id,
+        },
+        success: function (response) {
+            // Handle success response
+            $('#myModalDate').modal('hide'); // Hide the modal
+
+            $('#myModalDate').modal('hide'); // Hide the modal
+
+// Update the displayed date
+const updatedDate = new Date(daily_date); // Convert the new date string to a Date object
+const formattedDate = formatDate(updatedDate); // Format the date
+$('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct selector for your date container
+
+
+        },
+        error: function (xhr) {
+            // Handle error response
+            const error = xhr.responseJSON?.message || 'An error occurred.';
+            alert(error);
+        }
+    });
+}
+
 });
+
+
 </script>
 
 <style>
@@ -596,6 +653,31 @@ $(document).ready(function() {
                     </div>
                 </form>
 
+                <!-- <form id="form2" @submit.prevent="updateDate" class="form-material"> -->
+                    <div class="modal fade" id="myModalDate" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Change Date</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="row">
+                                        <div class="form-group col-12">
+                                            <input type="date" name="daily_date" id="daily_date" v-model="note.tab_date"  class="form-control" />
+                                            <input type="hidden" name="head_id" v-model="note.head_id" id="head_id_date" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" id="changeDailyDate" class="btn btn-info"><i class="ti ti-check"></i> Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- </form> -->
+
                 <div class="row page-titles">
                     <div class="col-lg-12">
                         <div class="card">
@@ -639,7 +721,7 @@ $(document).ready(function() {
                                                 <div class="d-flex m-t-20 row ">
                                                     <div class="col-12">
                                                         <h4 class="card-title">
-                                                            {{ FormatDate(new Date((h.head_date.split(" "))[0])) }}
+                                                            <span id="dateDisplay">{{ FormatDate(new Date((h.head_date.split(" "))[0])) }} </span><button class="btn btn-rounded btn-sm btn-outline-primary" id="dateButton" @click.prevent="showDate(tab, h)"><i class="ti-calendar"></i></button> 
                                                             <button class="pull-right btn btn-success btn-rounded btn-sm" id="movementBtn" @click.prevent="showMovement(tab, h.head_date)" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Add Movement</button>
                                                         </h4>
                                                         <h6 class="card-subtitle">

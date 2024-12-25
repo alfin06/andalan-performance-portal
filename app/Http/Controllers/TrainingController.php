@@ -149,6 +149,26 @@ class TrainingController extends Controller
         sleep(1);
     }
 
+    public function updateDailyMovementDate(Request $request)
+{
+    $request->validate([
+        'daily_date' => 'required|date',
+        'head_id' => 'required|integer|exists:head_trainings,id',
+    ]);
+
+    try {
+        // Update the database
+        DB::table('head_trainings')
+            ->where('id', $request->head_id)
+            ->update(['head_date' => $request->daily_date]);
+
+        return response()->json(['message' => 'Date updated successfully!']);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Failed to update date: ' . $e->getMessage()], 500);
+    }
+}
+
+
     public function addHead(Request $request)
     {
         $head_training = Head_training::where('head_date', $request->date)
