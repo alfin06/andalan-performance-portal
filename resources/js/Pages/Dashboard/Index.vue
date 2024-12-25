@@ -517,6 +517,9 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
 .struggle {
     background: #ffe0ad;
 }
+.incomplete {
+    background: #FFADB0;
+}
 
 .day_container{
     padding:20px;
@@ -804,7 +807,7 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                                                 </tr>
                                                             </template>
 
-                                                            <tr data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id && x.head_training_id == h.id">
+                                                            <tr :class="{ incomplete: x.status === 'I' }"  data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id && x.head_training_id == h.id">
                                                                 <td>{{ x.block }}</td>
                                                                 <td @click.prevent="editMovement(tab, x)"><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
                                                                 <!-- <td>
@@ -829,7 +832,7 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                                                     &nbsp;
                                                                     <button class="btn btn-danger btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Fail')">F</button>
                                                                     &nbsp;
-                                                                    <button class="btn btn-info btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="incMovement(tab, x, 'Incomplete')">I - {{ x.id }}</button>
+                                                                    <button class="btn btn-info btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="incMovement(tab, x, 'Incomplete')">I</button>
                                                                     <!-- <button class="btn btn-danger btn-sm btn-rounded" @click.prevent="deleteMovement(x)"><i class="ti-trash"></i> Delete</button> -->
                                                                 </td>
                                                             </tr>

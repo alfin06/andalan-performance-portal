@@ -24372,9 +24372,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               key: $props.data.id
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Add a blank row only if it's not the first row and the first letter of x.block changes "), index > 0 && x.block && $props.data[index - 1].block && x.block.charAt(0) !== $props.data[index - 1].block.charAt(0) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_125, [].concat(_hoisted_127))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), x.tab_id == tab.id && x.head_training_id == h.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
               key: 1,
+              "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
+                incomplete: x.status === 'I'
+              }, "accordion-toggle"]),
               "data-toggle": "collapse",
-              "data-target": '#sub' + index,
-              "class": "accordion-toggle"
+              "data-target": '#sub' + index
             }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(x.block), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
               onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
                 return $setup.editMovement(tab, x);
@@ -24417,7 +24419,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
                 return $setup.incMovement(tab, x, 'Incomplete');
               }, ["prevent"])
-            }, "I - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(x.id), 9 /* TEXT, PROPS */, _hoisted_139)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-danger btn-sm btn-rounded\" @click.prevent=\"deleteMovement(x)\"><i class=\"ti-trash\"></i> Delete</button> ")])], 8 /* PROPS */, _hoisted_128)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), x.tab_id == tab.id && x.head_training_id == h.id && x.subs == 'Y' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
+            }, "I", 8 /* PROPS */, _hoisted_139)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-danger btn-sm btn-rounded\" @click.prevent=\"deleteMovement(x)\"><i class=\"ti-trash\"></i> Delete</button> ")])], 10 /* CLASS, PROPS */, _hoisted_128)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), x.tab_id == tab.id && x.head_training_id == h.id && x.subs == 'Y' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
               key: 2,
               "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['accordian-body', 'collapse', x.sub_status === 'Struggling' ? 'struggle' : 'fail']),
               id: 'sub' + index
@@ -29580,7 +29582,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fail {\r\n    background: #FFADB0;\n}\n.struggle {\r\n    background: #ffe0ad;\n}\n.day_container{\r\n    padding:20px;\r\n    margin-bottom:10px;\r\n    background-color: white;\r\n  /* Add shadow */\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);\r\n  border-radius: 8px; /* Optional: rounded corners */\n}\n.dateBtn{\r\n    margin-bottom:10px;\n}\n.tab-pane{\r\n    margin-top:15px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fail {\r\n    background: #FFADB0;\n}\n.struggle {\r\n    background: #ffe0ad;\n}\n.incomplete {\r\n    background: #FFADB0;\n}\n.day_container{\r\n    padding:20px;\r\n    margin-bottom:10px;\r\n    background-color: white;\r\n  /* Add shadow */\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);\r\n  border-radius: 8px; /* Optional: rounded corners */\n}\n.dateBtn{\r\n    margin-bottom:10px;\n}\n.tab-pane{\r\n    margin-top:15px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
