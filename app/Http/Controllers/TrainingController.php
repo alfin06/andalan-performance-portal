@@ -318,6 +318,26 @@ class TrainingController extends Controller
         sleep(1);
     }
 
+    public function incMovement(Request $request)
+    {
+        // Find the training record by ID
+        $training = Training::find($request->id);
+
+        if ($training) {
+            // Update the status to "Incomplete"
+            $training->status = $request->status;
+            $training->updated_by = Auth::id();
+            $training->updated_at = now();
+            $training->save();
+
+            // Return a success response
+            return response()->json(['message' => 'Movement status updated successfully.']);
+        } else {
+            // If training not found, return an error response
+            return response()->json(['message' => 'Training not found.'], 404);
+        }
+    }
+
     public function deleteMovement(Request $request)
     {
         Training::where('id', $request->id)->delete();

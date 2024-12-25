@@ -227,27 +227,54 @@ const subsMovement = (tab, x, status) => {
     mov.status = status;
     mov.block = x.block;
 
-  
-        
-        $("#mov_plan").val(x.movement_id + '-' + x.movement_name).change();
-        $("#hid_plan").val(x.movement_id + '-' + x.movement_name);
-        mov.mov_plan = x.movement_id + '-' + x.movement_name;
+    $("#mov_plan").val(x.movement_id + '-' + x.movement_name).change();
+    $("#hid_plan").val(x.movement_id + '-' + x.movement_name);
+    mov.mov_plan = x.movement_id + '-' + x.movement_name;
 
-        mov.sets = "";
-        mov.reps = "";
-        mov.t = "";
-        mov.wt = "";
-        mov.rest = "";
-        mov.reps1 = "";
-        mov.reps2 = "";
-        mov.reps3 = "";
-        mov.reps4 = "";
-        mov.reps5 = "";
-        mov.reps6 = "";
+    mov.sets = "";
+    mov.reps = "";
+    mov.t = "";
+    mov.wt = "";
+    mov.rest = "";
+    mov.reps1 = "";
+    mov.reps2 = "";
+    mov.reps3 = "";
+    mov.reps4 = "";
+    mov.reps5 = "";
+    mov.reps6 = "";
    
 
     $('#movementModal').modal('show');
 };
+
+  // Now define the incMovement function outside
+  const incMovement = (tab, x, status) => {
+    const data = {
+      id: x.id, // Send the ID of the specific movement
+      status: "I", // In this case, "Incomplete"
+    };
+
+    $.ajax({
+      url: '/training/incMovement', // The route for updating the movement
+      method: 'POST',
+      data: data,
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token
+      },
+      success: function(response) {
+        // Handle success response
+       // alert('Movement status updated to Incomplete');
+        // Optionally, update the row's status here if needed
+        x.status = "I"; // Update the status in the local data
+      },
+      error: function(xhr) {
+        // Handle error response
+        console.error(xhr.responseJSON || xhr);
+        alert('An error occurred while updating the movement');
+      }
+    });
+  }
+
 const deleteMovement = (x) => {
     if(confirm("Are you sure want to delete "+x.movement_name+"?"))
     {
@@ -802,7 +829,7 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                                                     &nbsp;
                                                                     <button class="btn btn-danger btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Fail')">F</button>
                                                                     &nbsp;
-                                                                    <!-- <button class="btn btn-info btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Incomplete')">I</button> -->
+                                                                    <button class="btn btn-info btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="incMovement(tab, x, 'Incomplete')">I - {{ x.id }}</button>
                                                                     <!-- <button class="btn btn-danger btn-sm btn-rounded" @click.prevent="deleteMovement(x)"><i class="ti-trash"></i> Delete</button> -->
                                                                 </td>
                                                             </tr>

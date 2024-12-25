@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function() {
     Route::post('training/{id}/mov_info', [AdminController::class, 'showMovementInfo'])->name('mov_info');
 
     Route::post('/training/update-daily-movement-date', [TrainingController::class, 'updateDailyMovementDate']);
+    Route::post('training/incMovement/', [TrainingController::class, 'incMovement'])->name('training.incMovement');
 
 
     /* Account */
