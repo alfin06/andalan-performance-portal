@@ -156,6 +156,47 @@
                         </div>
                     </div>
 
+
+                    <form id="addMovementForm" class="form-material">
+    @csrf
+    <div class="modal fade" id="movementModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width:1000px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title">Add Daily Movement</h4>
+                    <h4 class="modal-title" id="date_movement">Date: </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
+                        <span aria-hidden="true">&times;</span> 
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group col-3">
+                        <label>Date</label>
+                        <input type="date" class="form-control" >
+                    </div>
+                    <form class="row">
+                    <div class="form-group col-4">
+                        <label>Category</label>
+                        <select class="custom-select form-control pull-right">
+                            <option selected="">Pick Category</option>
+                            @foreach($mCategory as $category)
+                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                   
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="addButton" class="btn btn-info"><i class="ti ti-plus"></i> Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document" style="max-width:1000px;">
                         <div class="modal-content">
@@ -380,7 +421,7 @@
                                                     onclick="setModalDate('{{ $h->head_date }}', {{ $h->id }})">
                                                 <i class="ti-pencil"></i>
                                             </button>
-                                            <button class="pull-right btn btn-success btn-rounded btn-sm" id="movementBtn" data-toggle="modal" data-target="#movementModal">
+                                            <button class="pull-right btn btn-success btn-rounded btn-sm" id="movementBtn" data-date-id="{{ $h->id }}" data-toggle="modal" data-target="#movementModal">
                                                 <i class="ti-plus"></i> Add Movement
                                             </button>
                                         </h4>
@@ -560,6 +601,17 @@
        <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
 
     <script>
+
+$(document).ready(function () {
+        // Use delegated event binding if buttons are dynamically loaded
+        $(document).on('click', '#movementBtn', function () {
+            // Get the tab_id from the clicked button
+            var dateId = $(this).data('date-id');
+            
+            // Display the tab_id in the modal
+            $('#date_movement').text('Date: ' + dateId);
+        });
+    });
        
      
     $('#table_print').DataTable({
