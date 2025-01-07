@@ -70,6 +70,7 @@ const note = useForm({
     tab_id: '',
     tab_client_id: '',
     head_id: '',
+    tab_date: ''
 
 });
 const showNotes = (tab, h) => {
@@ -80,14 +81,24 @@ const showNotes = (tab, h) => {
     note.tab_client_id = tab.client_id;
     note.head_id = h.id;
 };
-
+const date_name = ref("");
 const showDate = (tab, h) => {
-    $('#myModalDate').modal('show');
+    const date = new Date(h.head_date);
+
+    // Format the date as 'Tuesday, April 30, 2024'
+    date_name.value = date.toLocaleDateString('en-US', {
+        weekday: 'long',  // 'long' gives the full weekday name (e.g., "Tuesday")
+        month: 'long',    // 'long' gives the full month name (e.g., "April")
+        day: 'numeric',   // 'numeric' gives the day number (e.g., "30")
+        year: 'numeric'   // 'numeric' gives the year (e.g., "2024")
+    });
 
     note.tab_date = h.head_date;
     // note.tab_id = tab.id;
      note.tab_client_id = tab.client_id;
      note.head_id = h.id;
+
+     $('#myModalDate').modal('show');
 };
 const updateNotes = () => {
     note.post(route("training.updateNotes"));
@@ -280,7 +291,15 @@ const subsMovement = (tab, x, status, h) => {
       }
     });
   }
-
+const deleteDate = (d) => {
+   
+   if(confirm("Are you sure want to delete whole day?"))
+   {
+        note.head_id = d;
+        note.post(route("training.deleteDate"));
+    //    $('#movementModal').modal('hide');
+   }
+};
 const deleteMovement = (x) => {
    
     if(confirm("Are you sure want to delete?"))
@@ -633,8 +652,8 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                 <div class="modal-footer">
                                     <input type="hidden" name="tab_id" v-model="mov.tab_id" id="tab_id" />
                                     <input type="hidden" name="tab_client_id" v-model="mov.tab_client_id" id="tab_client_id" />
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                     <button type="button" v-if="add_edit=='edit'" class="btn btn-danger" @click.prevent="deleteMovement(mov.id)"><i class="ti-trash"></i> Delete</button>
+                                    <button type="button" v-if="add_edit=='edit'" class="btn btn-danger" @click.prevent="deleteMovement(mov.id)"><i class="ti-trash"></i> Delete</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="ti ti-close"></i>Close</button>
                                     <button type="submit" v-if="add_edit=='add'" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-plus"></i> Add</button>
                                     <button type="submit" v-if="add_edit=='edit'" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-check"></i> Update</button>
                                     <button type="submit" v-if="add_edit=='subs'" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-plus"></i> Subs</button>
@@ -702,7 +721,7 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Change Date</h4>
+                                    <h4 class="modal-title">Change Date: {{ date_name }}</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span >&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
@@ -714,7 +733,8 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                     </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" @click.prevent="deleteDate(note.head_id)"><i class="ti ti-trash"></i> Delete</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="ti ti-close"></i>Close</button>
                                     <button type="button" id="changeDailyDate" class="btn btn-info"><i class="ti ti-check"></i> Submit</button>
                                 </div>
                             </div>

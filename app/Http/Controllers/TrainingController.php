@@ -344,4 +344,10 @@ class TrainingController extends Controller
         Training::where('id', $request->id)->delete();
         sleep(1);
     }
+
+    public function deleteDate(Request $request)
+    {
+        Head_training::where('id', $request->head_id)->first()->delete();
+        sleep(1);
+    }
 }

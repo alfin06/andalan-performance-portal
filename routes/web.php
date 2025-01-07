@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function() {
 
     Route::post('/training/update-daily-movement-date', [TrainingController::class, 'updateDailyMovementDate']);
     Route::post('training/incMovement/', [TrainingController::class, 'incMovement'])->name('training.incMovement');
+    Route::post('training/deleteDate/', [TrainingController::class, 'deleteDate'])->name('training.deleteDate');
 
 
     /* Account */
