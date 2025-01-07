@@ -189,9 +189,10 @@ const submitMovement = () => {
 
     
 };
-const editMovement = (tab, x) => {
+const editMovement = (tab, x, h) => {
+    var mov_date = h.head_date.split(" ");
     add_edit = "edit";
-    var mov_date = x.date.split(" ");
+    
     tab_name.value = "Edit Daily Movement: " + tab.tab_name + " | " + mov_date[0];
     mov.tab_id = tab.id;
     mov.tab_client_id = tab.client_id;
@@ -798,27 +799,26 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                                             </tr>
                                                         </thead>
                                                         <tbody v-for="(x, index) in data" :key="data.id">
-                                                           <!-- Add a blank row only if it's not the first row and the first letter of x.block changes -->
-                                                           <template v-if="index > 0 && x.block && data[index - 1].block && x.block.charAt(0) !== data[index - 1].block.charAt(0)">
+                                                            <template v-if="x.tab_id == tab.id && x.head_training_id == h.id && index > 0 && x.block && data[index - 1].block && x.block.charAt(0) !== data[index - 1].block.charAt(0)">
                                                                 <tr>
                                                                     <td colspan="100%" style="height: 20px; padding: 0;">
                                                                         &nbsp;
                                                                     </td>
                                                                 </tr>
                                                             </template>
-
+  
                                                             <tr :class="{ incomplete: x.status === 'I' }"  data-toggle="collapse" :data-target="'#sub'+index" class="accordion-toggle"  v-if="x.tab_id == tab.id && x.head_training_id == h.id">
                                                                 <td>{{ x.block }}</td>
-                                                                <td @click.prevent="editMovement(tab, x)"><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
+                                                                <td @click.prevent="editMovement(tab, x, h)"><span class="label label-primary" v-if="x.subs=='Y'">subs</span> {{ x.movement_name }}</td>
                                                                 <!-- <td>
                                                                     <span class="label label-warning label-rounded" v-if="x.status == 'Struggling'">{{x.status}}</span>
                                                                     <span class="label label-danger label-rounded" v-if="x.status == 'Fail'">{{x.status}}</span>
                                                                 </td> -->
-                                                                <td @click.prevent="editMovement(tab, x)">{{ x.sets }}</td>
-                                                                <td @click.prevent="editMovement(tab, x)">{{ x.reps }}</td>
-                                                                <td @click.prevent="editMovement(tab, x)">{{ x.t }}</td>
-                                                                <td @click.prevent="editMovement(tab, x)">{{ x.wt }}</td>
-                                                                <td @click.prevent="editMovement(tab, x)">{{ x.rest }}</td>
+                                                                <td @click.prevent="editMovement(tab, x, h)">{{ x.sets }}</td>
+                                                                <td @click.prevent="editMovement(tab, x, h)">{{ x.reps }}</td>
+                                                                <td @click.prevent="editMovement(tab, x, h)">{{ x.t }}</td>
+                                                                <td @click.prevent="editMovement(tab, x, h)">{{ x.wt }}</td>
+                                                                <td @click.prevent="editMovement(tab, x, h)">{{ x.rest }}</td>
                                                                 <td>{{ x.reps1 }}</td>
                                                                 <td>{{ x.reps2 }}</td>
                                                                 <td>{{ x.reps3 }}</td>
