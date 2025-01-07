@@ -282,11 +282,13 @@ const subsMovement = (tab, x, status, h) => {
   }
 
 const deleteMovement = (x) => {
-    if(confirm("Are you sure want to delete "+x.movement_name+"?"))
+   
+    if(confirm("Are you sure want to delete?"))
     {
-        mov.id = x.id;
+        mov.id = x;
         mov.post(route("training.deleteMovement"));
-        // toast.success('Daily movement deleted succesfully!');
+        $('#movementModal').modal('hide');
+       // toast.success('Daily movement deleted succesfully!');
     }
 };
 function formatDate(date) {
@@ -609,23 +611,6 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                             <input type="hidden" id="hid_plan" name="hid_plan" v-model="mov.mov_plan" />
                                             <input type="hidden" id="hid_plan2" name="hid_plan2" />
                                         </div>
-                                        <!--<div class="form-group col-3">
-                                            <label>Status</label>
-                                            <div class="row">
-                                                 <div class="col-md-4">
-                                                    <input type="radio" id="good" value="Good" class="form-control" v-model="mov.status" />
-                                                    <label for="good" class="label label-success">Good</label>
-                                                </div> 
-                                                <div class="col-md-6">
-                                                    <input type="radio" id="medium" value="Struggling" class="form-control" v-model="mov.status" />
-                                                    <label for="medium">Struggling</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <input type="radio" id="bad" value="Fail" class="form-control" v-model="mov.status" />
-                                                    <label for="bad">Fail</label>
-                                                </div>
-                                            </div> 
-                                        </div> -->
                                         <div class="col-6 col-sm-12 col-lg-6 col-md-6" >
                                             <label>Details</label> <br />
                                             <input type="text" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
@@ -649,6 +634,7 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                     <input type="hidden" name="tab_id" v-model="mov.tab_id" id="tab_id" />
                                     <input type="hidden" name="tab_client_id" v-model="mov.tab_client_id" id="tab_client_id" />
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                     <button type="button" v-if="add_edit=='edit'" class="btn btn-danger" @click.prevent="deleteMovement(mov.id)"><i class="ti-trash"></i> Delete</button>
                                     <button type="submit" v-if="add_edit=='add'" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-plus"></i> Add</button>
                                     <button type="submit" v-if="add_edit=='edit'" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-check"></i> Update</button>
                                     <button type="submit" v-if="add_edit=='subs'" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-plus"></i> Subs</button>
