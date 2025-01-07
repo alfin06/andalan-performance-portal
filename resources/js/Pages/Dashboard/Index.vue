@@ -116,7 +116,8 @@ const mov = useForm({
     block: '',
     tab_id: '',
     tab_client_id: '',
-    id: ''
+    id: '',
+    head_training_id: ''
 });
 
 const showHead = (tab) => {
@@ -141,19 +142,19 @@ const submitHead = () => {
     $('#headModal').modal('hide');
 };
 
-const showMovement = (tab, head_date) => {
-    add_edit = "add";
-    tab_name.value = "Add Daily Movement: " + tab.tab_name;
-    $("#hid_plan").val('');
-    mov.tab_id = tab.id;
-    mov.tab_client_id = tab.client_id;
-
-    if(head_date != null)
+const showMovement = (tab, h) => {
+     add_edit = "add";
+     tab_name.value = "Add Daily Movement: " + tab.tab_name;
+     $("#hid_plan").val('');
+     mov.tab_id = tab.id;
+     mov.tab_client_id = tab.client_id;
+     mov.head_training_id = h.id;
+    if(h.head_date != null)
     {
-        mov.date = head_date.split(" ")[0];
+        mov.date = h.head_date.split(" ")[0];
     }
     
-    $('#movementModal').modal('show');
+     $('#movementModal').modal('show');
 };
 const submitMovement = () => {
     var nomovement = false;
@@ -172,6 +173,7 @@ const submitMovement = () => {
         alert('Please select a movement!');
     }else{
         if(add_edit == "add") {
+       
             mov.post(route("training.addMovement"));
             //toast.success('Daily movement added succesfully!');
         }
@@ -214,11 +216,12 @@ const editMovement = (tab, x, h) => {
     mov.reps5 = x.reps5;
     mov.reps6 = x.reps6;
     mov.block = x.block;
+    mov.head_training_id = h.id;
     $('#movementModal').modal('show');
 };
-const subsMovement = (tab, x, status) => {
+const subsMovement = (tab, x, status, h) => {
+    var mov_date = h.head_date.split(" ");
     mov.reset();
-    var mov_date = x.date.split(" ");
     add_edit = "subs";
     tab_name.value = "Subs Daily Movement: " + tab.tab_name + " | " + mov_date[0] + " | " + x.movement_name;
     mov.tab_id = tab.id;
@@ -231,6 +234,8 @@ const subsMovement = (tab, x, status) => {
     $("#mov_plan").val(x.movement_id + '-' + x.movement_name).change();
     $("#hid_plan").val(x.movement_id + '-' + x.movement_name);
     mov.mov_plan = x.movement_id + '-' + x.movement_name;
+
+    mov.head_training_id = h.id;
 
     mov.sets = "";
     mov.reps = "";
@@ -580,12 +585,13 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                     <div class="row">
                                     <div class="form-group col-6" v-if="add_edit=='add'">
                                         <label>Date</label><br />
-                                        <input type="date" v-model="mov.date" class="form-control" style="width:300px;"> 
+                                        <input type="date" v-model="mov.date" class="form-control" style="width:300px;"  :disabled="add_edit === 'add'"> 
                                     </div>
                                     <div class="form-group col-6">
                                         <label>Block</label><br />
                                         <input type="text" v-model="mov.block" class="form-control" style="width:60px;"> 
                                     </div>
+                                    <input type="hidden" name="head_training_id" v-model="mov.head_training_id" id="head_training_id"/>
                                 </div>
                                     <form class="row" id="myForm">
                                         <div class="form-group col-6">
@@ -622,7 +628,7 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                         </div> -->
                                         <div class="col-6 col-sm-12 col-lg-6 col-md-6" >
                                             <label>Details</label> <br />
-                                            <input type="number" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
+                                            <input type="text" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
                                             <input type="text" class="form-control" placeholder="Reps" v-model="mov.reps" style="width:80px;margin-right:10px;">
                                             <input type="text" class="form-control" placeholder="T." v-model="mov.t" style="width:80px;margin-right:10px;">
                                             <input type="text" class="form-control" placeholder="Wt." v-model="mov.wt" style="width:80px;margin-right:10px;">
@@ -774,7 +780,7 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                                     <div class="col-12">
                                                         <h4 class="card-title">
                                                             <span id="dateDisplay">{{ FormatDate(new Date((h.head_date.split(" "))[0])) }} </span><button class="btn btn-rounded btn-sm btn-outline-primary" id="dateButton" @click.prevent="showDate(tab, h)"><i class="ti-calendar"></i></button> 
-                                                            <button class="pull-right btn btn-success btn-rounded btn-sm" id="movementBtn" @click.prevent="showMovement(tab, h.head_date)" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Add Movement</button>
+                                                            <button class="pull-right btn btn-success btn-rounded btn-sm" id="movementBtn" @click.prevent="showMovement(tab, h)" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Add Movement</button>
                                                         </h4>
                                                         <h6 class="card-subtitle">
                                                             Notes: {{ h.head_notes }}
@@ -828,11 +834,11 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                                                 <!-- <td>{{ (x.reps1||"-") + ' | ' + (x.reps2||"-") + ' | ' + (x.reps3||"-") + ' | ' + (x.reps4||"-") + ' | ' + (x.reps5||"-") + ' | ' + (x.reps6||"-") }}</td> -->
                                                                 <td class="">
                                                                     <!-- <button class="btn btn-info btn-sm btn-rounded" @click.prevent="editMovement(tab, x)"><i class="ti-pencil"></i> Edit</button> -->
-                                                                    <button class="btn btn-warning btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Struggling')">S</button>
+                                                                    <button class="btn btn-warning btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Struggling', h)">S</button>
                                                                     &nbsp;
-                                                                    <button class="btn btn-danger btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Fail')">F</button>
+                                                                    <button class="btn btn-danger btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="subsMovement(tab, x, 'Fail', h)">F</button>
                                                                     &nbsp;
-                                                                    <button class="btn btn-info btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="incMovement(tab, x, 'Incomplete')">I</button>
+                                                                    <button class="btn btn-info btn-sm btn-rounded" v-if="x.subs!='Y'" @click.prevent="incMovement(tab, x, 'Incomplete', h)">I</button>
                                                                     <!-- <button class="btn btn-danger btn-sm btn-rounded" @click.prevent="deleteMovement(x)"><i class="ti-trash"></i> Delete</button> -->
                                                                 </td>
                                                             </tr>

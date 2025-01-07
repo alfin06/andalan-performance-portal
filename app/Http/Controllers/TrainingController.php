@@ -32,7 +32,7 @@ class TrainingController extends Controller
         $tabs = Tab::where('client_id', $client_id)->get();
         $data = Training::select('trainings.tab_id', 'movements.name AS movement_name', 'trainings.status', 'trainings.sets', 'trainings.t', 'trainings.wt', 'trainings.rest','trainings.reps','trainings.block',
                                  'trainings.subs', 'trainings.reps1', 'trainings.reps2', 'trainings.reps3', 'trainings.reps4',
-                                 'trainings.reps5', 'trainings.reps6', 'trainings.date', 'trainings.movement_id', 'trainings.id', 'trainings.head_training_id',
+                                 'trainings.reps5', 'trainings.reps6', 'trainings.movement_id', 'trainings.id', 'trainings.head_training_id',
                                  'subs.tab_id AS sub_tab_id', 'subs.movement_name AS sub_mov_name', 'subs.status AS sub_status', 'subs.sets AS sub_sets', 'subs.t AS sub_t', 'subs.wt AS sub_wt', 'subs.rest AS sub_rest','subs.reps AS sub_reps','subs.block AS sub_block',
                                  'subs.reps1 AS sub_reps1', 'subs.reps2 AS sub_reps2', 'subs.reps3 AS sub_reps3', 'subs.reps4 AS sub_reps4',
                                  'subs.reps5 AS sub_reps5', 'subs.reps6 AS sub_reps6')
@@ -198,20 +198,18 @@ class TrainingController extends Controller
         $movement_id = $movement_plan[0];
         $movement_name = $movement_plan[1];
 
-        $head_training = Head_training::where('head_date', $request->date)
-                                     ->where('tab_id', $request->tab_id)
-                                     ->where('client_id', $request->tab_client_id)
-                                     ->first();
+        // $head_training = Head_training::where('id', $request->head_training_id)
+        //                              ->first();
         
-        if($head_training == null)
-        {
-            $head_training = new Head_training();
-            $head_training->head_date = $request->date;
-            $head_training->tab_id = $request->tab_id;
-            $head_training->client_id = $request->tab_client_id;
-            $head_training->created_by = Auth::id();
-            $head_training->save();
-        }
+        // if($head_training == null)
+        // {
+        //     $head_training = new Head_training();
+        //     $head_training->head_date = $request->date;
+        //     $head_training->tab_id = $request->tab_id;
+        //     $head_training->client_id = $request->tab_client_id;
+        //     $head_training->created_by = Auth::id();
+        //     $head_training->save();
+        // }
 
         $training = new Training();
         $training->date = $request->date;
@@ -232,7 +230,7 @@ class TrainingController extends Controller
         $training->reps4 = $request->reps4;
         $training->reps5 = $request->reps5;
         $training->reps6 = $request->reps6;
-        $training->head_training_id = $head_training->id;
+        $training->head_training_id = $request->head_training_id;
         $training->created_by = Auth::id();
         $training->save();
         sleep(1);
