@@ -24620,18 +24620,27 @@ var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "md_checkbox_27"
 }, "Squat", -1 /* HOISTED */);
-var _hoisted_33 = {
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "md_checkbox_28"
+}, "Breathing", -1 /* HOISTED */);
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "md_checkbox_29"
+}, "CAMPS", -1 /* HOISTED */);
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "md_checkbox_30"
+}, "Reset", -1 /* HOISTED */);
+var _hoisted_36 = {
   "class": "row p-t-20"
 };
-var _hoisted_34 = {
+var _hoisted_37 = {
   "class": "col-md-12"
 };
-var _hoisted_35 = ["disabled"];
-var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_38 = ["disabled"];
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fa fa-check"
 }, null, -1 /* HOISTED */);
-var _hoisted_37 = ["href"];
-var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_40 = ["href"];
+var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fa fa-times"
 }, null, -1 /* HOISTED */);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -24661,7 +24670,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
           return $setup.form.categories = $event;
         }),
-        value: "cardio"
+        value: "Cardio"
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "checkbox",
         id: "md_checkbox_22",
@@ -24669,7 +24678,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $setup.form.categories = $event;
         }),
-        value: "power"
+        value: "Power"
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "checkbox",
         id: "md_checkbox_23",
@@ -24677,7 +24686,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return $setup.form.categories = $event;
         }),
-        value: "hamstring"
+        value: "Hamstring"
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "checkbox",
         id: "md_checkbox_24",
@@ -24685,7 +24694,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return $setup.form.categories = $event;
         }),
-        value: "push"
+        value: "Push"
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "checkbox",
         id: "md_checkbox_25",
@@ -24693,7 +24702,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
           return $setup.form.categories = $event;
         }),
-        value: "pull"
+        value: "Pull"
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "checkbox",
         id: "md_checkbox_26",
@@ -24701,7 +24710,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
           return $setup.form.categories = $event;
         }),
-        value: "hinge"
+        value: "Hinge"
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "checkbox",
         id: "md_checkbox_27",
@@ -24709,17 +24718,41 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
           return $setup.form.categories = $event;
         }),
-        value: "squat"
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_32])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row p-t-20\">\r\n                                            <div class=\"col-md-6\">\r\n                                                <div class=\"form-group\">\r\n                                                    <label for=\"email\" class=\"control-label\">Email</label>\r\n                                                    <input type=\"text\" v-model=\"form.email\" name=\"email\" class=\"form-control\" placeholder=\"Email\" />\r\n                                                    <div v-if=\"form.errors.email\" class=\"text-sm text-red-600\">\r\n                                                        {{ form.errors.email }}\r\n                                                    </div>\r\n                                                </div>\r\n                                            </div>\r\n                                            <div class=\"col-md-6\">\r\n                                                <div class=\"form-group\">\r\n                                                    <label for=\"phone\" class=\"control-label\">Phone</label>\r\n                                                    <input type=\"text\" v-model=\"form.phone\" name=\"phone\" class=\"form-control\" placeholder=\"Phone\" />\r\n                                                    <div v-if=\"form.errors.phone\" class=\"text-sm text-red-600\">\r\n                                                        {{ form.errors.phone }}\r\n                                                    </div>\r\n                                                </div>\r\n                                            </div>\r\n                                        </div>\r\n                                        <div class=\"row p-t-20\">\r\n                                            <div class=\"col-md-6\">\r\n                                                <div class=\"form-group\">\r\n                                                    <label for=\"program\" class=\"control-label\">Program</label>\r\n                                                    <input type=\"text\" v-model=\"form.program\" name=\"program\" class=\"form-control\" placeholder=\"Program\" />\r\n                                                    <div v-if=\"form.errors.program\" class=\"text-sm text-red-600\">\r\n                                                        {{ form.errors.program }}\r\n                                                    </div>\r\n                                                </div>\r\n                                            </div>\r\n                                            <div class=\"col-md-6\">\r\n                                                <div class=\"form-group\">\r\n                                                    <label for=\"goal\" class=\"control-label\">Goal</label>\r\n                                                    <input type=\"text\" v-model=\"form.goal\" name=\"goal\" class=\"form-control\" placeholder=\"Goal\" />\r\n                                                    <div v-if=\"form.errors.goal\" class=\"text-sm text-red-600\">\r\n                                                        {{ form.errors.goal }}\r\n                                                    </div>\r\n                                                </div>\r\n                                            </div>\r\n                                        </div>\r\n                                        <div class=\"row p-t-20\">\r\n                                            <div class=\"col-md-6\">\r\n                                                <div class=\"form-group\">\r\n                                                    <label for=\"start_date\" class=\"control-label\">Start Date</label>\r\n                                                    <input type=\"date\" v-model=\"form.start_date\" name=\"start_date\" class=\"form-control\" placeholder=\"mm/dd/yy\" />\r\n                                                    <div v-if=\"form.errors.start_date\" class=\"text-sm text-red-600\">\r\n                                                        {{ form.errors.start_date }}\r\n                                                    </div>\r\n                                                </div>\r\n                                            </div>\r\n                                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        value: "Squat"
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "checkbox",
+        id: "md_checkbox_28",
+        "class": "filled-in chk-col-light-blue",
+        "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+          return $setup.form.categories = $event;
+        }),
+        value: "Breathing"
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "checkbox",
+        id: "md_checkbox_29",
+        "class": "filled-in chk-col-light-blue",
+        "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+          return $setup.form.categories = $event;
+        }),
+        value: "CAMPS"
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "checkbox",
+        id: "md_checkbox_30",
+        "class": "filled-in chk-col-light-blue",
+        "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+          return $setup.form.categories = $event;
+        }),
+        value: "Reset"
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $setup.form.categories]]), _hoisted_35])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row p-t-20\">\r\n                                            <div class=\"col-md-6\">\r\n                                                <div class=\"form-group\">\r\n                                                    <label for=\"email\" class=\"control-label\">Email</label>\r\n                                                    <input type=\"text\" v-model=\"form.email\" name=\"email\" class=\"form-control\" placeholder=\"Email\" />\r\n                                                    <div v-if=\"form.errors.email\" class=\"text-sm text-red-600\">\r\n                                                        {{ form.errors.email }}\r\n                                                    </div>\r\n                                                </div>\r\n                                            </div>\r\n                                            <div class=\"col-md-6\">\r\n                                                <div class=\"form-group\">\r\n                                                    <label for=\"phone\" class=\"control-label\">Phone</label>\r\n                                                    <input type=\"text\" v-model=\"form.phone\" name=\"phone\" class=\"form-control\" placeholder=\"Phone\" />\r\n                                                    <div v-if=\"form.errors.phone\" class=\"text-sm text-red-600\">\r\n                                                        {{ form.errors.phone }}\r\n                                                    </div>\r\n                                                </div>\r\n                                            </div>\r\n                                        </div>\r\n                                        <div class=\"row p-t-20\">\r\n                                            <div class=\"col-md-6\">\r\n                                                <div class=\"form-group\">\r\n                                                    <label for=\"program\" class=\"control-label\">Program</label>\r\n                                                    <input type=\"text\" v-model=\"form.program\" name=\"program\" class=\"form-control\" placeholder=\"Program\" />\r\n                                                    <div v-if=\"form.errors.program\" class=\"text-sm text-red-600\">\r\n                                                        {{ form.errors.program }}\r\n                                                    </div>\r\n                                                </div>\r\n                                            </div>\r\n                                            <div class=\"col-md-6\">\r\n                                                <div class=\"form-group\">\r\n                                                    <label for=\"goal\" class=\"control-label\">Goal</label>\r\n                                                    <input type=\"text\" v-model=\"form.goal\" name=\"goal\" class=\"form-control\" placeholder=\"Goal\" />\r\n                                                    <div v-if=\"form.errors.goal\" class=\"text-sm text-red-600\">\r\n                                                        {{ form.errors.goal }}\r\n                                                    </div>\r\n                                                </div>\r\n                                            </div>\r\n                                        </div>\r\n                                        <div class=\"row p-t-20\">\r\n                                            <div class=\"col-md-6\">\r\n                                                <div class=\"form-group\">\r\n                                                    <label for=\"start_date\" class=\"control-label\">Start Date</label>\r\n                                                    <input type=\"date\" v-model=\"form.start_date\" name=\"start_date\" class=\"form-control\" placeholder=\"mm/dd/yy\" />\r\n                                                    <div v-if=\"form.errors.start_date\" class=\"text-sm text-red-600\">\r\n                                                        {{ form.errors.start_date }}\r\n                                                    </div>\r\n                                                </div>\r\n                                            </div>\r\n                                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         type: "submit",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-info", {
           'opacity-25': $setup.form.processing
         }]),
         disabled: $setup.form.processing
-      }, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Submit ")], 10 /* CLASS, PROPS */, _hoisted_35), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("   "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      }, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Submit ")], 10 /* CLASS, PROPS */, _hoisted_38), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("   "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
         href: _ctx.route('movement.index'),
         "class": "btn btn-inverse"
-      }, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancel")], 8 /* PROPS */, _hoisted_37)])])])], 32 /* NEED_HYDRATION */)])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Footer"])])];
+      }, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancel")], 8 /* PROPS */, _hoisted_40)])])])], 32 /* NEED_HYDRATION */)])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["Footer"])])];
     }),
     _: 1 /* STABLE */
   })], 64 /* STABLE_FRAGMENT */);
