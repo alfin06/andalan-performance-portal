@@ -83,22 +83,6 @@ const showNotes = (tab, h) => {
 };
 const date_name = ref("");
 const showDate = (tab, h) => {
-      // Attempt to parse the date string
-      const standardizedDateString = h.head_date.replace(/-/g, '/'); // Replace '-' with '/' for Safari
-    const date = new Date(standardizedDateString);
-
-    if (isNaN(date.getTime())) {
-        console.error('Invalid date format:', h.head_date);
-        return;
-    }
-
-    // Format the date
-    date_name.value = date.toLocaleDateString('en-US', {
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-    });
 
     note.tab_date = h.head_date;
     // note.tab_id = tab.id;
@@ -723,7 +707,7 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Change Date: {{ date_name }}</h4>
+                                    <h4 class="modal-title">Change Date</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span >&times;</span> </button>
                                 </div>
                                 <div class="modal-body">
