@@ -83,14 +83,21 @@ const showNotes = (tab, h) => {
 };
 const date_name = ref("");
 const showDate = (tab, h) => {
-    const date = new Date(h.head_date);
+      // Attempt to parse the date string
+      const standardizedDateString = h.head_date.replace(/-/g, '/'); // Replace '-' with '/' for Safari
+    const date = new Date(standardizedDateString);
 
-    // Format the date as 'Tuesday, April 30, 2024'
+    if (isNaN(date.getTime())) {
+        console.error('Invalid date format:', h.head_date);
+        return;
+    }
+
+    // Format the date
     date_name.value = date.toLocaleDateString('en-US', {
-        weekday: 'long',  // 'long' gives the full weekday name (e.g., "Tuesday")
-        month: 'long',    // 'long' gives the full month name (e.g., "April")
-        day: 'numeric',   // 'numeric' gives the day number (e.g., "30")
-        year: 'numeric'   // 'numeric' gives the year (e.g., "2024")
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
     });
 
     note.tab_date = h.head_date;
@@ -133,14 +140,9 @@ const mov = useForm({
 
 const showHead = (tab) => {
     add_edit = "add";
-    tab_name.value = "Add New Schedule: " + tab.tab_name;
+    tab_name.value = "Add New Date tab: " + tab.tab_name;
     mov.tab_id = tab.id;
     mov.tab_client_id = tab.client_id;
-    
-    if(head_date != null)
-    {
-        mov.date = head_date.split(" ")[0];
-    }
     
     $('#headModal').modal('show');
 };

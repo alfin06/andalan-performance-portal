@@ -21175,17 +21175,20 @@ __webpack_require__.r(__webpack_exports__);
     };
     var date_name = (0,vue__WEBPACK_IMPORTED_MODULE_2__.ref)("");
     var showDate = function showDate(tab, h) {
-      var date = new Date(h.head_date);
+      // Attempt to parse the date string
+      var standardizedDateString = h.head_date.replace(/-/g, '/'); // Replace '-' with '/' for Safari
+      var date = new Date(standardizedDateString);
+      if (isNaN(date.getTime())) {
+        console.error('Invalid date format:', h.head_date);
+        return;
+      }
 
-      // Format the date as 'Tuesday, April 30, 2024'
+      // Format the date
       date_name.value = date.toLocaleDateString('en-US', {
         weekday: 'long',
-        // 'long' gives the full weekday name (e.g., "Tuesday")
         month: 'long',
-        // 'long' gives the full month name (e.g., "April")
         day: 'numeric',
-        // 'numeric' gives the day number (e.g., "30")
-        year: 'numeric' // 'numeric' gives the year (e.g., "2024")
+        year: 'numeric'
       });
       note.tab_date = h.head_date;
       // note.tab_id = tab.id;
@@ -21225,12 +21228,9 @@ __webpack_require__.r(__webpack_exports__);
     });
     var showHead = function showHead(tab) {
       add_edit = "add";
-      tab_name.value = "Add New Schedule: " + tab.tab_name;
+      tab_name.value = "Add New Date tab: " + tab.tab_name;
       mov.tab_id = tab.id;
       mov.tab_client_id = tab.client_id;
-      if (head_date != null) {
-        mov.date = head_date.split(" ")[0];
-      }
       $('#headModal').modal('show');
     };
     var submitHead = function submitHead() {
