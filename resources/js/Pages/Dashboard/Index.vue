@@ -142,9 +142,16 @@ const submitHead = () => {
 const showMovement = (tab, h) => {
      add_edit = "add";
      tab_name.value = "Add Daily Movement: " + tab.tab_name;
+     
      $("#hid_plan").val('');
      $("#hid_plan2").val('');
      $('#mov_plan').val(null).trigger('change');
+     $('#d_sets').val('');
+     $('#d_reps').val('');
+     $('#d_t').val('');
+     $('#d_wt').val('');
+     $('#d_rest').val('');
+     $('#d_block').val('');
      mov.tab_id = tab.id;
      mov.tab_client_id = tab.client_id;
      mov.head_training_id = h.id;
@@ -198,6 +205,7 @@ const submitMovement = () => {
     
 };
 const editMovement = (tab, x, h) => {
+   
     var mov_date = h.head_date.split(" ");
     add_edit = "edit";
     
@@ -608,7 +616,7 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                     </div>
                                     <div class="form-group col-6">
                                         <label>Block</label><br />
-                                        <input type="text" v-model="mov.block" class="form-control" style="width:60px;"> 
+                                        <input id="d_block" type="text" v-model="mov.block" class="form-control" style="width:60px;"> 
                                     </div>
                                     <input type="hidden" name="head_training_id" v-model="mov.head_training_id" id="head_training_id"/>
                                 </div>
@@ -630,11 +638,11 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                         </div>
                                         <div class="col-6 col-sm-12 col-lg-6 col-md-6" >
                                             <label>Details</label> <br />
-                                            <input type="text" id="sets" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
-                                            <input type="text" id="reps" class="form-control" placeholder="Reps" v-model="mov.reps" style="width:80px;margin-right:10px;">
-                                            <input type="text" id="t" class="form-control" placeholder="T." v-model="mov.t" style="width:80px;margin-right:10px;">
-                                            <input type="text" id="wt" class="form-control" placeholder="Wt." v-model="mov.wt" style="width:80px;margin-right:10px;">
-                                            <input type="text" id="rest" class="form-control" placeholder="Rest" v-model="mov.rest" style="width:80px;margin-right:10px;">
+                                            <input type="text" id="d_sets" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
+                                            <input type="text" id="d_reps" class="form-control" placeholder="Reps" v-model="mov.reps" style="width:80px;margin-right:10px;">
+                                            <input type="text" id="d_t" class="form-control" placeholder="T." v-model="mov.t" style="width:80px;margin-right:10px;">
+                                            <input type="text" id="d_wt" class="form-control" placeholder="Wt." v-model="mov.wt" style="width:80px;margin-right:10px;">
+                                            <input type="text" id="d_rest" class="form-control" placeholder="Rest" v-model="mov.rest" style="width:80px;margin-right:10px;">
                                         </div>
                                         <div class="col-6 col-sm-12 col-lg-6 col-md-6" >
                                             <label>Reps Achieved</label> <br />
