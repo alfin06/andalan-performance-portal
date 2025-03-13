@@ -21229,15 +21229,7 @@ __webpack_require__.r(__webpack_exports__);
     var showMovement = function showMovement(tab, h) {
       add_edit = "add";
       tab_name.value = "Add Daily Movement: " + tab.tab_name;
-      $("#hid_plan").val('');
-      $("#hid_plan2").val('');
-      $('#mov_plan').val(null).trigger('change');
-      $('#d_sets').val('');
-      $('#d_reps').val('');
-      $('#d_t').val('');
-      $('#d_wt').val('');
-      $('#d_rest').val('');
-      $('#d_block').val('');
+      resetalldata();
       mov.tab_id = tab.id;
       mov.tab_client_id = tab.client_id;
       mov.head_training_id = h.id;
@@ -21330,6 +21322,30 @@ __webpack_require__.r(__webpack_exports__);
       mov.reps6 = "";
       $('#movementModal').modal('show');
     };
+    function resetalldata() {
+      $("#hid_plan").val(null);
+      $("#hid_plan2").val(null);
+      $('#d_sets').val(null);
+      $('#d_reps').val(null);
+      $('#d_t').val(null);
+      $('#d_wt').val(null);
+      $('#d_rest').val(null);
+      $('#d_block').val(null);
+      $('#mov_plan').val(null).trigger('change');
+      mov.mov_plan = "";
+      mov.block = "";
+      mov.sets = "";
+      mov.reps = "";
+      mov.t = "";
+      mov.wt = "";
+      mov.rest = "";
+      mov.reps1 = "";
+      mov.reps2 = "";
+      mov.reps3 = "";
+      mov.reps4 = "";
+      mov.reps5 = "";
+      mov.reps6 = "";
+    }
 
     // Now define the incMovement function outside
     var incMovement = function incMovement(tab, x, status) {
@@ -21637,6 +21653,7 @@ __webpack_require__.r(__webpack_exports__);
       submitMovement: submitMovement,
       editMovement: editMovement,
       subsMovement: subsMovement,
+      resetalldata: resetalldata,
       incMovement: incMovement,
       deleteDate: deleteDate,
       deleteMovement: deleteMovement,
@@ -24219,6 +24236,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.rest]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [_hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(), _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "d_reps1",
         "class": "form-control",
         "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
           return $setup.mov.reps1 = $event;
@@ -24229,6 +24247,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.reps1]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "d_reps2",
         "class": "form-control",
         "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
           return $setup.mov.reps2 = $event;
@@ -24239,6 +24258,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.reps2]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "d_reps3",
         "class": "form-control",
         "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
           return $setup.mov.reps3 = $event;
@@ -24249,6 +24269,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.reps3]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "d_reps4",
         "class": "form-control",
         "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
           return $setup.mov.reps4 = $event;
@@ -24259,6 +24280,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.reps4]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "d_reps5",
         "class": "form-control",
         "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
           return $setup.mov.reps5 = $event;
@@ -24269,6 +24291,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.reps5]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "d_reps6",
         "class": "form-control",
         "onUpdate:modelValue": _cache[18] || (_cache[18] = function ($event) {
           return $setup.mov.reps6 = $event;

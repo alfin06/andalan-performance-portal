@@ -142,16 +142,9 @@ const submitHead = () => {
 const showMovement = (tab, h) => {
      add_edit = "add";
      tab_name.value = "Add Daily Movement: " + tab.tab_name;
-     
-     $("#hid_plan").val('');
-     $("#hid_plan2").val('');
-     $('#mov_plan').val(null).trigger('change');
-     $('#d_sets').val('');
-     $('#d_reps').val('');
-     $('#d_t').val('');
-     $('#d_wt').val('');
-     $('#d_rest').val('');
-     $('#d_block').val('');
+
+     resetalldata();
+    
      mov.tab_id = tab.id;
      mov.tab_client_id = tab.client_id;
      mov.head_training_id = h.id;
@@ -267,6 +260,33 @@ const subsMovement = (tab, x, status, h) => {
     $('#movementModal').modal('show');
 };
 
+function resetalldata(){
+    $("#hid_plan").val(null);
+     $("#hid_plan2").val(null);
+     $('#d_sets').val(null);
+     $('#d_reps').val(null);
+     $('#d_t').val(null);
+     $('#d_wt').val(null);
+     $('#d_rest').val(null);
+     $('#d_block').val(null);
+     $('#mov_plan').val(null).trigger('change');
+
+    mov.mov_plan = "";
+
+    mov.block = "";
+    mov.sets = "";
+    mov.reps = "";
+    mov.t = "";
+    mov.wt = "";
+    mov.rest = "";
+    mov.reps1 = "";
+    mov.reps2 = "";
+    mov.reps3 = "";
+    mov.reps4 = "";
+    mov.reps5 = "";
+    mov.reps6 = "";
+}
+
   // Now define the incMovement function outside
   const incMovement = (tab, x, status) => {
     const data = {
@@ -308,6 +328,7 @@ const deleteMovement = (x) => {
     if(confirm("Are you sure want to delete?"))
     {
         mov.id = x;
+
         mov.post(route("training.deleteMovement"));
         $('#movementModal').modal('hide');
        // toast.success('Daily movement deleted succesfully!');
@@ -646,12 +667,12 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                         </div>
                                         <div class="col-6 col-sm-12 col-lg-6 col-md-6" >
                                             <label>Reps Achieved</label> <br />
-                                            <input type="text" class="form-control" v-model="mov.reps1" style="width:60px;margin-right:5px;">
-                                            <input type="text" class="form-control" v-model="mov.reps2" style="width:60px;margin-right:5px;">
-                                            <input type="text" class="form-control" v-model="mov.reps3" style="width:60px;margin-right:5px;">
-                                            <input type="text" class="form-control" v-model="mov.reps4" style="width:60px;margin-right:5px;">
-                                            <input type="text" class="form-control" v-model="mov.reps5" style="width:60px;margin-right:5px;">
-                                            <input type="text" class="form-control" v-model="mov.reps6" style="width:60px;margin-right:5px;">
+                                            <input type="text" id="d_reps1" class="form-control" v-model="mov.reps1" style="width:60px;margin-right:5px;">
+                                            <input type="text" id="d_reps2" class="form-control" v-model="mov.reps2" style="width:60px;margin-right:5px;">
+                                            <input type="text" id="d_reps3" class="form-control" v-model="mov.reps3" style="width:60px;margin-right:5px;">
+                                            <input type="text" id="d_reps4" class="form-control" v-model="mov.reps4" style="width:60px;margin-right:5px;">
+                                            <input type="text" id="d_reps5" class="form-control" v-model="mov.reps5" style="width:60px;margin-right:5px;">
+                                            <input type="text" id="d_reps6" class="form-control" v-model="mov.reps6" style="width:60px;margin-right:5px;">
                                         </div>
                                     </form>
                                 </div>
