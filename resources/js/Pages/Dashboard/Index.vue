@@ -143,6 +143,8 @@ const showMovement = (tab, h) => {
      add_edit = "add";
      tab_name.value = "Add Daily Movement: " + tab.tab_name;
      $("#hid_plan").val('');
+     $("#hid_plan2").val('');
+     $('#mov_plan').val(null).trigger('change');
      mov.tab_id = tab.id;
      mov.tab_client_id = tab.client_id;
      mov.head_training_id = h.id;
@@ -165,6 +167,13 @@ const submitMovement = () => {
         }
     }
 
+    
+
+    document.getElementById("hid_plan").value = "";
+    document.getElementById("hid_plan2").value = "";
+    $("#mov_plan").prop("selectedIndex", 0).val();
+
+    
     if(nomovement)
     {
         alert('Please select a movement!');
@@ -339,6 +348,43 @@ $(document).ready(function() {
                     'X-Requested-With': 'XMLHttpRequest',
                 }
             });
+
+    $("#mov_plan").change(function() {
+        
+        $("#hid_plan").val($(this).val());
+        $("#hid_plan2").val($(this).val());
+        var client_id = $("#tab_client_id").val();
+        var temp_mov = ($(this).val()).split("-");
+        var mov_plan = temp_mov[0];
+
+        // Display mov plan info
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var ajaxurl = 'mov_info';
+        $.ajax({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url : ajaxurl,
+            type: 'POST',
+            data: {client:client_id, mov_plan:mov_plan},
+            dataType: 'json',
+            success:function(response) {
+                if (response.length > 0)
+                {
+                    $("#mov_info").html(response[0]['count']);
+                }
+                else
+                {
+                    $("#mov_info").html(0);
+                }
+            }
+        });
+    });
+
     // Movement dropdown
     $("#mov_category").change(function() {
         // Selected category id
@@ -397,41 +443,7 @@ $(document).ready(function() {
         }
     });
 
-    $("#mov_plan").change(function() {
-        $("#hid_plan").val($(this).val());
-        $("#hid_plan2").val($(this).val());
-        var client_id = $("#tab_client_id").val();
-        var temp_mov = ($(this).val()).split("-");
-        var mov_plan = temp_mov[0];
-
-        // Display mov plan info
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var ajaxurl = 'mov_info';
-        $.ajax({
-            headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url : ajaxurl,
-            type: 'POST',
-            data: {client:client_id, mov_plan:mov_plan},
-            dataType: 'json',
-            success:function(response) {
-                if (response.length > 0)
-                {
-                    $("#mov_info").html(response[0]['count']);
-                }
-                else
-                {
-                    $("#mov_info").html(0);
-                }
-            }
-        });
-    });
-
+   
         // Switchery
         var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
     $('.js-switch').each(function() {
@@ -618,11 +630,11 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                         </div>
                                         <div class="col-6 col-sm-12 col-lg-6 col-md-6" >
                                             <label>Details</label> <br />
-                                            <input type="text" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
-                                            <input type="text" class="form-control" placeholder="Reps" v-model="mov.reps" style="width:80px;margin-right:10px;">
-                                            <input type="text" class="form-control" placeholder="T." v-model="mov.t" style="width:80px;margin-right:10px;">
-                                            <input type="text" class="form-control" placeholder="Wt." v-model="mov.wt" style="width:80px;margin-right:10px;">
-                                            <input type="text" class="form-control" placeholder="Rest" v-model="mov.rest" style="width:80px;margin-right:10px;">
+                                            <input type="text" id="sets" class="form-control" placeholder="Sets" v-model="mov.sets" style="width:80px;margin-right:10px;">
+                                            <input type="text" id="reps" class="form-control" placeholder="Reps" v-model="mov.reps" style="width:80px;margin-right:10px;">
+                                            <input type="text" id="t" class="form-control" placeholder="T." v-model="mov.t" style="width:80px;margin-right:10px;">
+                                            <input type="text" id="wt" class="form-control" placeholder="Wt." v-model="mov.wt" style="width:80px;margin-right:10px;">
+                                            <input type="text" id="rest" class="form-control" placeholder="Rest" v-model="mov.rest" style="width:80px;margin-right:10px;">
                                         </div>
                                         <div class="col-6 col-sm-12 col-lg-6 col-md-6" >
                                             <label>Reps Achieved</label> <br />

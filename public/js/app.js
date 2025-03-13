@@ -21230,6 +21230,8 @@ __webpack_require__.r(__webpack_exports__);
       add_edit = "add";
       tab_name.value = "Add Daily Movement: " + tab.tab_name;
       $("#hid_plan").val('');
+      $("#hid_plan2").val('');
+      $('#mov_plan').val(null).trigger('change');
       mov.tab_id = tab.id;
       mov.tab_client_id = tab.client_id;
       mov.head_training_id = h.id;
@@ -21247,6 +21249,9 @@ __webpack_require__.r(__webpack_exports__);
           nomovement = true;
         }
       }
+      document.getElementById("hid_plan").value = "";
+      document.getElementById("hid_plan2").value = "";
+      $("#mov_plan").prop("selectedIndex", 0).val();
       if (nomovement) {
         alert('Please select a movement!');
       } else {
@@ -21403,6 +21408,41 @@ __webpack_require__.r(__webpack_exports__);
           'X-Requested-With': 'XMLHttpRequest'
         }
       });
+      $("#mov_plan").change(function () {
+        $("#hid_plan").val($(this).val());
+        $("#hid_plan2").val($(this).val());
+        var client_id = $("#tab_client_id").val();
+        var temp_mov = $(this).val().split("-");
+        var mov_plan = temp_mov[0];
+
+        // Display mov plan info
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+          }
+        });
+        var ajaxurl = 'mov_info';
+        $.ajax({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          url: ajaxurl,
+          type: 'POST',
+          data: {
+            client: client_id,
+            mov_plan: mov_plan
+          },
+          dataType: 'json',
+          success: function success(response) {
+            if (response.length > 0) {
+              $("#mov_info").html(response[0]['count']);
+            } else {
+              $("#mov_info").html(0);
+            }
+          }
+        });
+      });
+
       // Movement dropdown
       $("#mov_category").change(function () {
         // Selected category id
@@ -21462,40 +21502,6 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
         }
-      });
-      $("#mov_plan").change(function () {
-        $("#hid_plan").val($(this).val());
-        $("#hid_plan2").val($(this).val());
-        var client_id = $("#tab_client_id").val();
-        var temp_mov = $(this).val().split("-");
-        var mov_plan = temp_mov[0];
-
-        // Display mov plan info
-        $.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-          }
-        });
-        var ajaxurl = 'mov_info';
-        $.ajax({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          url: ajaxurl,
-          type: 'POST',
-          data: {
-            client: client_id,
-            mov_plan: mov_plan
-          },
-          dataType: 'json',
-          success: function success(response) {
-            if (response.length > 0) {
-              $("#mov_info").html(response[0]['count']);
-            } else {
-              $("#mov_info").html(0);
-            }
-          }
-        });
       });
 
       // Switchery
@@ -24146,6 +24152,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.mov_plan]]), _hoisted_40]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [_hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(), _hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "sets",
         "class": "form-control",
         placeholder: "Sets",
         "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
@@ -24157,6 +24164,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.sets]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "reps",
         "class": "form-control",
         placeholder: "Reps",
         "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
@@ -24168,6 +24176,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.reps]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "t",
         "class": "form-control",
         placeholder: "T.",
         "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
@@ -24179,6 +24188,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.t]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "wt",
         "class": "form-control",
         placeholder: "Wt.",
         "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
@@ -24190,6 +24200,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.mov.wt]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
+        id: "rest",
         "class": "form-control",
         placeholder: "Rest",
         "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
