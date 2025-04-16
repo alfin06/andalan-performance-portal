@@ -77,6 +77,9 @@ class ClientController extends Controller
         $client->email = $request->email;
         $client->phone = $request->phone;
         $client->birth_date = $request->birth_date;
+        $client->start_date = $request->start_date;
+        $client->program = $request->program;
+        $client->goal = $request->goal;
         $client->is_active = $request->is_active;
         $client->updated_at = now();
         $client->save();

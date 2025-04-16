@@ -21,15 +21,15 @@ const props = defineProps({
             });
 
 //remove hours, minutes, and seconds
-//var format_bdate = props.client.birth_date.split(" ");
-var format_sdate = props.client.start_date.split(" ");
+var format_bdate = props.client.birth_date ? props.client.birth_date.split(" ")[0] : null;
+var format_sdate = props.client.start_date ? props.client.start_date.split(" ") : null;
 
 const form = useForm({
                 id: props.client.id,
                 name: props.client.name,
                 email: props.client.email,
                 phone: props.client.phone,
-                //birth_date: format_bdate[0],
+                birth_date: format_bdate,
                 program: props.client.program,
                 goal: props.client.goal,
                 start_date: format_sdate[0],
@@ -115,16 +115,16 @@ jQuery(document).ready(function() {
                 </form>
              
                 <div class="row">
-                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                    <!-- <div class="col-lg-4 col-xlg-3 col-md-5">
                         <div class="card"> 
                             <img class="card-img" src="/assets/images/background/bg.jpg" alt="Card image">
                             <div class="card-img-overlay card-inverse social-profile d-flex ">
                                 <div class="align-self-center"> 
-                                    <h4 class="card-title">Start Date:</h4>
-                                    <h6 class="card-subtitle">{{ form.start_date }}</h6>
+                                     <h4 class="card-title">Start Date:</h4>
+                                    <h6 class="card-subtitle">{{ form.start_date }}</h6> 
                                     <h4 class="card-title">Program:</h4>
                                     <h6 class="card-subtitle">{{ form.program }}</h6>
-                                    <h4 class="card-title">Goal:</h4>
+                                   <h4 class="card-title">Goal:</h4>
                                     <h6 class="card-subtitle">{{ form.goal }}</h6>
                                     <div class="p-t-20">
                                         <button class="btn btn-warning"  @click.prevent="showProgram(form)" data-toggle="modal" data-target="#programModal"><i class="fa fa-pencil"></i> Change</button> 
@@ -132,14 +132,14 @@ jQuery(document).ready(function() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-lg-8 col-xlg-9 col-md-7">
                         <div class="card">
                             <div class="card-body">
-                                <form @submit.prevent="submit" class="form-material m-t-40">
+                                <form @submit.prevent="submit" class="form-material">
                                     <div class="form-body">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="name" class="control-label">Full Name</label>
                                                     <input type="text" v-model="form.name" name="name" class="form-control" placeholder="Name" />
@@ -148,15 +148,48 @@ jQuery(document).ready(function() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="col-md-6">
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="goal" class="control-label">Birth Date</label>
-                                                    <input type="date" v-model="form.birth_date" name="birth_date" class="form-control" placeholder="mm/dd/yyyy" />
-                                                    <div v-if="form.errors.birth_date" class="text-sm text-red-600">
+                                                    <label for="start_date" class="control-label">Start Date</label>
+                                                   <input type="date" v-model="form.start_date" name="start_date" class="form-control" placeholder="mm/dd/yyyy" />
+                                                     <div v-if="form.errors.start_date" class="text-sm text-red-600">
+                                                        {{ form.errors.start_date }}
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                             <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="birth_date" class="control-label">Birth Date</label>
+                                                   <input type="date" v-model="form.birth_date" name="birth_date" class="form-control" placeholder="mm/dd/yyyy" />
+                                                     <div v-if="form.errors.birth_date" class="text-sm text-red-600">
                                                         {{ form.errors.birth_date }}
                                                     </div>
                                                 </div>
-                                            </div> -->
+                                            </div> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="goal" class="control-label">Goal</label>
+                                                    <input type="text" v-model="form.goal" name="goal" class="form-control" placeholder="Goal" />
+                                                    <div v-if="form.errors.goal" class="text-sm text-red-600">
+                                                        {{ form.errors.goal }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="program" class="control-label">Program</label>
+                                                    <input type="text" v-model="form.program" name="program" class="form-control" placeholder="Program" />
+                                                    <div v-if="form.errors.program" class="text-sm text-red-600">
+                                                        {{ form.errors.program }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                         </div>
                                         <div class="row p-t-20">
                                             <div class="col-md-6">

@@ -37,14 +37,24 @@ const props = defineProps({
                 },
             });
 
-function destroy(id) {
-    if (confirm("Are you sure you want to delete?")) {
-        form.delete(route('client.destroy', id));
-        toast.success('Client deleted successfully!');
+    function formatDate(datetime) {
+        if (!datetime) return '';
+        const date = new Date(datetime);
+        return date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
     }
-}
-</script>
 
+    function destroy(id) {
+        if (confirm("Are you sure you want to delete?")) {
+            form.delete(route('client.destroy', id));
+            toast.success('Client deleted successfully!');
+        }
+    }
+
+</script>
 <style>
 </style>
 
@@ -93,8 +103,8 @@ function destroy(id) {
                                                     <tr>
                                                         <th>Action</th>
                                                         <th>Full Name</th>
-                                                        <th>Email</th>
-                                                        <th>Phone</th>
+                                                        <!-- <th>Email</th> -->
+                                                        <!-- <th>Phone</th> -->
                                                         <th>Program</th>
                                                         <th>Goal</th>
                                                         <th>Start Date</th>
@@ -107,11 +117,11 @@ function destroy(id) {
                                                             <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn text-danger" data-toggle="tooltip" data-original-title="Delete" @click="destroy(item.id)"><i class="ti-trash" aria-hidden="true"></i></button>
                                                         </td>
                                                         <td>{{item.name}}</td>
-                                                        <td>{{item.email}}</td>
-                                                        <td>{{item.phone}}</td>
+                                                        <!-- <td>{{item.email}}</td> -->
+                                                        <!-- <td>{{item.phone}}</td> -->
                                                         <td>{{item.program}}</td>
                                                         <td>{{item.goal}}</td>
-                                                        <td>{{item.start_date}}</td>
+                                                        <td>{{ formatDate(item.start_date) }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
