@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function() {
     Route::post('training/subsMovement/', [TrainingController::class, 'subsMovement'])->name('training.subsMovement');
     Route::post('training/deleteMovement/', [TrainingController::class, 'deleteMovement'])->name('training.deleteMovement');
    
+    Route::post('training/editTab/', [TrainingController::class, 'editTab'])->name('training.editTab');
     /* Helper */
     Route::post('training/{id}/mov', [AdminController::class, 'showMovement'])->name('mov');
     Route::post('training/{id}/mov_info', [AdminController::class, 'showMovementInfo'])->name('mov_info');

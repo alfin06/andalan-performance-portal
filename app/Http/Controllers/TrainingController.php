@@ -192,6 +192,29 @@ class TrainingController extends Controller
         sleep(1);
     }
 
+    public function editTab(Request $request)
+    {
+        $tab = Tab::where('id', $request->tab_id)
+                    ->where('client_id', $request->tab_client_id)
+                    ->first();
+
+        if ($tab) {
+            // Update "tab name"
+            $tab->tab_name = $request->tab_name;
+            $tab->updated_by = Auth::id();
+            $tab->updated_at = now();
+            $tab->save();
+            sleep(1);
+
+            // Return a success response
+           // return response()->json(['message' => 'Tab name updated successfully.']);
+        } else {
+            // If training not found, return an error response
+             return response()->json(['message' => 'Tab not found.'], 404);
+         }
+        
+    }
+
     public function addMovement(Request $request)
     {
         $movement_plan = explode("-", $request->mov_plan);

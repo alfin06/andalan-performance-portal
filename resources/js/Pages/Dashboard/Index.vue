@@ -119,7 +119,8 @@ const mov = useForm({
     tab_id: '',
     tab_client_id: '',
     id: '',
-    head_training_id: ''
+    head_training_id: '',
+    tab_name : ''
 });
 
 const showHead = (tab) => {
@@ -129,6 +130,24 @@ const showHead = (tab) => {
     mov.tab_client_id = tab.client_id;
     
     $('#headModal').modal('show');
+};
+const showTab = (tab) => {
+    tab_name.value = "Edit tab: " + tab.tab_name;
+    mov.tab_id = tab.id;
+    mov.tab_client_id = tab.client_id;
+    
+    $('#tabModal').modal('show');
+};
+const editTab = () => {
+
+    mov.post(route("training.editTab"), {
+        tab_id: mov.tab_id,
+        tab_client_id: mov.tab_client_id,
+        tab_name: mov.tab_name,
+    });
+
+    mov.reset();
+    $('#tabModal').modal('hide');
 };
 const submitHead = () => {
     if(add_edit == "add") {
@@ -621,6 +640,31 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                     </div>
                 </form>
 
+                <form @submit.prevent="editTab" class="form-material">
+                    <div class="modal fade" id="tabModal" tabindex="-1" role="dialog" >
+                        <div class="modal-dialog" role="document" style="max-width:1000px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">{{ tab_name }}</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span >&times;</span> </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group col-lg-6 col-sm-12" >
+                                        <label>New Tab Name</label>
+                                        <input type="text" v-model="mov.tab_name" class="form-control" > 
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="hidden" name="tab_id" v-model="mov.tab_id" id="tab_id" />
+                                    <input type="hidden" name="tab_client_id" v-model="mov.tab_client_id" id="tab_client_id" />
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-info" :disabled="mov.processing" :class="{ 'opacity-25': mov.processing }"><i class="ti ti-save"></i> Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
                 <form @submit.prevent="submitMovement" class="form-material">
                     <div class="modal fade" id="movementModal" tabindex="-1" role="dialog" >
                         <div class="modal-dialog" role="document" style="max-width:1000px;">
@@ -807,13 +851,14 @@ $('#dateDisplay').text(formattedDate); // Replace #dateDisplay with the correct 
                                 <div class="tab-content tabcontent-border">
                                     <div class="tab-pane" v-for="(tab, index) in tabs" :key="tab.id" :id='"tab_" + tab.id' role="tabpanel">
                                         <button class="btn btn-success btn-rounded dateBtn" id="dateBtn" @click.prevent="showHead(tab)" data-toggle="modal" data-target="#headModal"><i class="ti-calendar"></i> Add Date</button>
+                                        <button class="btn btn-success btn-rounded dateBtn pull-right " id="editTabBtn" @click.prevent="showTab(tab)" data-toggle="modal" data-target="#tabModal"><i class="ti-settings"></i></button>
                                         <div v-for="(h, index) in head_training" :key="h.id" :id="h.id">
                                             <div v-if="h.tab_id==tab.id" class="day_container">
                                                 <div class="d-flex m-t-20 row ">
                                                     <div class="col-12">
                                                         <h4 class="card-title">
-                                                            <span id="dateDisplay">{{ FormatDate(new Date((h.head_date.split(" "))[0])) }} </span><button class="btn btn-rounded btn-sm btn-outline-primary" id="dateButton" @click.prevent="showDate(tab, h)"><i class="ti-calendar"></i></button> 
-                                                            <button class="pull-right btn btn-success btn-rounded btn-sm" id="movementBtn" @click.prevent="showMovement(tab, h)" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Add Movement</button>
+                                                            <span id="dateDisplay">{{ FormatDate(new Date((h.head_date.split(" "))[0])) }} </span><button class="btn btn-rounded btn-sm btn-outline-primary m-l-5" id="dateButton" @click.prevent="showDate(tab, h)"><i class="ti-calendar"></i></button> 
+                                                            <button class="pull-right btn btn-success btn-rounded btn-sm m-t-10" id="movementBtn" @click.prevent="showMovement(tab, h)" data-toggle="modal" data-target="#movementModal"><i class="ti-plus"></i> Movement</button>
                                                         </h4>
                                                         <h6 class="card-subtitle">
                                                             Notes: {{ h.head_notes }}
